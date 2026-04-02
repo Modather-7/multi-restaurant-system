@@ -2,32 +2,22 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-// #[Fillable(['name', 'email', 'password', 'phone_number', 'address', 'branch'])]
-#[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class Employee extends Model
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-        protected $fillable = [
+    protected $fillable = [
         'name',
-        'email',
-        'password',
-        'phone_number',
+        'phone',
         'address',
-        'branch',
+        'branch_id',
+        'role',
+        'salary',
     ];
 
     /*
@@ -41,17 +31,9 @@ class User extends Authenticatable
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function branch()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this -> belongsTo(Branch::class);
     }
 
     /*
@@ -89,4 +71,5 @@ class User extends Authenticatable
     | TESTING
     |--------------------------------------------------------------------------
     */
+
 }
