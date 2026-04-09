@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('address');
-            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
+            $table->foreignId('branch_id')->constrained()->onDelete('restrict');
             $table->string('role')->default('employee');
             $table->decimal('salary', 10, 2)->nullable();
             $table->timestamps();
