@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
+
 return [
 
     /*
@@ -326,6 +329,11 @@ return [
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',
+        ],
+        [
+            'text' => 'products',
+            'url' => 'dashboard/products',
+            'icon' => 'fas fa-book-open',
         ],
         ['header' => 'account_settings'],
         [

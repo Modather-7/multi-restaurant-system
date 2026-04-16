@@ -4,22 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Category extends Model
 {
-    /*
+        /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'category_id',
-        'ingredients',
-        'price',
-        'quantity',
-        'is_available',
-    ];
-
+    protected $fillable = ['name'];
     /*
     |--------------------------------------------------------------------------
     | CONFIGURATION
@@ -31,32 +23,10 @@ class Product extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function branchProducts()
+    public function products()
     {
-        return $this -> hasMany(BranchProduct::class);
+        return $this->hasMany(Product::class);
     }
-
-    public function cartItems()
-    {
-        return $this -> hasMany(CartItem::class);
-    }
-
-    public function orderItems()
-    {
-        return $this -> hasMany(OrderItem::class);
-    }
-
-    public function branches()
-    {
-        return $this -> belongsToMany(Branch::class)
-                        ->withPivot('quantity');
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS

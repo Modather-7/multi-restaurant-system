@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str as SupportStr;
+use Pest\Support\Str;
 
 class ProductController extends Controller
 {
@@ -12,7 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('dashboard.product.index');
+        $products = Product::all();
+        $categories = Category::all();
+
+        return view('dashboard.product.index', compact('products', 'categories'));
     }
 
     /**
@@ -20,7 +27,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('dashboard.product.create', compact('categories'));
     }
 
     /**
@@ -28,7 +37,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product::create($request->validate([
+            'name'         => ['required', 'string', 'max:255'],
+            'category_id'  => ['required', 'exists:categories,id'],
+            'ingredients'  => ['required', 'string', 'max:255'],
+            'price'        => ['required', 'numeric'],
+            'quantity'     => ['required', 'numeric'],
+            'is_available' => ['required', 'boolean'],
+        ]));
+
+
+        return redirect('dashboard/products')
+        ->with('success', 'Product Added');
     }
 
     /**
@@ -52,7 +72,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+
     }
 
     /**
