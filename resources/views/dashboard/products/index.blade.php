@@ -9,7 +9,7 @@
 @section('content')
 
     <div class="mb-5">
-        <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-primary">Add Product</a>
+        <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary">Add Product</a>
     </div>
 
     @if (session()->has('success'))
@@ -41,13 +41,13 @@
                 <td>{{ $product -> ingredients }}</td>
                 <td>{{ $product -> price }}</td>
                 <td>{{ $product -> quantity }}</td>
-                <td>{{ $product -> is_available }}</td>
+                <td>{{ $product -> is_available ? 'True' : 'False'}}</td>
                 <td>{{ $product -> created_at }}</td>
                 <td>
-                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                    <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                 </td>
                 <td>
-                    <form action="{{ route ('products.destroy', $product->id) }}" method="POST">
+                    <form action="{{ route ('dashboard.products.destroy', $product->id) }}" method="POST">
                         @csrf
                         {{-- Form method spoofing --}}
                         <input type="hidden" name="_method" value="delete">
@@ -61,7 +61,6 @@
                 <td colspan="10">No Products Found.</td>
             </tr>
             @endforelse
-
     </tbody>
 @stop
 

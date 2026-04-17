@@ -4,8 +4,14 @@ use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::group([
+    'middleware' => ['auth', 'verified'],
+    'as' => 'dashboard.', //all routes should start with (dashboard.) -> 'dashboard.products.create'
+    'prefix' => 'dashboard', //all routes in this group starts with dashboard in the url
 
-Route::resource('dashboard/products', ProductController::class);
+], function() {
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    Route::resource('products', ProductController::class);
+});

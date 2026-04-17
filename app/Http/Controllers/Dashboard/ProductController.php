@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str as SupportStr;
-use Pest\Support\Str;
 
 class ProductController extends Controller
 {
@@ -16,70 +15,62 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $categories = Category::all();
+        $products = Product::with('category')->orderBy('id', 'asc')->simplePaginate();
 
-        return view('dashboard.product.index', compact('products', 'categories'));
+        return view('dashboard.products.index', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::select('id', 'name')->get();
 
-        return view('dashboard.product.create', compact('categories'));
+        return view('dashboard.products.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        Product::create($request->validate([
-            'name'         => ['required', 'string', 'max:255'],
-            'category_id'  => ['required', 'exists:categories,id'],
-            'ingredients'  => ['required', 'string', 'max:255'],
-            'price'        => ['required', 'numeric'],
-            'quantity'     => ['required', 'numeric'],
-            'is_available' => ['required', 'boolean'],
-        ]));
+        Product::create($request->validated());
 
-
-        return redirect('dashboard/products')
+        return redirect()->route('dashboard.products.index')
         ->with('success', 'Product Added');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+
+        return view('dashboard.products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, Product $product)
     {
+        $product -> update($request->validated());
 
+        return redirect()->route('dashboard.products.index')
+        ->with('success', 'product Updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('dashboard.products.index')
+        ->with('success', 'Product Deleted Successfully');
     }
 }
