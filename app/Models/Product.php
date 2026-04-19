@@ -19,6 +19,7 @@ class Product extends Model
         'ingredients',
         'price',
         'quantity',
+        'image',
         'is_available',
     ];
 

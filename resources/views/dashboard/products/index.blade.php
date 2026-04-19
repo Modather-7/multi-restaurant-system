@@ -17,6 +17,16 @@
             {{ session('success') }}
         </div>
     @endif
+    @if (session()->has('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+    @endif
+    @if (session()->has('delete'))
+        <div class="alert alert-danger">
+            {{ session('delete') }}
+        </div>
+    @endif
 
     <table class="table">
         <thead>
@@ -29,10 +39,11 @@
                 <th>Quantity</th>
                 <th>Is Available</th>
                 <th>Created At</th>
+                <th>Image</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
-    <tbody>
+        <tbody>
             @forelse ($products as $product)
             <tr>
                 <td>{{ $product -> id }}</td>
@@ -43,6 +54,13 @@
                 <td>{{ $product -> quantity }}</td>
                 <td>{{ $product -> is_available ? 'True' : 'False'}}</td>
                 <td>{{ $product -> created_at }}</td>
+                <td><img
+                    src="{{ asset('storage/' . $product->image) }}"
+                    alt=""
+                    height="100"
+                    style="border: 2px solid #ddd; padding: 3px; border-radius: 50%;"
+                    >
+                </td>
                 <td>
                     <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                 </td>
@@ -61,7 +79,12 @@
                 <td colspan="10">No Products Found.</td>
             </tr>
             @endforelse
-    </tbody>
+        </tbody>
+    </table>
+
+    <div class="mt-3">
+        {{ $products->links() }}
+    </div>
 @stop
 
 @section('css')

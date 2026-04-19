@@ -7,46 +7,13 @@
 @stop
 
 @section('content')
-    <form action="{{ route('dashboard.products.update', $product -> id) }}" method="POST">
+    <form action="{{ route('dashboard.products.update', $product -> id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="form-group">
-            <label for="">Product Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $product -> name }}">
-        </div>
-        <div class="form-group">
-            <label for="">Category</label>
-            <select name="category_id" class="form-control form-select">
-                <option value="selected"></option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @selected($product -> category_id == $category -> id)>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="">Product Ingredients</label>
-            <textarea name="ingredients" class="form-control">{{ $product -> ingredients }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="">Price</label>
-            <input type="number" name="price" class="form-control" value="{{ $product -> price }}">
-        </div>
-        <div class="form-group">
-            <label for="">Quantity</label>
-            <input type="number" name="quantity" class="form-control" value="{{ $product -> quantity }}">
-        </div>
-        <div class="form-group">
-            <label for="">Is_Available</label>
-            <select name="is_available" class="form-control">
-                <option value="1" @selected($product -> is_available == 1)>True</option>
-                <option value="0" @selected($product -> is_available == 0)>False</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Update</button>
-        </div>
+
+        @include('dashboard.products._form', [
+            'button_label' => 'Update'
+        ]) {{-- _ معناها ان دا ملف داخلي او فرعي مش رئيسي فيه الفورم اللي محتاجين نعملها include --}}
     </form>
 @stop
 

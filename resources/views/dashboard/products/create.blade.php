@@ -7,43 +7,12 @@
 @stop
 
 @section('content')
-    <form action="{{ route('dashboard.products.store') }}" method="POST">
+    <form action="{{ route('dashboard.products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="form-group">
-            <label for="">Product Name</label>
-            <input type="text" name="name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="">Category</label>
-            <select name="category_id" class="form-control form-select">
-                <option value="">Primary Category</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="">Product Ingredients</label>
-            <textarea name="ingredients" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="">Price</label>
-            <input type="number" name="price" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="">Quantity</label>
-            <input type="number" name="quantity" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="">Is_Available</label>
-            <select name="is_available" class="form-control">
-                <option value="1">True</option>
-                <option value="0">False</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>
+
+        @include('dashboard.products._form', [
+            'button_label' => 'Save'
+        ])
     </form>
 @stop
 

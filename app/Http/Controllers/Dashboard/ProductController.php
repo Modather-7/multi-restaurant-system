@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class ProductController extends Controller
 {
@@ -15,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->orderBy('id', 'asc')->simplePaginate();
+        $products = Product::with('category')->orderBy('id', 'asc')->simplePaginate(4);
 
         return view('dashboard.products.index', compact('products'));
     }
@@ -24,11 +26,11 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      */
 
-    public function create()
+    public function create(Product $product)
     {
         $categories = Category::select('id', 'name')->get();
 
-        return view('dashboard.products.create', compact('categories'));
+        return view('dashboard.products.create', compact('categories', 'product'));
     }
 
     /**
@@ -36,10 +38,15 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->validated());
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+        Product::create($validated);
 
         return redirect()->route('dashboard.products.index')
-        ->with('success', 'Product Added');
+            ->with('success', 'Product Added');
     }
 
     /**
@@ -57,20 +64,47 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $product -> update($request->validated());
+        $validated = $request->validated();
+        $old_image = $product->image;
+
+        if ($request->hasFile('image')) {
+            // store the new image
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        $product->fill($validated);
+        $hasChanges = $product->isDirty();
+
+        if( ! $hasChanges) {
+            return redirect()->route('dashboard.products.index')
+                ->with('info', 'No changes were made');
+        }
+
+        // delete the old one
+        if($request->hasFile('image') && $old_image) {
+            FacadesStorage::disk('public')->delete($old_image);
+        }
+
+        $product -> save();
 
         return redirect()->route('dashboard.products.index')
-        ->with('success', 'product Updated Successfully');
+            ->with('info', 'product Updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::findOrFail($id);
         $product->delete();
 
+        // to delete the image from the storage/app/public file
+        if($product->image) {
+            FacadesStorage::disk('public')->delete($product->image);
+        }
+
         return redirect()->route('dashboard.products.index')
-        ->with('success', 'Product Deleted Successfully');
+            ->with('delete', 'Product Deleted Successfully');
     }
 }
