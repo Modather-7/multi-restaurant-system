@@ -1,10 +1,24 @@
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <h3>Error Occured</h3>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>
+                    {{ $error }}
+                </li>
+            @endforeach
+        </ul>
+
+    </div>
+@endif
+
 <div class="form-group">
     <label for="">Product Name</label>
     <input
         type="text"
         name="name"
-        class="form-control"
-        value="{{ $product -> name ?? '' }}"
+        class="form-control @error('name') is-invalid @enderror"
+        value="{{ old('name', $product -> name) }}"
         required
         >
 </div>
@@ -12,15 +26,14 @@
     <label for="">Category</label>
     <select
         name="category_id"
-        class="form-control
-        form-select"
+        class="form-control form-select @error('category_id') is-invalid @enderror"
         required
         >
-        <option value=""></option>
+        <option value="">--Select Category--</option>
         @foreach ($categories as $category)
             <option
                 value="{{ $category->id }}"
-                @selected($product -> category_id == $category -> id)
+                @selected(old('category_id', $product -> category_id) == $category -> id)
                 >
                 {{ $category->name }}
             </option>
@@ -31,19 +44,17 @@
     <label for="">Product Ingredients</label>
     <textarea
         name="ingredients"
-        class="form-control"
+        class="form-control @error('ingredients') is-invalid @enderror"
         required
-        >
-        {{ $product -> ingredients }}
-    </textarea>
+        >{{ old('ingredients', $product -> ingredients) }}</textarea>
 </div>
 <div class="form-group">
     <label for="">Price</label>
     <input
         type="number"
         name="price"
-        class="form-control"
-        value="{{ $product -> price }}"
+        class="form-control @error('price') is-invalid @enderror"
+        value="{{ old('price', $product -> price) }}"
         required
         >
 </div>
@@ -52,8 +63,9 @@
     <input
         type="number"
         name="quantity"
-        class="form-control"
-        value="{{ $product -> quantity }}"
+        class="form-control @error('quantity') is-invalid @enderror"
+        value="{{ old('quantity', $product -> quantity) }}"
+        placeholder="---"
         required
         >
 </div>
@@ -61,16 +73,16 @@
     <label for="">Is_Available</label>
     <select
         name="is_available"
-        class="form-control"
+        class="form-control @error('is_available') is-invalid @enderror"
         required
         >
-        <option value="1" @selected($product -> is_available == 1)>True</option>
-        <option value="0" @selected($product -> is_available == 0)>False</option>
+        <option value="1" @selected(old('is_available', $product -> is_available) == 1)>True</option>
+        <option value="0" @selected(old('is_available', $product -> is_available) == 0)>False</option>
     </select>
 </div>
 <div class="form-group">
     <label for="image">Image</label>
-    <input type="file" name="image" class="form-control" accept="image/*">
+    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
     @if ($product->image)
         <img
             src="{{ asset('storage/' . $product->image) }}"

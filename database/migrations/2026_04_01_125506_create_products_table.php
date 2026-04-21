@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->text('ingredients');
             $table->decimal('price');
-            $table->decimal('quantity')->nullable(0);
+            $table->decimal('quantity')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_available')->default(true);
             $table->timestamps();

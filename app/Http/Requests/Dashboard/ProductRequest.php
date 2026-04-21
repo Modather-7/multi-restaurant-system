@@ -4,6 +4,7 @@ namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class ProductRequest extends FormRequest
 {
@@ -23,13 +24,22 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => ['required', 'string', 'max:255'],
-            'category_id'  => ['required', 'exists:categories,id'],
-            'ingredients'  => ['required', 'string', 'max:255'],
-            'price'        => ['required', 'numeric'],
-            'quantity'     => ['required', 'numeric'],
-            'is_available' => ['required', 'boolean'],
-            'image'        => ['nullable', 'image'],
+            'name'         => ['bail', 'required', 'string', 'max:255'],
+            'category_id'  => ['bail', 'required', 'integer', 'exists:categories,id'], // if null don't check for the rest of commands
+            'ingredients'  => ['bail', 'required', 'string', 'max:255'],
+            'price'        => ['bail', 'required', 'numeric', 'max:5000'],
+            'quantity'     => ['bail', 'nullable', 'numeric', 'max:5000'],
+            'is_available' => ['bail', 'required', 'boolean'],
+            'image'        => ['bail', 'nullable', 'image', File::image() -> types('jpg', 'jpeg', 'png') -> max(10*1024)],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id'   => 'لازم تختار نوع المنتج',
+            'ingredients'   => 'لازم تكتب وصفة المنتج',
+            'price'         => 'المنتج دا بكام ؟',
         ];
     }
 }

@@ -325,10 +325,10 @@ return [
         ],
         [
             'text' => 'pages',
-            'url' => 'admin/pages',
+            'url' => 'dashboard/pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
-            'label_color' => 'success',
+            'label_color' => 'danger',
         ],
         [
             'text' => 'products',
@@ -340,22 +340,6 @@ return [
             'text' => 'profile',
             'url' => '/profile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
         ],
     ],
 

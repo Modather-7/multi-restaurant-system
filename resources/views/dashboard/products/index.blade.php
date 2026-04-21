@@ -11,22 +11,21 @@
     <div class="mb-5">
         <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary">Add Product</a>
     </div>
+    @php
+        $alerts = [
+            'success' => 'success',
+            'info'    => 'info',
+            'delete'  => 'danger',
+        ];
+    @endphp
 
-    @if (session()->has('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if (session()->has('info'))
-        <div class="alert alert-info">
-            {{ session('info') }}
-        </div>
-    @endif
-    @if (session()->has('delete'))
-        <div class="alert alert-danger">
-            {{ session('delete') }}
-        </div>
-    @endif
+    @foreach ($alerts as $alert => $class)
+        @if (session()->has($alert))
+            <div class="alert alert-{{ $class }}">
+                {{ session($alert) }}
+            </div>
+        @endif
+    @endforeach
 
     <table class="table">
         <thead>
@@ -58,7 +57,7 @@
                     src="{{ asset('storage/' . $product->image) }}"
                     alt=""
                     height="100"
-                    style="border: 2px solid #ddd; padding: 3px; border-radius: 50%;"
+                    style="border: 2px solid #ddd; padding: 3px; border-radius: 10%;"
                     >
                 </td>
                 <td>

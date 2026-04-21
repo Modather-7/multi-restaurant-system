@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Container\Attributes\Storage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class ProductController extends Controller
@@ -43,10 +41,11 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
+
         Product::create($validated);
 
         return redirect()->route('dashboard.products.index')
-            ->with('success', 'Product Added');
+            ->with('success', 'Product Added successfully');
     }
 
     /**
@@ -80,7 +79,7 @@ class ProductController extends Controller
                 ->with('info', 'No changes were made');
         }
 
-        // delete the old one
+        // delete the old image
         if($request->hasFile('image') && $old_image) {
             FacadesStorage::disk('public')->delete($old_image);
         }
@@ -88,7 +87,7 @@ class ProductController extends Controller
         $product -> save();
 
         return redirect()->route('dashboard.products.index')
-            ->with('info', 'product Updated Successfully');
+            ->with('success', 'product Updated Successfully');
     }
 
     /**
