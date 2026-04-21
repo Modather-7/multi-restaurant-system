@@ -37,6 +37,7 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => 'مينفعش تسيب اسم المنتج فاضي',
             'category_id'   => 'لازم تختار نوع المنتج',
             'ingredients'   => 'لازم تكتب وصفة المنتج',
             'price'         => 'المنتج دا بكام ؟',
