@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => ['bail', 'required', 'string', 'max:255'],
+            'name'         => ['bail', 'required', 'string', 'between:3,255'],
             'category_id'  => ['bail', 'required', 'integer', 'exists:categories,id'], // if null don't check for the rest of commands
             'ingredients'  => ['bail', 'required', 'string', 'max:255'],
             'price'        => ['bail', 'required', 'numeric', 'max:5000'],
