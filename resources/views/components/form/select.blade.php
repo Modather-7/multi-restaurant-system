@@ -7,7 +7,7 @@
     {{ $attributes->class([
         'form-control',
         'form-select',
-        'is-invalid' => $errors->has($name)
+        'is-invalid' => $errors->has($name),
     ])}}
     required
     >

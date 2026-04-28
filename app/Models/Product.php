@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -77,6 +78,27 @@ class Product extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    // local scope
+    public function scopeActive(Builder $builder)
+    {
+        $builder->where('is_available', '=', 1);
+    }
+
+    // dynamic scope
+    public function scopeFilter(Builder $builder, array $filters)
+    {
+        $builder->when($filters['name'] ?? false, function($builder, $value) {
+            $builder->where('name', 'LIKE', "%{$value}%");
+        });
+
+        // use ($filters) -> means true or false as it comes from $filters['is_available'],
+        // I didn't use $value as the want 0,1 value not true,false or string
+        $builder->when(
+            isset($filters['is_available']) && $filters['is_available'] != 'All',
+            function($builder) use ($filters) {
+                $builder->where('is_available', $filters['is_available']);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------

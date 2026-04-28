@@ -266,7 +266,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => '/profile',
     'disable_darkmode_routes' => false,
 
     /*
@@ -332,8 +332,13 @@ return [
         ],
         [
             'text' => 'products',
-            'url' => 'dashboard/products',
-            'icon' => 'fas fa-book-open',
+            'route' => 'dashboard.products.index',
+            'icon' => 'fas fa-hamburger'
+        ],
+        [
+            'text' => 'Categories',
+            'route' => 'dashboard.categories.index',
+            'icon' => 'fas fa-tags'
         ],
         ['header' => 'account_settings'],
         [

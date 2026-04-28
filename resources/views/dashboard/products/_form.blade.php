@@ -29,12 +29,12 @@
 
 <div class="form-group">
     <x-form.label id="price">Price</x-form.label>
-    <x-form.input name="price" type="number" :value="$product -> price" label="Price"/>
+    <x-form.input name="price" type="number" :value="$product -> price" label="Price" placeholder="Add Price" />
 </div>
 
 <div class="form-group">
     <x-form.label id="quantity">Quantity</x-form.label>
-    <x-form.input name="quantity" type="number" :value="$product -> quantity" label="Quantity" placeholder="---"/>
+    <x-form.input name="quantity" type="number" :value="$product -> quantity" label="Quantity" placeholder="Add Quantity"/>
 </div>
 
 <div class="form-group">

@@ -7,7 +7,7 @@
     name="{{ $name }}"
     {{ $attributes->class([
         'form-control',
-        'is-invalid' => $errors->has($name)
+        'is-invalid' => $errors->has($name),
     ]) }}
-    value="{{ old($name, $value) }}"
+    value="{{ old($name, $value) }}" {{-- Gets the old name in POST request only --}}
     >

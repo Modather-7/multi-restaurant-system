@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,7 @@ Route::group([
             ->name('dashboard');
 
         Route::resource('products', ProductController::class);
+        Route::resource('categories', CategoryController::class);
     });
 
 Route::get('dashboard/pages', [DashboardController::class, 'pages'])

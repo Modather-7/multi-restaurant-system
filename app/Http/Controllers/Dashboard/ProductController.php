@@ -15,7 +15,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->orderBy('id', 'asc')->simplePaginate(4);
+        $request = request();
+
+        $products = Product::filter($request->query())
+            ->with('category')
+            ->orderBy('id', 'asc')
+            ->paginate(2);
 
         return view('dashboard.products.index', compact('products'));
     }

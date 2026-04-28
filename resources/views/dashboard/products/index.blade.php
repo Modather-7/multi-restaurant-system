@@ -12,6 +12,21 @@
         <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary">Add Product</a>
     </div>
 
+    {{-- Search Form --}}
+    <form action="{{ URL::current() }}" method="get" class=d-flex justify-content-between mb-4>
+        <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
+        <x-form.select
+            name="is_available"
+            :options="[
+                'All' => 'All',
+                1 => 'True',
+                0 => 'False',
+            ]"
+            :selected="request('is_available')"
+            class="mx-2" />
+        <button class="btn btn-dark mx-2">Filter</button>
+    </form>
+
     <x-alert />
 
     <table class="table">
@@ -69,7 +84,7 @@
     </table>
 
     <div class="mt-3">
-        {{ $products->links() }}
+        {{ $products->withQueryString()->appends(['search' => 1])->links() }}
     </div>
 @stop
 

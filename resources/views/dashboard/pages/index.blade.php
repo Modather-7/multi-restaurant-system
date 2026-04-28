@@ -15,7 +15,10 @@
         </theads>
         <tbody>
             <tr>
-                <td><a href="{{ route('dashboard.products.index') }}">Product Page</a></td>
+                <td>
+                    <a href="{{ route('dashboard.products.index') }}">Product Page</a><br>
+                    <a href="{{ route('dashboard.categories.index') }}">Categories Page</a>
+                </td>
             </tr>
         </tbody>
     </table>
