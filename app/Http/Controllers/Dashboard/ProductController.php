@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class ProductController extends Controller
@@ -50,7 +51,7 @@ class ProductController extends Controller
         Product::create($validated);
 
         return redirect()->route('dashboard.products.index')
-            ->with('success', 'Product Added successfully');
+            ->with('success', 'Product Added successfully!');
     }
 
     /**
@@ -92,23 +93,51 @@ class ProductController extends Controller
         $product -> save();
 
         return redirect()->route('dashboard.products.index')
-            ->with('success', 'product Updated Successfully');
+            ->with('success', 'product Updated Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($id);
         $product->delete();
+
+        return redirect()->route('dashboard.products.index')
+            ->with('delete', 'Product Trashed!');
+    }
+
+    public function trash()
+    {
+        $request = request();
+
+        $products = Product::onlyTrashed()
+            ->filter($request->query())
+            ->paginate();
+
+        return view('dashboard.products.trash', compact('products'));
+    }
+
+    public function restore(Request $request, int $id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id);
+        $product->restore();
+
+        return redirect()->route('dashboard.products.trash')
+            ->with('info', 'Product Restored Successfully!');
+    }
+
+    public function forceDelete(int $id)
+    {
+        $product = Product::onlyTrashed() -> findOrFail($id);
+        $product->forceDelete();
 
         // to delete the image from the storage/app/public file
         if($product->image) {
             FacadesStorage::disk('public')->delete($product->image);
         }
 
-        return redirect()->route('dashboard.products.index')
-            ->with('delete', 'Product Deleted Successfully');
+        return redirect()->route('dashboard.products.trash')
+            ->with('delete', 'Product Deleted Forever!');
     }
 }

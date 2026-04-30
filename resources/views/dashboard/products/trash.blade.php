@@ -1,16 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Products')
+@section('title', 'Trashed Products')
 
 @section('content_header')
-    <h1>Products</h1>
+    <h1>Trashed Products</h1>
 @stop
 
 @section('content')
 
     <div class="mb-5">
-        <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary mr-2">Add Product</a>
-        <a href="{{ route('dashboard.products.trash') }}" class="btn btn-sm btn-outline-dark">Go To Trash</a>
+        <a href="{{ route('dashboard.products.index') }}" class="btn btn-sm btn-outline-primary">Back To Products</a>
     </div>
 
     {{-- Search Form --}}
@@ -37,12 +36,11 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Category</th>
                 <th>Ingredients</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Is Available</th>
-                <th>Created At</th>
+                <th>Deleted At</th>
                 <th>Image</th>
                 <th colspan="2"></th>
             </tr>
@@ -52,12 +50,11 @@
             <tr>
                 <td>{{ $product -> id }}</td>
                 <td>{{ $product -> name }}</td>
-                <td>{{ $product -> category-> name ?? '-' }}</td>
                 <td>{{ $product -> ingredients }}</td>
                 <td>{{ $product -> price }}</td>
                 <td>{{ $product -> quantity }}</td>
                 <td>{{ $product -> is_available ? 'True' : 'False'}}</td>
-                <td>{{ $product -> created_at }}</td>
+                <td>{{ $product -> deleted_at }}</td>
                 <td><img
                     src="{{ asset('storage/' . $product->image) }}"
                     alt=""
@@ -66,13 +63,17 @@
                     >
                 </td>
                 <td>
-                    <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-                </td>
-                <td>
-                    <form action="{{ route ('dashboard.products.destroy', $product->id) }}" method="POST">
+                    <form action="{{ route ('dashboard.products.restore', $product->id) }}" method="POST">
                         @csrf
                         {{-- Form method spoofing --}}
                         <input type="hidden" name="_method" value="delete">
+                        @method('put')
+                        <button type="submit" class="btn btn-sm btn-outline-info">restore</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{{ route ('dashboard.products.force-delete', $product->id) }}" method="POST">
+                        @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                     </form>

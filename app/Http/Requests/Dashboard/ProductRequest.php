@@ -30,7 +30,7 @@ class ProductRequest extends FormRequest
             'price'        => ['bail', 'required', 'numeric', 'max:5000'],
             'quantity'     => ['bail', 'nullable', 'numeric', 'max:5000'],
             'is_available' => ['bail', 'required', 'boolean'],
-            'image'        => ['bail', 'nullable', 'image', File::image() -> types('jpg', 'jpeg', 'png') -> max(10*1024)],
+            'image'        => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
         ];
     }
 
