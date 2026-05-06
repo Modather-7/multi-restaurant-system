@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'asc')->paginate(2);
+        $request = request();
+
+        $categories = Category::filter($request->query())
+            ->orderBy('id', 'asc')
+            ->paginate(5);
 
         return view('dashboard.categories.index', compact('categories'));
     }
@@ -69,12 +73,40 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        $category = Category::find($id);
         $category->delete();
 
         return redirect()->route('dashboard.categories.index')
-            ->with('delete', 'Category Deleted Successfully');
+            ->with('delete', 'Category Trashed!');
+    }
+
+    public function trash()
+    {
+        $request = request();
+
+        $categories = Category::onlyTrashed()
+            ->filter($request->query())
+            ->paginate();
+
+        return view('dashboard.categories.trash', compact('categories'));
+    }
+
+    public function restore(Request $request, int $id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+
+        return redirect()->route('dashboard.categories.trash')
+            ->with('info', 'Category Restored Successfully!');
+    }
+
+    public function forceDelete(int $id)
+    {
+        $category = Category::onlyTrashed() -> findOrFail($id);
+        $category->forceDelete();
+
+        return redirect()->route('dashboard.categories.trash')
+            ->with('delete', 'Category Deleted Forever!');
     }
 }

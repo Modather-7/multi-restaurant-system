@@ -1,16 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'categories')
+@section('title', 'Trashed Categories')
 
 @section('content_header')
-    <h1>Categories</h1>
+    <h1>Trashed Categories</h1>
 @stop
 
 @section('content')
 
     <div class="mb-5">
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Add Category</a>
-        <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark">Go To Trash</a>
+        <a href="{{ route('dashboard.categories.index') }}" class="btn btn-sm btn-outline-primary">Back To Categories</a>
     </div>
 
     {{-- Search Form --}}
@@ -28,7 +27,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Created At</th>
+                <th>Deleted At</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -37,12 +36,18 @@
             <tr>
                 <td>{{ $category -> id }}</td>
                 <td>{{ $category -> name }}</td>
-                <td>{{ $category -> created_at }}</td>
+                <td>{{ $category -> deleted_at }}</td>
                 <td>
-                    <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                    <form action="{{ route ('dashboard.categories.restore', $category->id) }}" method="POST">
+                        @csrf
+                        {{-- Form method spoofing --}}
+                        <input type="hidden" name="_method" value="delete">
+                        @method('put')
+                        <button type="submit" class="btn btn-sm btn-outline-info">restore</button>
+                    </form>
                 </td>
                 <td>
-                    <form action="{{ route ('dashboard.categories.destroy', $category->id) }}" method="POST">
+                    <form action="{{ route ('dashboard.categories.force-delete', $category->id) }}" method="POST">
                         @csrf
                         {{-- Form method spoofing --}}
                         <input type="hidden" name="_method" value="delete">
@@ -53,14 +58,14 @@
             </tr>
             @empty
             <tr>
-                <td colspan="3">No Categories Found.</td>
+                <td colspan="10">No Categories Found.</td>
             </tr>
             @endforelse
         </tbody>
     </table>
 
     <div class="mt-3">
-        {{ $categories->links() }}
+        {{ $categories->withQueryString()->links() }}
     </div>
 @stop
 

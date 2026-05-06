@@ -2,20 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Restaurant extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'logo_image',
+        'cover_image',
+        'status',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | CONFIGURATION
@@ -31,6 +38,7 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
     /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS
@@ -48,12 +56,6 @@ class Category extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    public function scopeFilter(Builder $builder, array $filters)
-    {
-        $builder->when($filters['name'] ?? false, function($builder, $value) {
-            $builder->where('name', 'LIKE', "%{$value}%");
-        });
-    }
 
     /*
     |--------------------------------------------------------------------------

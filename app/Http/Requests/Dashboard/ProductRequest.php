@@ -24,13 +24,14 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => ['bail', 'required', 'string', 'between:3,255'],
-            'category_id'  => ['bail', 'required', 'integer', 'exists:categories,id'], // if null don't check for the rest of commands
-            'ingredients'  => ['bail', 'required', 'string', 'max:255'],
-            'price'        => ['bail', 'required', 'numeric', 'max:5000'],
-            'quantity'     => ['bail', 'nullable', 'numeric', 'max:5000'],
-            'is_available' => ['bail', 'required', 'boolean'],
-            'image'        => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
+            'name'           => ['bail', 'required', 'string', 'between:3,255'],
+            'restaurant_id'  => ['bail', 'required', 'integer', 'exists:restaurants,id'],
+            'category_id'    => ['bail', 'required', 'integer', 'exists:categories,id'], // if null don't check for the rest of commands
+            'ingredients'    => ['bail', 'required', 'string', 'max:255'],
+            'price'          => ['bail', 'required', 'numeric', 'max:5000'],
+            'quantity'       => ['bail', 'nullable', 'numeric', 'max:5000'],
+            'status'         => ['bail', 'required', 'in:active,draft,archived'],
+            'image'          => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
         ];
     }
 

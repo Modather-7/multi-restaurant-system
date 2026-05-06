@@ -324,13 +324,6 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
-            'url' => 'dashboard/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'danger',
-        ],
-        [
             'text' => 'products',
             'route' => 'dashboard.products.index',
             'icon' => 'fas fa-hamburger'

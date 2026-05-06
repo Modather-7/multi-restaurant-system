@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-        'middleware' => ['auth', 'verified'],
+        'middleware' => ['auth'],
         'as' => 'dashboard.', //all routes should start with (dashboard.) -> 'dashboard.products.create'
         'prefix' => 'dashboard', //all routes in this group starts with dashboard in the url
     ], function() {
@@ -21,8 +21,11 @@ Route::group([
             ->name('products.force-delete');
         Route::resource('products', ProductController::class);
 
+        Route::get('/categories/trash', [CategoryController::class, 'trash'])
+            ->name('categories.trash');
+        Route::put('categories/{category}/restore', [CategoryController::class, 'restore'])
+            ->name('categories.restore');
+        Route::delete('categories/{category}/force-delete', [CategoryController::class, 'forceDelete'])
+            ->name('categories.force-delete');
         Route::resource('categories', CategoryController::class);
     });
-
-Route::get('dashboard/pages', [DashboardController::class, 'pages'])
-    ->middleware(['auth', 'verified']);

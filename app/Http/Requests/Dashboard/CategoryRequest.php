@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Dashboard;
 
-use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryRequest extends FormRequest
 {
@@ -23,8 +23,16 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryId = $this->route('category')?->id;
+
         return [
-            'name' => ['bail', 'required', 'string', 'between:3,255'],
+            'name' => [
+                'bail',
+                'required',
+                'string',
+                'between:3,255',
+                Rule::unique('categories', 'name')->ignore($categoryId),
+            ],
         ];
     }
 }

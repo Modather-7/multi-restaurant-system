@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -17,12 +19,16 @@ class Product extends Model
     */
     protected $fillable = [
         'name',
+        'slug',
         'category_id',
+        'restaurant_id',
         'ingredients',
         'price',
+        'compare_price',
         'quantity',
         'image',
-        'is_available',
+        'status',
+        'feautured',
     ];
 
     /*
@@ -54,7 +60,7 @@ class Product extends Model
     public function branches()
     {
         return $this -> belongsToMany(Branch::class)
-                        ->withPivot('quantity');
+            ->withPivot('quantity');
     }
 
     public function category()
@@ -62,11 +68,37 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
+
     /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    // model initialization
+    protected static function booted()
+    {
+        // restaurant_id -> authentication
+        static::addGlobalScope('restaurant', function(Builder $builder) {
+            $user = Auth::user();
+            if ($user->restaurant_id) {
+                $builder->where('restaurant_id', $user->restaurant_id);
+            }
+        });
+
+        // slug
+        static::creating(function ($product) {
+            $product->slug = Str::slug($product->name);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -79,11 +111,6 @@ class Product extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    // local scope
-    public function scopeActive(Builder $builder)
-    {
-        $builder->where('is_available', '=', 1);
-    }
 
     // dynamic scope
     public function scopeFilter(Builder $builder, array $filters)
@@ -92,12 +119,11 @@ class Product extends Model
             $builder->where('name', 'LIKE', "%{$value}%");
         });
 
-        // use ($filters) -> means true or false as it comes from $filters['is_available'],
-        // I didn't use $value as the want 0,1 value not true,false or string
+        // use ($filters) -> means active, draft or achived as it comes from $filters['status'],
         $builder->when(
-            isset($filters['is_available']) && $filters['is_available'] != 'All',
+            isset($filters['status']) && $filters['status'] != 'All',
             function($builder) use ($filters) {
-                $builder->where('is_available', $filters['is_available']);
+                $builder->where('status', $filters['status']);
         });
     }
 

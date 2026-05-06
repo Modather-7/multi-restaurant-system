@@ -12,9 +12,4 @@ class DashboardController extends Controller
     {
         return view('home');
     }
-
-    public function pages()
-    {
-        return view('dashboard.pages.index');
-    }
 }

@@ -17,13 +17,13 @@
     <form action="{{ URL::current() }}" method="get" class=d-flex justify-content-between mb-4>
         <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
         <x-form.select
-            name="is_available"
+            name="status"
             :options="[
-                'All' => 'All',
-                1 => 'True',
-                0 => 'False',
+                'active'  => 'Active',
+                'draft'   => 'Draft',
+                'achived' => 'Archived',
             ]"
-            :selected="request('is_available')"
+            :selected="request('status')"
             class="mx-2" />
         <button class="btn btn-dark mx-2">Filter</button>
     </form>
@@ -37,11 +37,12 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Restaurant</th>
                 <th>Category</th>
                 <th>Ingredients</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Is Available</th>
+                <th>Status</th>
                 <th>Created At</th>
                 <th>Image</th>
                 <th colspan="2"></th>
@@ -52,11 +53,12 @@
             <tr>
                 <td>{{ $product -> id }}</td>
                 <td>{{ $product -> name }}</td>
-                <td>{{ $product -> category-> name ?? '-' }}</td>
+                <td>{{ $product -> restaurant -> name ?? '-' }}</td>
+                <td>{{ $product -> category -> name ?? '-' }}</td>
                 <td>{{ $product -> ingredients }}</td>
                 <td>{{ $product -> price }}</td>
                 <td>{{ $product -> quantity }}</td>
-                <td>{{ $product -> is_available ? 'True' : 'False'}}</td>
+                <td>{{ $product -> status }}</td>
                 <td>{{ $product -> created_at }}</td>
                 <td><img
                     src="{{ asset('storage/' . $product->image) }}"

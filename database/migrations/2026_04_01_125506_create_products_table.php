@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('slug')->unique();
             $table->text('ingredients');
-            $table->decimal('price');
-            $table->decimal('quantity')->nullable();
+            $table->decimal('price', 8, 2);
+            $table->decimal('compare_price', 8, 2)->nullable();
+            $table->integer('quantity')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('is_available')->default(true);
+            $table->enum('status', ['active', 'draft', 'archived'])->default('active');
+            $table->boolean('feautured')->default(0); // منتج مميز
             $table->timestamps();
         });
     }

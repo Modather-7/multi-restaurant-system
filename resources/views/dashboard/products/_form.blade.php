@@ -17,6 +17,12 @@
 </div>
 
 <div class="form-group">
+    <x-form.label id="restaurant">Restaurant</x-form.label>
+    <x-form.select name="restaurant_id" :options="$restaurants->pluck('name','id')" :selected="$product -> restaurant_id"
+    placeholder="--Select Restautant--"/> {{-- This is experimental system not final edition --}}
+</div>
+
+<div class="form-group">
     <x-form.label id="category">Category</x-form.label>
     <x-form.select name="category_id" :options="$categories->pluck('name','id')" :selected="$product -> category_id"
     placeholder="--Select Category--"/>
@@ -38,8 +44,14 @@
 </div>
 
 <div class="form-group">
-    <x-form.label id="is_available">Is_Available</x-form.label>
-    <x-form.select name="is_available" :options="[1 => 'True', 0 => 'False']" :selected="$product -> is_available" />
+    <x-form.label id="status">Status</x-form.label>
+    <x-form.radio name="status"
+    :options="[
+        'active' => 'Active',
+        'draft' => 'Draft',
+        'archived' => 'Archived',
+    ]"
+    :checked="$product -> status" />
 </div>
 
 <div class="form-group">

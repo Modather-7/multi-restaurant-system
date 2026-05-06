@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
@@ -33,8 +34,9 @@ class ProductController extends Controller
     public function create(Product $product)
     {
         $categories = Category::select('id', 'name')->get();
+        $restaurants = Restaurant::select('id', 'name')->get();
 
-        return view('dashboard.products.create', compact('categories', 'product'));
+        return view('dashboard.products.create', compact('categories', 'product', 'restaurants'));
     }
 
     /**
@@ -60,8 +62,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $restaurants = Restaurant::all();
 
-        return view('dashboard.products.edit', compact('product', 'categories'));
+        return view('dashboard.products.edit', compact('product', 'categories', 'restaurants'));
     }
 
     /**
