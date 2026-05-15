@@ -18,9 +18,15 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="first_name" :value="__('First Name')" />
+            <x-form.input name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->profile->first_name)" />
+            <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
+        </div>
+
+        <div>
+            <x-input-label for="last_name" :value="__('Last Name')" />
+            <x-form.input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->profile->last_name)" />
+            <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
         </div>
 
         <div>
@@ -45,6 +51,24 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <div>
+            <x-input-label for="birthday" :value="__('Birthday')" />
+            <x-form.input id="birthday" name="birthday" type="date" class="mt-1 block w-full" :value="old('birthday', $user->profile->birthday)" />
+            <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
+        </div>
+
+        <div>
+            <x-input-label for="city" :value="__('City')" />
+            <x-form.input id="city" name="city" type="text" class="mt-1 block w-full" :value="old('city', $user->profile->city)" />
+            <x-input-error class="mt-2" :messages="$errors->get('city')" />
+        </div>
+
+        <div>
+            <x-input-label for="gender" :value="__('Gender')" />
+            <x-form.radio id="gender" name="gender" :options="['male' => 'Male', 'female' => 'Female']" :checked="$user->profile->gender" />
+            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
         </div>
 
         <div class="flex items-center gap-4">

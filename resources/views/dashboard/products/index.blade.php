@@ -14,11 +14,12 @@
     </div>
 
     {{-- Search Form --}}
-    <form action="{{ URL::current() }}" method="get" class=d-flex justify-content-between mb-4>
+    <form action="{{ URL::current() }}" method="get" class="d-flex" justify-content-between mb-4>
         <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
         <x-form.select
             name="status"
             :options="[
+                'All'     => 'All',
                 'active'  => 'Active',
                 'draft'   => 'Draft',
                 'achived' => 'Archived',

@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         Restaurant::factory(5)->create();
         Category::factory(10)->create();
-        Product::factory(100)->create();
+        Product::factory(50)->create();
 
         // $this->call(UserSeeder::class);
     }

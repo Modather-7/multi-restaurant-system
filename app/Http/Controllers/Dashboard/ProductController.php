@@ -20,7 +20,7 @@ class ProductController extends Controller
         $request = request();
 
         $products = Product::filter($request->query())
-            ->with('category')
+            ->with(['category', 'restaurant'])
             ->orderBy('id', 'asc')
             ->paginate(2);
 

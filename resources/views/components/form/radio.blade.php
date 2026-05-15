@@ -3,7 +3,7 @@
 ])
 
 @foreach ($options as $value => $text)
-    <div class="form-check">
+    <div class="form-check dark:text-gray-300">
         <input
             type="radio"
             name="{{ $name }}"

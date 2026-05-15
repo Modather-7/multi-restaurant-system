@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class Profile extends Model
 {
     use HasFactory;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
     protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'logo_image',
-        'cover_image',
-        'status',
+        'user_id',
+        'first_name',
+        'last_name',
+        'birthday',
+        'gender',
+        'city',
     ];
+
+    protected $primaryKey = 'user_id';
 
     /*
     |--------------------------------------------------------------------------
@@ -34,9 +35,9 @@ class Restaurant extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function products()
+    public function user()
     {
-        return $this->hasMany(Product::class, 'restaurant_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /*

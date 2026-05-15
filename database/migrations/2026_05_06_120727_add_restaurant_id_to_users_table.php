@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('restaurant_id')
                 ->nullable()
-                ->after('phone_number')
+                ->after('email')
                 ->constrained('restaurants')
                 ->nullOnDelete();
         });
