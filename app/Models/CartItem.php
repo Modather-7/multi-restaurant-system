@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['cart_id', 'product_id', 'quantity', 'price', 'total'])]
 class CartItem extends Model
 {
     /*
@@ -11,13 +12,6 @@ class CartItem extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'cart_id',
-        'product_id',
-        'quantity',
-        'price',
-        'total',
-    ];
 
     /*
     |--------------------------------------------------------------------------

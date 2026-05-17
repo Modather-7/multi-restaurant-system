@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+#[Fillable([
+    'name', 'slug', 'category_id', 'restaurant_id', 'ingredients',
+    'price', 'compare_price', 'quantity', 'image', 'status', 'feautured'
+])]
 class Product extends Model
 {
     use HasFactory, SoftDeletes;

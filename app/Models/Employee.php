@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['name', 'phone', 'address', 'branch_id', 'role', 'salary'])]
 class Employee extends Model
 {
     /*
@@ -11,14 +12,6 @@ class Employee extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'phone',
-        'address',
-        'branch_id',
-        'role',
-        'salary',
-    ];
 
     /*
     |--------------------------------------------------------------------------

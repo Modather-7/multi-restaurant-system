@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['name', 'slug', 'description', 'logo_image', 'cover_image', 'status'])]
 class Restaurant extends Model
 {
     use HasFactory;
@@ -14,15 +15,7 @@ class Restaurant extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'logo_image',
-        'cover_image',
-        'status',
-    ];
-
+    
     /*
     |--------------------------------------------------------------------------
     | CONFIGURATION

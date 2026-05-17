@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['name', 'image'])]
 class Menu extends Model
 {
     /*
@@ -11,10 +12,6 @@ class Menu extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'image',
-    ];
 
     /*
     |--------------------------------------------------------------------------

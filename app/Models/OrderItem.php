@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['order_id', 'product_id', 'quantity', 'price'])]
 class OrderItem extends Model
 {
     /*
@@ -11,12 +12,6 @@ class OrderItem extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'order_id',
-        'product_id',
-        'quantity',
-        'price',
-    ];
 
     /*
     |--------------------------------------------------------------------------

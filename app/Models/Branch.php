@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable('name', 'address', 'phone')]
 class Branch extends Model
 {
     /*
@@ -11,11 +12,6 @@ class Branch extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'address',
-        'phone',
-    ];
 
     /*
     |--------------------------------------------------------------------------
