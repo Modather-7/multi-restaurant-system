@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->string('address')->nullable();
-            $table->string('phone', 11)->nullable()->unique();
+            $table->string('phone', 11)->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
