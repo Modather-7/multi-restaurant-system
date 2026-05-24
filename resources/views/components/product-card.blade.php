@@ -33,14 +33,13 @@
                     {{-- Old Price --}}
                     @if ($product->compare_price)
                         <div class="text-muted small text-decoration-line-through">
-                            {{ $product->compare_price }} EGP
+                            {{ App\Helpers\Currency::format($product->compare_price) }}
                         </div>
                     @endif
                     {{-- Current Price + Discount --}}
                     <div class="d-flex align-items-center gap-2">
                         <span class="fw-bold fs-4 text-dark">
-                            {{ $product->price }}
-                            <small class="fs-6 text-muted fw-normal">EGP</small>
+                            {{ App\Helpers\Currency::format($product->price) }}
                         </span>
 
                     </div>

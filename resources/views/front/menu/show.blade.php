@@ -58,13 +58,12 @@
                     <div class="mb-4">
                         @if ($product->compare_price)
                             <div class="text-muted text-decoration-line-through small mb-1">
-                                {{ $product->compare_price }} EGP
+                                {{ App\Helpers\Currency::format($product->compare_price) }}
                             </div>
                         @endif
 
                         <h2 class="text-gold fw-bold mb-0">
-                            {{ $product->price }}
-                            <span class="fs-5 text-muted">EGP</span>
+                            {{ App\Helpers\Currency::format($product->price) }}
                         </h2>
                     </div>
 
