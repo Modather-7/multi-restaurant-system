@@ -94,7 +94,7 @@ class Product extends Model
         // restaurant_id -> authentication
         static::addGlobalScope('restaurant', function(Builder $builder) {
             $user = Auth::user();
-            if ($user->restaurant_id) {
+            if ($user && $user->restaurant_id) {
                 $builder->where('restaurant_id', $user->restaurant_id);
             }
         });
@@ -116,6 +116,10 @@ class Product extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeActive(Builder $builder)
+    {
+        $builder->where('status', 'active');
+    }
 
     // dynamic scope
     public function scopeFilter(Builder $builder, array $filters)
@@ -137,6 +141,26 @@ class Product extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getImageUrlAttribute()
+    {
+        if( ! $this->image){
+            return 'https://cdn.vectorstock.com/i/500p/44/96/silver-dome-food-cover-vector-63084496.jpg';
+        }
+
+        if(Str::startsWith($this->image, ['http://', 'https://'])){
+            return $this->image;
+        }
+
+        return asset('storage/' . $this->image);
+    }
+
+    public function getSalePercentAttribute()
+    {
+        if( ! $this->compare_price){
+            return 0;
+        }
+        return 100 - (100 * $this->price / $this->compare_price);
+    }
 
     /*
     |--------------------------------------------------------------------------

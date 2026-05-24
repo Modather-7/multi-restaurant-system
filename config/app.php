@@ -67,6 +67,8 @@ return [
 
     'timezone' => 'UTC',
 
+    'currency' => 'EGP',
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

@@ -1,0 +1,145 @@
+/* ==========================================================================
+   FoodGrids - Main Core Stylesheet (Premium Minimalist Dining)
+   ========================================================================== */
+
+/* --- [FONT CONTROLLER ZONE] --- */
+@font-face {
+    font-family: 'CustomFontPrimary';
+    src: url('../fonts/inter/inter-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'CustomFontPrimary';
+    src: url('../fonts/inter/inter-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --primary-color: #d4af37;
+    --primary-hover: #bfa030;
+    --dark-brand: #111111;
+    --light-brand: #ffffff;
+    --text-muted: #6c757d;
+    --bg-light: #f9f9f9;
+    --font-family-system: 'CustomFontPrimary', -apple-system, sans-serif;
+}
+
+body {
+    font-family: var(--font-family-system);
+    background-color: var(--bg-light);
+    color: var(--dark-brand);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Premium Navbar Setup (Original Structure & Spacing) --- */
+.navbar {
+    background-color: var(--light-brand) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.2rem !important;
+}
+.navbar-brand {
+    font-size: 1.6rem !important;
+    letter-spacing: -0.5px;
+}
+.navbar-nav .nav-link {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem !important; /* مسافات ضيقة وموزونة تمنع التباعد */
+    transition: color 0.2s ease, border-color 0.2s ease;
+    border-bottom: 2px solid transparent; /* خط سفلي شفاف افتراضياً */
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active-page {
+    color: var(--dark-brand) !important;
+    font-weight: 700 !important;
+    border-color: var(--primary-color) !important; /* يظهر الخط الأصفر الذهبي مباشرة تحت الكلمة */
+}
+
+/* --- Corporate Golden Button --- */
+.btn-gold {
+    background-color: var(--primary-color) !important;
+    color: var(--dark-brand) !important;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.btn-gold:hover {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+/* --- Clean Input & Select Fields --- */
+.form-control, .form-select {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--dark-brand);
+    transition: all 0.2s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--dark-brand);
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.05);
+}
+
+/* --- Bootstrap Pills Custom Override (إلغاء الخلفية تماماً) --- */
+.nav-pills {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.nav-pills .nav-link {
+    color: #6c757d !important;
+    font-weight: 500;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0.5rem 1rem !important;
+    position: relative;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+.nav-pills .nav-link.active {
+    color: var(--dark-brand) !important;
+    font-weight: 700 !important;
+    border-color: var(--primary-color) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.nav-pills .nav-link:hover:not(.active) {
+    color: var(--primary-hover) !important;
+}
+
+/* --- Premium Product Cards Grid --- */
+.product-card {
+    background: var(--light-brand);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+    border-color: rgba(212, 175, 55, 0.15);
+}
+.product-image {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-dark-brand {
+    background-color: var(--dark-brand) !important;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+}
