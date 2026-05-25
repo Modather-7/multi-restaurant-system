@@ -3,10 +3,11 @@
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-        'middleware' => ['auth'],
+        'middleware' => ['auth', 'auth.type:super-admin,admin'],
         'as' => 'dashboard.', //all routes should start with (dashboard.) -> 'dashboard.products.create'
         'prefix' => 'dashboard', //all routes in this group starts with dashboard in the url
     ], function() {
