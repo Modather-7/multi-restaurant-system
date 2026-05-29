@@ -25,10 +25,6 @@ class Employee extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function branch()
-    {
-        return $this -> belongsTo(Branch::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -41,6 +37,10 @@ class Employee extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function branch()
+    {
+        return $this -> belongsTo(Branch::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

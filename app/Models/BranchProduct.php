@@ -25,15 +25,6 @@ class BranchProduct extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function branch()
-    {
-        return $this -> belongsTo(Branch::class);
-    }
-
-    public function product()
-    {
-        return $this -> belongsTo(Product::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -46,6 +37,15 @@ class BranchProduct extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function branch()
+    {
+        return $this -> belongsTo(Branch::class);
+    }
+
+    public function product()
+    {
+        return $this -> belongsTo(Product::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

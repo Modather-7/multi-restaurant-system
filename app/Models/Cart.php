@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\CartObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-#[Fillable(['user_id', 'branch_id'])]
+#[Fillable(['cookie_id', 'user_id', 'product_id', 'quantity', 'options'])]
 class Cart extends Model
 {
     /*
@@ -13,7 +15,7 @@ class Cart extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-
+    public $incrementing = false;
     /*
     |--------------------------------------------------------------------------
     | CONFIGURATION
@@ -25,32 +27,40 @@ class Cart extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function user()
-    {
-        return $this -> belongsTo(User::class);
-    }
-
-    public function branch()
-    {
-        return $this -> belongsTo(Branch::class);
-    }
-
-    public function items()
-    {
-        return $this -> hasMany(CartItem::class);
-    }
 
     /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    // Cart Events (Observers)
+	// Creating, Created, Updating, Updated, Saving, Saved
+	// Deleting, Deleted, Restoring, Restored, Retrieved
+    protected static function booted()
+    {
+        static::observe(CartObserver::class);
+
+        // static::creating(function(Cart $cart){
+        //     $cart->id = Str::uuid();
+        // });
+    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function user()
+    {
+        return $this -> belongsTo(User::class)->withDefault([
+            'name' => 'Anonymous',
+        ]);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------

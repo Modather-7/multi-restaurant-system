@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\MenuController;
 use App\Http\Controllers\ProfileController;
@@ -13,6 +14,8 @@ Route::get('/menu', [MenuController::class, 'index'])
 
 Route::get('/menu/{product:slug}', [MenuController::class, 'show'])
     ->name('menu.show');
+
+Route::resource('cart', CartController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

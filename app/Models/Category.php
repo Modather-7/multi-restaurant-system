@@ -29,10 +29,7 @@ class Category extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'category_id', 'id');
-    }
+
     /*
     |--------------------------------------------------------------------------
     | STATIC FUNCTIONS
@@ -44,6 +41,10 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------

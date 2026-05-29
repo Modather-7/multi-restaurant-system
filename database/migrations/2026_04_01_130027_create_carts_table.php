@@ -12,9 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('branch_id')->constrained('branches')->onDelete('cascade');
+            $table->uuid('id')->primary(); // string has a diffrent format returns unique id
+            $table->uuid('cookie_id');
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained('users')
+                ->cascadeOnDelete();
+            $table->foreignId('product_id')
+                ->constrained('products')
+                ->cascadeOnDelete();
+            $table->unsignedTinyInteger('quantity')->default(1);
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }

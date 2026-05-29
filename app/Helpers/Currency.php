@@ -5,7 +5,7 @@ use NumberFormatter;
 
 class Currency
 {
-    public static function format(int $amount, $currency = null)
+    public static function format($amount, $currency = null)
     {
         $formatter = new NumberFormatter(config('app.locale'), NumberFormatter::CURRENCY);
         if($currency === null){

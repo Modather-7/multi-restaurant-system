@@ -1,52 +1,93 @@
-<x-front-layout>
+<x-front-layout title="Our Fine Menu">
 
-<section class="py-5 bg-white border-bottom">
-    <div class="container text-center">
-        <h1 class="fw-bold text-dark display-5 mb-3">Our Fine Menu</h1>
-        <p class="text-muted max-w-600 mx-auto">Explore curated categories built for your selected location. Freshness guaranteed in every selection.</p>
-        <div class="d-flex justify-content-center gap-2 mt-4 flex-wrap">
-            <ul class="nav nav-pills bg-light p-1 rounded-pill shadow-sm">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active rounded-pill px-4" data-category="all">All Items</a>
-                </li>
-                @foreach($categories as $category)
+    {{-- Hero / Categories --}}
+    <section class="menu-hero-section">
+        <div class="container">
+            <div class="menu-hero-content text-center">
+                <span class="menu-badge">
+                    Premium Food Experience
+                </span>
+                <h1 class="menu-title">
+                    Explore Our Delicious Menu
+                </h1>
+                <p class="menu-subtitle">
+                    Fresh ingredients, rich flavors, and dishes crafted with love.
+                </p>
+            </div>
+            {{-- Categories --}}
+            <div class="menu-categories-wrapper">
+                <ul class="nav justify-content-center gap-2 flex-wrap" id="menu-tabs">
                     <li class="nav-item">
-                        <a href="" class="nav-link rounded-pill px-4" data-category="{{ $category->id }}">{{ $category->name }}</a>
+                        <button class="nav-link active" data-filter="all">
+                            All Items
+                        </button>
                     </li>
-                @endforeach
-            </ul>
+                    @foreach ($categories as $category)
+                        <li class="nav-item">
+                            <button class="nav-link" data-filter="cat-{{ $category->id }}">
+                                {{ $category->name }}
+                            </button>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="row g-4" id="menu-products-wrapper">
-            @foreach($products as $product)
-                <x-product-card :product="$product" />
-            @endforeach
+    {{-- Products --}}
+    <section class="menu-products-section">
+        <div class="container">
+            <div class="row" id="filterable-products">
+
+                @forelse($products as $product)
+                    <div class="col-xl-4 col-md-6 col-12 mb-4 product-item cat-{{ $product->category_id }}">
+                        <div class="product-card-animation">
+                            <x-product-card :product="$product" />
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="empty-products-box text-center">
+                            <i class="lni lni-empty-file"></i>
+                            <h4>
+                                No items found
+                            </h4>
+                            <p>
+                                There are currently no products available.
+                            </p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<script>
-    // كود التحكم البصري السريع للانتقال بين الأقسام الممررة ديناميكياً من السيرفر
-    document.querySelectorAll('.nav-pills .nav-link').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.nav-pills .nav-link').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            const selectedCategory = tab.getAttribute('data-category');
-            document.querySelectorAll('.product-item-card').forEach(card => {
-                if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tabs = document.querySelectorAll('#menu-tabs .nav-link');
+                const items = document.querySelectorAll('.product-item');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        const filterValue = this.getAttribute('data-filter');
+                        items.forEach(item => {
+                            if (
+                                filterValue === 'all' ||
+                                item.classList.contains(filterValue)
+                            ) {
+                                item.style.display = 'block';
+                                item.style.animation =
+                                    'fadeProduct .35s ease';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    });
+                });
             });
-        });
-    });
-</script>
+        </script>
+    @endpush
 
 </x-front-layout>

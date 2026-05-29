@@ -26,10 +26,9 @@ class ProductFactory extends Factory
             'category_id' => Category::inRandomOrder()->first()->id,
             'restaurant_id' => Restaurant::inRandomOrder()->first()->id,
             'ingredients' => fake()->sentence(15), // 15 word sentence
-            'image' => fake()->imageUrl(800, 600),
-            'price' => fake()->randomFloat(1, 10, 499),
-            'compare_price' => fake()->randomFloat(1, 500, 999),
-            'quantity' => fake()->randomNumber(),
+            'price' => fake()->numberBetween(100, 500),
+            'compare_price' => fake()->numberBetween(50, 99),
+            'quantity' => fake()->randomNumber(1, 1000),
             'feautured' => rand(0, 1), // minimum 0 , maximum 1
             'slug' => Str::slug($name),
         ];

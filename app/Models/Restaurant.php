@@ -28,10 +28,6 @@ class Restaurant extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'restaurant_id', 'id');
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -44,6 +40,10 @@ class Restaurant extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'restaurant_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------

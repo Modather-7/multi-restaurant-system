@@ -22,19 +22,6 @@ class Product extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-    protected $fillable = [
-        'name',
-        'slug',
-        'category_id',
-        'restaurant_id',
-        'ingredients',
-        'price',
-        'compare_price',
-        'quantity',
-        'image',
-        'status',
-        'feautured',
-    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -47,37 +34,6 @@ class Product extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function branchProducts()
-    {
-        return $this -> hasMany(BranchProduct::class);
-    }
-
-    public function cartItems()
-    {
-        return $this -> hasMany(CartItem::class);
-    }
-
-    public function orderItems()
-    {
-        return $this -> hasMany(OrderItem::class);
-    }
-
-    public function branches()
-    {
-        return $this -> belongsToMany(Branch::class)
-            ->withPivot('quantity');
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
-    }
-
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
-    }
-
     // public function getRouteKeyName()
     // {
     //     return 'slug';
@@ -110,6 +66,32 @@ class Product extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function branchProducts()
+    {
+        return $this -> hasMany(BranchProduct::class);
+    }
+
+    public function orderItems()
+    {
+        return $this -> hasMany(OrderItem::class);
+    }
+
+    public function branches()
+    {
+        return $this -> belongsToMany(Branch::class)
+            ->withPivot('quantity');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -159,7 +141,7 @@ class Product extends Model
         if( ! $this->compare_price){
             return 0;
         }
-        return 100 - (100 * $this->price / $this->compare_price);
+        return 100 - (100 * $this->compare_price / $this->price);
     }
 
     /*
