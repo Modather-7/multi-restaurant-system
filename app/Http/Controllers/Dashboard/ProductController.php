@@ -22,7 +22,7 @@ class ProductController extends Controller
         $products = Product::filter($request->query())
             ->with(['category', 'restaurant'])
             ->orderBy('id', 'asc')
-            ->paginate(2);
+            ->paginate(6);
 
         return view('dashboard.products.index', compact('products'));
     }

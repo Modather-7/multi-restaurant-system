@@ -37,7 +37,7 @@
                             <nav aria-label="breadcrumb" class="mb-3">
                                 <ol class="breadcrumb mb-0 small">
                                     <li class="breadcrumb-item">
-                                        <a href="/menu" class="text-decoration-none">
+                                        <a href="{{  route('restaurant.menu.index', $restaurant)  }}" class="text-decoration-none">
                                             Menu
                                         </a>
                                     </li>
@@ -81,7 +81,7 @@
                             </div>
 
                             {{-- Form --}}
-                            <form action="{{ route('cart.store') }}" method="POST" class="mt-auto">
+                            <form action="{{ route('restaurant.cart.store', $restaurant) }}" method="POST" class="mt-auto">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 {{-- Notes --}}

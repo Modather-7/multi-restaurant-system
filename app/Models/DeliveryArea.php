@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['branch_id', 'product_id', 'quantity', 'availability'])]
-class BranchProduct extends Model
+#[Fillable(['branch_id', 'name', 'delivery_fee'])]
+class DeliveryArea extends Model
 {
     /*
     |--------------------------------------------------------------------------
@@ -40,11 +40,6 @@ class BranchProduct extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
     }
 
     /*

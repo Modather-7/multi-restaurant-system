@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class FrontLayout extends Component
 {
     public $title;
+    public $restaurant;
 
     /**
      * Create a new component instance.
@@ -16,6 +17,7 @@ class FrontLayout extends Component
     public function __construct($title = null)
     {
         $this->title = $title ?? config('app.name');
+        $this->restaurant = request()->route('restaurant');
     }
 
     /**
@@ -23,7 +25,7 @@ class FrontLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        
+
         return view('layouts.front');
     }
 }

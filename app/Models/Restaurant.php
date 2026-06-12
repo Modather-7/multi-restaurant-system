@@ -45,6 +45,16 @@ class Restaurant extends Model
         return $this->hasMany(Product::class, 'restaurant_id', 'id');
     }
 
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

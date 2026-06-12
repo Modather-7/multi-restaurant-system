@@ -39,11 +39,6 @@
 </div>
 
 <div class="form-group">
-    <x-form.label id="quantity">Quantity</x-form.label>
-    <x-form.input name="quantity" type="number" :value="$product -> quantity" label="Quantity" placeholder="Add Quantity"/>
-</div>
-
-<div class="form-group">
     <x-form.label id="status">Status</x-form.label>
     <x-form.radio name="status"
     :options="[

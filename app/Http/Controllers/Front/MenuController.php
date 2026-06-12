@@ -3,30 +3,33 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Restaurant;
 
 class MenuController extends Controller
 {
-    public function index()
+    public function index(Restaurant $restaurant)
     {
-        $products = Product::active()
-            ->latest()
-            ->take(6)
-            ->get();
-        $categories = Category::latest('id')
-            ->take(6)
-            ->get();
+        $categories = $restaurant->categories()->with([
+            'products' => function ($query) use ($restaurant) {
+                $query->where('restaurant_id', $restaurant->id)
+                    ->where('status', 'active');
+            }
+        ])->latest('id')->get();
 
-        return view('front.menu.index', compact('products', 'categories'));
+        return view('front.menu.index', compact('categories', 'restaurant'));
     }
 
-    public function show(Product $product, Category $category)
+    public function show(Restaurant $restaurant, Product $product)
     {
         if($product->status != 'active'){
             abort(404);
         }
 
-        return view('front.menu.show', compact('product','category'));
+        if ($product->restaurant_id != $restaurant->id) {
+            abort(404);
+        }
+
+        return view('front.menu.show', compact('product', 'restaurant'));
     }
 }

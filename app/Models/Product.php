@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 #[Fillable([
     'name', 'slug', 'category_id', 'restaurant_id', 'ingredients',
-    'price', 'compare_price', 'quantity', 'image', 'status', 'feautured'
+    'price', 'compare_price', 'image', 'status', 'feautured'
 ])]
 class Product extends Model
 {
@@ -66,20 +66,16 @@ class Product extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function branchProducts()
-    {
-        return $this -> hasMany(BranchProduct::class);
-    }
-
-    public function orderItems()
-    {
-        return $this -> hasMany(OrderItem::class);
-    }
-
     public function branches()
     {
-        return $this -> belongsToMany(Branch::class)
-            ->withPivot('quantity');
+        return $this->belongsToMany(Branch::class)
+            ->withPivot('availability')
+            ->withTimestamps();
+    }
+
+    public function branchProducts()
+    {
+        return $this->hasMany(BranchProduct::class);
     }
 
     public function category()
@@ -91,7 +87,6 @@ class Product extends Model
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
-
 
     /*
     |--------------------------------------------------------------------------

@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('restrict');
-            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
-            $table->foreignId('branch_id')->constrained()->onDelete('restrict');
-            $table->decimal('total_price', 10, 2);
-            $table->decimal('delivery_fee', 10, 2)->default(0);
-            $table->text('notes')->nullable();
-            $table->string('address')->nullable();
-            $table->enum('order_status', ['received', 'preparing', 'on_the_way', 'delivered'])->default('received');
-            $table->enum('payment_method', ['cash_on_delivery', 'visa', 'mobile_wallet']);
+            $table->foreignId('restaurant_id')
+                ->constrained('restaurants');
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+            $table->string('number')->unique();
+            $table->string('payment_method');
+            $table->enum('status', ['pending', 'processing', 'delivering', 'completed', 'cancelled', 'refunded'])
+                ->default('pending');
+            $table->enum('payment_status', ['pending', 'paid', 'failed']);
             $table->enum('order_type', ['delivery', 'pickup']);
             $table->timestamps();
         });

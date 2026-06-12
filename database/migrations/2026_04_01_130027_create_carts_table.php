@@ -21,9 +21,15 @@ return new class extends Migration
             $table->foreignId('product_id')
                 ->constrained('products')
                 ->cascadeOnDelete();
+            $table->foreignId('restaurant_id')
+                ->constrained('restaurants')
+                ->cascadeOnDelete();
+            $table->text('notes')->nullable();
             $table->unsignedTinyInteger('quantity')->default(1);
             $table->json('options')->nullable();
             $table->timestamps();
+
+            $table->unique(['cookie_id', 'product_id']);
         });
     }
 

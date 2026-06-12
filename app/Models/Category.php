@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 #[Fillable(['name'])]
 class Category extends Model
@@ -35,6 +36,12 @@ class Category extends Model
     | STATIC FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    protected static function booted()
+    {
+        static::creating(function($category) {
+            $category->slug = Str::slug($category);
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +50,14 @@ class Category extends Model
     */
     public function products()
     {
-        return $this->hasMany(Product::class, 'category_id', 'id');
+        return $this->hasMany(Product::class, 'category_id', 'id')
+            ->active()
+            ->latest();
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
     }
 
     /*

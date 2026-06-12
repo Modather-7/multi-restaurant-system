@@ -28,8 +28,7 @@ class ProductFactory extends Factory
             'ingredients' => fake()->sentence(15), // 15 word sentence
             'price' => fake()->numberBetween(100, 500),
             'compare_price' => fake()->numberBetween(50, 99),
-            'quantity' => fake()->randomNumber(1, 1000),
-            'feautured' => rand(0, 1), // minimum 0 , maximum 1
+            'featured' => rand(0, 1), // minimum 0 , maximum 1
             'slug' => Str::slug($name),
         ];
     }

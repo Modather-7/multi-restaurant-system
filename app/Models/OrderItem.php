@@ -4,15 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 #[Fillable(['order_id', 'product_id', 'quantity', 'price'])]
-class OrderItem extends Model
+class OrderItem extends Pivot
 {
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $table = 'order_items';
+    public $incrementing = true; // it has an Primary Id not Composite Id ,,,, NO Need for Fillable as Pivot has NO $guarded
+    public $timestamps = false;
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +48,9 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this -> belongsTo(Product::class);
+        return $this -> belongsTo(Product::class)->withDefault([
+                'name' => $this->product_name
+            ]);
     }
 
     /*

@@ -42,7 +42,6 @@
                 <th>Category</th>
                 <th>Ingredients</th>
                 <th>Price</th>
-                <th>Quantity</th>
                 <th>Status</th>
                 <th>Created At</th>
                 <th>Image</th>
@@ -58,7 +57,6 @@
                 <td>{{ $product -> category -> name ?? '-' }}</td>
                 <td>{{ $product -> ingredients }}</td>
                 <td>{{ $product -> price }}</td>
-                <td>{{ $product -> quantity }}</td>
                 <td>{{ $product -> status }}</td>
                 <td>{{ $product -> created_at }}</td>
                 <td><img

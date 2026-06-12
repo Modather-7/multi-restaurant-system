@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Restaurant;
 
 class HomeController extends Controller
 {
@@ -11,8 +12,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Restaurant $restaurant)
     {
-        return view('front.home');
+        return view('front.home', compact('restaurant'));
     }
 }

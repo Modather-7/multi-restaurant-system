@@ -20,10 +20,9 @@ return new class extends Migration
             $table->text('ingredients');
             $table->decimal('price', 8, 2);
             $table->decimal('compare_price', 8, 2)->nullable();
-            $table->integer('quantity')->nullable();
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'draft', 'archived'])->default('active');
-            $table->boolean('feautured')->default(0); // منتج مميز
+            $table->boolean('featured')->default(0); // منتج مميز
             $table->timestamps();
         });
     }

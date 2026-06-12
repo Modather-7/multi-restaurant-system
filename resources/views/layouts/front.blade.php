@@ -21,9 +21,7 @@
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg modern-navbar sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="/">
-            Food<span class="text-gold">Grids</span>
-        </a>
+        <a class="navbar-brand" href="{{ route('restaurant.home', $restaurant) }}">Food<span class="text-gold">Grids</span></a>
         <button class="navbar-toggler border-0 shadow-none"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
@@ -33,10 +31,9 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-                <li><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
-                <li><a class="nav-link {{ request()->is('menu*') ? 'active' : '' }}" href="/menu">Menu</a></li>
+                <li><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('restaurant.home', $restaurant) }}">Home</a></li>
+                <li><a class="nav-link {{ request()->is('menu*') ? 'active' : '' }}" href="{{  route('restaurant.menu.index', $restaurant)  }}">Menu</a></li>
                 <li><a class="nav-link" href="/contact">Contact</a></li>
-                <li><a class="nav-link" href="/about">About</a></li>
 
                 @guest
                     <li>
@@ -64,7 +61,7 @@
                 @endauth
 
                 <li>
-                    <a href="/cart" class="cart-pill">
+                    <a href="{{  route('restaurant.cart.index', $restaurant)  }}" class="cart-pill">
                         <i class="lni lni-cart"></i>
                         <span>Cart</span>
                         <span id="cart-badge-nav">0</span>

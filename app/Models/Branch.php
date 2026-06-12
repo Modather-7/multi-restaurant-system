@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable('name', 'address', 'phone')]
+#[Fillable('name', 'restaurant_id', 'phone', 'status')]
 class Branch extends Model
 {
     /*
@@ -39,19 +39,29 @@ class Branch extends Model
     */
     public function branchProducts()
     {
-        return $this -> hasMany(BranchProduct::class);
+        return $this->hasMany(BranchProduct::class);
     }
 
     public function orders()
     {
-        return $this -> hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public function products()
     {
-        return $this ->belongsToMany(Product::class)
-                        ->withPivot('quantity')
-                        ->withTimestamps();
+        return $this->belongsToMany(Product::class)
+            ->withPivot('availability')
+            ->withTimestamps();
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
+
+    public function deliveryAreas()
+    {
+        return $this->hasMany(DeliveryArea::class);
     }
 
     /*

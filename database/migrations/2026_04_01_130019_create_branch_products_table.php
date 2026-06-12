@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('branch_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->decimal('quantity')->default(0);
+            $table->foreignId('branch_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignId('product_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->enum('availability', [
+                'available',
+                'out_of_stock',
+                'hidden'
+            ])->default('available');
+            $table->integer('quantity')->nullable();
             $table->timestamps();
+
             $table->unique(['branch_id', 'product_id']);
         });
     }

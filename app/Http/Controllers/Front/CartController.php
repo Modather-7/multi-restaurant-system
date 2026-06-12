@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\CartRequest;
+use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Restaurant;
 use App\Repositories\Cart\CartRepository;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -18,10 +21,11 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Restaurant $restaurant)
     {
-        return view('front.cart', [
+        return view('front.cart.index', [
             'cart' => $this->cart,
+            'restaurant' => $restaurant
         ]);
     }
 
@@ -31,26 +35,40 @@ class CartController extends Controller
     public function store(CartRequest $request, CartRepository $cart)
     {
         $product = Product::findOrFail($request->post('product_id'));
+        $restaurant = $product->restaurant;
+        $cart->add($product, $request->post('quantity'), $request->post('notes'));
 
-        $cart->add($product, $request->post('quantity'));
-        return redirect()->route('cart.index');
+        if($request->expectsJson()){
+            return response()->json([
+                'Item added to cart successfully',
+            ], 201); // success and created
+        }
+        return redirect()->route('restaurant.cart.index', $restaurant);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CartRequest $request, CartRepository $cart)
+    public function update(Request $request, Restaurant $restaurant, Cart $cart)
     {
-        $product = Product::findOrFail($request->post('product_id'));
+        $request->validate([
+            'quantity' => ['required', 'integer', 'min:1', 'max:50']
+        ]);
 
-        $cart->update($product, $request->post('quantity'));
+        $this->cart->update($cart->id, $request->quantity);
+
+        return response()->json(['success' => true]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CartRepository $cart, string $id)
+    public function destroy(Restaurant $restaurant, Cart $cart)
     {
-        $cart->delete($id);
+        $this->cart->delete($cart->id);
+
+        return [
+            'message' => 'Item deleted!',
+        ];
     }
 }
