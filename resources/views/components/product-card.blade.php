@@ -1,6 +1,6 @@
 <div class="single-product">
     <div class="product-image">
-        <a href="{{ route('restaurant.menu.show', [$product->restaurant, $product->slug]) }}">
+        <a href="{{ route('restaurant.menu.show', [$product->restaurant, $branch, $product->slug]) }}">
             <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
         </a>
 
@@ -12,7 +12,7 @@
         @endif
 
         <div class="button">
-            <a href="{{ route('restaurant.menu.show', [$product->restaurant, $product->slug]) }}" class="btn">
+            <a href="{{ route('restaurant.menu.show', [$product->restaurant, $branch, $product->slug]) }}" class="btn">
                 <i class="lni lni-cart"></i> View Details
             </a>
         </div>
@@ -20,7 +20,7 @@
 
     <div class="product-info">
         <h4 class="title">
-            <a href="{{ route('restaurant.menu.show', [$product->restaurant, $product->slug]) }}">{{ $product->name }}</a>
+            <a href="{{ route('restaurant.menu.show', [$product->restaurant, $branch, $product->slug]) }}">{{ $product->name }}</a>
         </h4>
 
         <p class="text-muted small mb-2" style="min-height: 40px;">

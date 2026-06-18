@@ -98,8 +98,12 @@
 
                         @foreach ($branches as $branch)
 
-                            <a href="{{ route('branch.select', $branch->id) }}"
-                               class="branch-item">
+                        <form action="{{ route('restaurant.branches.select', [$restaurant, $branch]) }}"
+                            method="POST">
+
+                            @csrf
+
+                            <button type="submit" class="branch-item w-100">
 
                                 <div class="d-flex justify-content-between align-items-center">
 
@@ -121,7 +125,9 @@
 
                                 </div>
 
-                            </a>
+                            </button>
+
+                        </form>
 
                         @endforeach
 

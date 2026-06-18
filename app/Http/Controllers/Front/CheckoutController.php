@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\DeliveryArea;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -15,7 +16,7 @@ use Throwable;
 
 class CheckoutController extends Controller
 {
-    public function create(CartRepository $cart, Restaurant $restaurant)
+    public function create(CartRepository $cart, Restaurant $restaurant, Branch $branch)
     {
         if ($cart->get()->count() == 0) {
             return redirect()->route('restaurant.home');
@@ -23,7 +24,7 @@ class CheckoutController extends Controller
 
         $areas = DeliveryArea::where('branch_id', session('branch_id'))->get();
 
-        return view('front.checkout', compact('cart', 'areas', 'restaurant'));
+        return view('front.checkout', compact('cart', 'areas', 'restaurant', 'branch'));
     }
 
     public function store(Request $request, CartRepository $cart)

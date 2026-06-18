@@ -50,7 +50,10 @@
                             @foreach ($category->products as $product)
                                 <div class="col-lg-3 col-md-4 col-6 mb-3">
                                     <div class="product-card-animation">
-                                        <x-product-card :product="$product" />
+                                            <x-product-card
+                                                :product="$product"
+                                                :branch="request()->route('branch')"
+                                            />
                                     </div>
                                 </div>
                             @endforeach

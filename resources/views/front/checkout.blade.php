@@ -1,6 +1,6 @@
 <x-front-layout title="Checkout">
 
-<form action="{{ route('restaurant.checkout', $restaurant) }}" method="POST">
+<form action="{{ route('restaurant.checkout', [$restaurant, $branch]) }}" method="POST">
     @csrf
 
     <div class="checkout-page">
@@ -19,12 +19,12 @@
 
                             <label class="payment-option w-100">
                                 <input type="radio" name="order_type" value="delivery" checked>
-                                <span>🏍️ Delivery</span>
+                                <span>Delivery</span>
                             </label>
 
                             <label class="payment-option w-100">
                                 <input type="radio" name="order_type" value="pickup">
-                                <span>🏪 Pickup</span>
+                                <span>Pickup</span>
                             </label>
 
                         </div>

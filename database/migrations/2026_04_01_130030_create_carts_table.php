@@ -24,6 +24,9 @@ return new class extends Migration
             $table->foreignId('restaurant_id')
                 ->constrained('restaurants')
                 ->cascadeOnDelete();
+            $table->foreignId('branch_id')
+                ->constrained('branches')
+                ->cascadeOnDelete();
             $table->text('notes')->nullable();
             $table->unsignedTinyInteger('quantity')->default(1);
             $table->json('options')->nullable();

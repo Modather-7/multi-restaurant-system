@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
-#[Fillable(['cookie_id', 'user_id', 'product_id', 'restaurant_id', 'notes', 'quantity', 'options'])]
+#[Fillable(['cookie_id', 'user_id', 'product_id', 'restaurant_id', 'branch_id', 'notes', 'quantity', 'options'])]
 class Cart extends Model
 {
     /*

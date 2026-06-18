@@ -17,7 +17,7 @@
                                 <h1>Your Cart</h1>
                                 <p>
                                     Review your selected meals and checkout or
-                                    <a href="{{ route('restaurant.menu.index', $restaurant) }}"
+                                    <a href="{{ route('restaurant.menu.index', [$restaurant, $branch]) }}"
                                     class="continue-shopping">
                                         Continue Shopping
                                     </a>
@@ -44,23 +44,14 @@
                                     {{-- INFO --}}
                                     <div class="cart-item-info">
                                         <h5>
-                                            <a href="{{ route('restaurant.menu.show', [$restaurant, $item->product->slug]) }}">
+                                            <a href="{{ route('restaurant.menu.show', [$restaurant, $branch, $item->product->slug]) }}">
                                                 {{ $item->product->name }}
                                             </a>
                                         </h5>
 
-                                        <div class="cart-item-price">
-                                            @if ($item->product->compare_price)
-                                                <span class="current-price">
-                                                    {{ App\Helpers\Currency::format($item->product->compare_price) }}
-                                                </span>
-                                                <span class="old-price">
-                                                    {{ App\Helpers\Currency::format($item->product->price) }}
-                                                </span>
-                                            @else
-                                                <span class="current-price">
-                                                    {{ App\Helpers\Currency::format($item->product->price) }}
-                                                </span>
+                                        <div class="cart-item-notes">
+                                            @if ($item->notes)
+                                                <span class="notes">( {{ $item->notes }} )</span>
                                             @endif
                                         </div>
 
@@ -120,7 +111,7 @@
                                 <span>{{ App\Helpers\Currency::format($cart->total()) }}</span>
                             </div>
 
-                            <a href="{{ route('restaurant.checkout', $restaurant) }}">
+                            <a href="{{ route('restaurant.checkout', [$restaurant, $branch]) }}">
                                 <button class="checkout-btn">
                                     Proceed to Checkout
                                 </button>
@@ -147,8 +138,9 @@
         </script>
 
         <script>
-            const csrf_token = "{{ csrf_token() }}";
             const restaurant_slug = "{{ $restaurant->slug }}";
+            const branch_slug = "{{ $branch->name }}";
+            const csrf_token = "{{ csrf_token() }}";
         </script>
     @endpush
 

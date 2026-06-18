@@ -10,6 +10,7 @@ class FrontLayout extends Component
 {
     public $title;
     public $restaurant;
+    public $branch;
 
     /**
      * Create a new component instance.
@@ -18,6 +19,7 @@ class FrontLayout extends Component
     {
         $this->title = $title ?? config('app.name');
         $this->restaurant = request()->route('restaurant');
+        $this->branch = request()->route('branch');
     }
 
     /**
@@ -25,7 +27,6 @@ class FrontLayout extends Component
      */
     public function render(): View|Closure|string
     {
-
         return view('layouts.front');
     }
 }

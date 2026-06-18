@@ -25,19 +25,24 @@ Route::group([
         Route::get('/', [HomeController::class, 'index'])
             ->name('home');
 
-        Route::get('/menu', [MenuController::class, 'index'])
-            ->name('menu.index');
-
-        Route::get('/menu/{product:slug}', [MenuController::class, 'show'])
-            ->scopeBindings()
-            ->name('menu.show');
-
-        Route::resource('cart', CartController::class);
-
         Route::get('/branches', [BranchController::class, 'index'])
             ->name('branches');
 
-        Route::get('/checkout', [CheckoutController::class, 'create'])
-            ->name('checkout');
-        Route::post('/checkout', [CheckoutController::class, 'store']);
+        Route::post('/branches/{branch}', [BranchController::class, 'select'])
+            ->name('branches.select');
+
+        Route::group([
+                'middleware' => 'branch.selected',
+                'prefix' => '{branch:name}'
+            ],
+                function () {
+                Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+
+                Route::get('/menu/{product:slug}', [MenuController::class, 'show'])->name('menu.show');
+
+                Route::resource('cart', CartController::class);
+
+                Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout');
+                Route::post('/checkout', [CheckoutController::class, 'store']);
+            });
     });

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable('name', 'restaurant_id', 'phone', 'status')]
+#[Fillable(['name', 'restaurant_id', 'phone', 'status'])]
 class Branch extends Model
 {
     /*
@@ -49,7 +49,7 @@ class Branch extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)
+        return $this->belongsToMany(Product::class, 'branch_products')
             ->withPivot('availability')
             ->withTimestamps();
     }

@@ -31,9 +31,28 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-                <li><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('restaurant.home', $restaurant) }}">Home</a></li>
-                <li><a class="nav-link {{ request()->is('menu*') ? 'active' : '' }}" href="{{  route('restaurant.menu.index', $restaurant)  }}">Menu</a></li>
+                @if (!request()->routeIs('restaurant.home', $restaurant))
+                <li>
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
+                        href="{{ route('restaurant.home', $restaurant) }}">
+                            Home
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ request()->is('menu*') ? 'active' : '' }}"
+                        href="{{ route('restaurant.menu.index', [$restaurant, $branch]) }}">
+                            Menu
+                    </a>
+                </li>
                 <li><a class="nav-link" href="/contact">Contact</a></li>
+                <li>
+                    <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill">
+                        <i class="lni lni-cart"></i>
+                        <span>Cart</span>
+                        <span id="cart-badge-nav">{{ \App\Helpers\CartCounter::count() }}</span>
+                    </a>
+                </li>
+                @endif
 
                 @guest
                     <li>
@@ -60,13 +79,6 @@
                     </li>
                 @endauth
 
-                <li>
-                    <a href="{{  route('restaurant.cart.index', $restaurant)  }}" class="cart-pill">
-                        <i class="lni lni-cart"></i>
-                        <span>Cart</span>
-                        <span id="cart-badge-nav">0</span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>

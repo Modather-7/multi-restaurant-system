@@ -8,7 +8,7 @@
         Browse our menu and find something delicious.
     </p>
 
-    <a href="{{ route('restaurant.menu.index', $restaurant) }}" class="empty-cart-btn">
+    <a href="{{ route('restaurant.menu.index', [$restaurant, $branch]) }}" class="empty-cart-btn">
         Browse Menu
     </a>
 </div>

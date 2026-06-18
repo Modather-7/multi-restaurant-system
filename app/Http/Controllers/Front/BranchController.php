@@ -4,26 +4,31 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Restaurant $restaurant)
     {
-        $branches = Branch::where('status', 'active')->get();
+        $branches = $restaurant->branches()
+            ->where('status', 'active')
+            ->get();
 
-        return view('front.branch', compact('branches'));
+        return view('front.branch', compact('restaurant', 'branches'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function select(Restaurant $restaurant, Branch $branch)
     {
-        //
+        $branch = $restaurant->branches()->where('status', 'active')->findOrFail($branch->id);
+
+        Cookie::queue("res_{$restaurant->id}_branch", $branch->id, 60*24*30);
+
+        return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
     }
 
     /**

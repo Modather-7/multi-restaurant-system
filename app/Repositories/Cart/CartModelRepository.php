@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\CurrentBranchId;
 
 class CartModelRepository implements CartRepository
 {
@@ -27,13 +28,22 @@ class CartModelRepository implements CartRepository
 
     public function add(Product $product, $quantity = 1, $notes = null)
     {
+        $branchId = CurrentBranchId::getBranchId();
+
+        if (! $branchId) {
+           abort(403, 'Branch not selected');
+        }
+
         $item = Cart::where('product_id', $product->id)
-            ->first();
+                ->where('branch_id', CurrentBranchId::getBranchId())
+                ->where('cookie_id', request()->cookie('cart_id'))
+                ->first();
 
         if(! $item){
             $cart = Cart::create([
                 'user_id' => Auth::id(),
                 'restaurant_id' => $product->restaurant_id,
+                'branch_id' => $branchId,
                 'product_id' => $product->id,
                 'quantity' => $quantity,
                 'notes' => $notes,
@@ -42,7 +52,13 @@ class CartModelRepository implements CartRepository
             return $cart;
         }
 
-        return $item->increment('quantity', $quantity, ['notes' => $notes]);
+        $item->increment('quantity', $quantity);
+
+        if ($notes) {
+            $item->update(['notes' => $notes]);
+        }
+
+        return $item;
     }
 
     public function update($id, $quantity)
