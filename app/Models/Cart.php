@@ -93,6 +93,15 @@ class Cart extends Model
         return $builder->where('restaurant_id', $restaurant->id);
     }
 
+    public function scopeForBranch(Builder $builder)
+    {
+        $branch = request()->route('branch');
+
+        abort_if(!$branch, 404);
+
+        return $builder->where('branch_id', $branch->id);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

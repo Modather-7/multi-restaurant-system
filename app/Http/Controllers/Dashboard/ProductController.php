@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class ProductController extends Controller
@@ -33,10 +33,14 @@ class ProductController extends Controller
 
     public function create(Product $product)
     {
-        $categories = Category::select('id', 'name')->get();
+        $user = Auth::user();
+
+        $categories = $user->restaurant->categories();
         $restaurants = Restaurant::select('id', 'name')->get();
 
-        return view('dashboard.products.create', compact('categories', 'product', 'restaurants'));
+        $branches = $user->restaurant->branches;
+
+        return view('dashboard.products.create', compact('product', 'categories', 'restaurants', 'branches'));
     }
 
     /**
@@ -50,7 +54,11 @@ class ProductController extends Controller
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
-        Product::create($validated);
+        $product = Product::create($validated);
+
+        $product->branches()->sync(
+            $request->input('branches', [])
+        );
 
         return redirect()->route('dashboard.products.index')
             ->with('success', 'Product Added successfully!');
@@ -61,10 +69,14 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $user = Auth::user();
+
+        $categories = $user->restaurant->categories();
         $restaurants = Restaurant::all();
 
-        return view('dashboard.products.edit', compact('product', 'categories', 'restaurants'));
+        $branches = $user->restaurant->branches;
+
+        return view('dashboard.products.edit', compact('product', 'categories', 'restaurants', 'branches'));
     }
 
     /**
@@ -81,7 +93,12 @@ class ProductController extends Controller
         }
 
         $product->fill($validated);
-        $hasChanges = $product->isDirty();
+
+        $changes = $product->branches()->sync( // sync() has three status -> (attached, detached, updated)
+            $request->input('branches', [])
+        );
+
+        $hasChanges = $product->isDirty() || !empty($changes['attached']) || !empty($changes['detached']) || !empty($changes['updated']);
 
         if( ! $hasChanges) {
             return redirect()->route('dashboard.products.index')
@@ -100,7 +117,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Trash the specified resource.
      */
     public function destroy(Product $product)
     {
@@ -110,6 +127,9 @@ class ProductController extends Controller
             ->with('delete', 'Product Trashed!');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function trash()
     {
         $request = request();

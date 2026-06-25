@@ -20,7 +20,11 @@ class CartModelRepository implements CartRepository
     public function get(): Collection
     {
         if(!$this->items->count()){
-            $this->items = Cart::with('product')->get();
+
+            $this->items = Cart::with('product')
+                ->forRestaurant()
+                ->forBranch()
+                ->get();
         }
 
         return $this->items;
@@ -35,7 +39,7 @@ class CartModelRepository implements CartRepository
         }
 
         $item = Cart::where('product_id', $product->id)
-                ->where('branch_id', CurrentBranchId::getBranchId())
+                ->where('branch_id', $branchId)
                 ->where('cookie_id', request()->cookie('cart_id'))
                 ->first();
 

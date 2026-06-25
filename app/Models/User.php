@@ -64,6 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withDefault();
     }
 
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

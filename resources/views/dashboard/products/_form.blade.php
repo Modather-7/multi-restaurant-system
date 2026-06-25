@@ -50,6 +50,23 @@
 </div>
 
 <div class="form-group">
+    <x-form.label id="branches">Available in Branch</x-form.label>
+
+    @foreach ($branches as $branch)
+        <div class="form-check">
+            <input
+                type="checkbox"
+                class="form-check-input"
+                name="branches[]"
+                value="{{ $branch->id }}"
+                @checked($product->exists && $product->branches->contains($branch->id))
+            >
+            {{ $branch->name }}
+        </div>
+    @endforeach
+</div>
+
+<div class="form-group">
     <x-form.label id="Image">Image</x-form.label>
     <x-form.input type="file" name="image" accept="image/*" />
     @if ($product->image)

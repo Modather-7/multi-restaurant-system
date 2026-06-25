@@ -31,6 +31,8 @@ class ProductRequest extends FormRequest
             'price'          => ['bail', 'required', 'numeric', 'max:5000'],
             'status'         => ['bail', 'required', 'in:active,draft,archived'],
             'image'          => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
+            'branches'       => ['nullable', 'array'],
+            'branches.*'     => ['exists:branches,id'],
         ];
     }
 
