@@ -42,7 +42,7 @@
                                 <option value="">Select Area</option>
                                 @foreach($areas as $area)
                                     <option value="{{ $area->id }}">
-                                        {{ $area->name }} - {{ App\Helpers\Currency::format($area->delivery_fee) }}
+                                        {{ App\Helpers\Currency::format($area->delivery_fee) }} - {{ $area->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -111,7 +111,7 @@
                             </span>
                         </div>
 
-                        <button class="checkout-btn">
+                        <button type="submit" class="checkout-btn">
                             Place Order
                         </button>
 

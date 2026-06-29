@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\DeliveryArea;
@@ -19,20 +20,20 @@ class CheckoutController extends Controller
     public function create(CartRepository $cart, Restaurant $restaurant, Branch $branch)
     {
         if ($cart->get()->count() == 0) {
-            return redirect()->route('restaurant.home');
+            return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
         }
 
-        $areas = DeliveryArea::where('branch_id', session('branch_id'))->get();
+        $areas = DeliveryArea::where('branch_id', $branch->id)->get();
 
-        return view('front.checkout', compact('cart', 'areas', 'restaurant', 'branch'));
+        return view('front.checkout', compact('cart', 'areas', 'restaurant', 'branch', 'areas'));
     }
 
-    public function store(Request $request, CartRepository $cart)
+    public function store(Request $request, CartRepository $cart, Restaurant $restaurant, Branch $branch)
     {
         $cartItems = $cart->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('restaurant.home');
+            return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
         }
 
         $request->validate([
@@ -40,11 +41,11 @@ class CheckoutController extends Controller
 
         $restaurant_id = $cartItems->first()->product->restaurant_id;
 
-        DB::beginTransaction();
+        DB::beginTransaction(); // Cancel auto commit
         try {
             $order = Order::create([
                 'restaurant_id' => $restaurant_id,
-                'branch_id' => session('branch_id'),
+                'branch_id' => $branch->id,
                 'order_type' => $request->order_type,
                 'user_id' => Auth::id(),
                 'payment_method' => 'COD',
@@ -71,15 +72,15 @@ class CheckoutController extends Controller
                 ]);
             }
 
-            $cart->empty(); // after completing the order remove the cart
+            DB::commit(); // after successful transaction commit the order
 
-            DB::commit();
+            OrderCreated::dispatch($order, request()->cookie('cart_id')); // OrderCreated event construct
 
-        } catch(Throwable $e) {
+        } catch(Throwable $e) { // Throwable::class ---> any throwable exception
             DB::rollBack();
             throw $e;
         }
 
-        return redirect()->route('restaurant.home');
+        return redirect()->route('restaurant.home', $restaurant);
     }
 }

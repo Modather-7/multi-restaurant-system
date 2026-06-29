@@ -39,6 +39,11 @@
 </div>
 
 <div class="form-group">
+    <x-form.label id="compare_price">Price After Discount</x-form.label>
+    <x-form.input name="compare_price" type="number" :value="$product -> compare_price" label="compare_price" placeholder="Add compare_price" />
+</div>
+
+<div class="form-group">
     <x-form.label id="status">Status</x-form.label>
     <x-form.radio name="status"
     :options="[

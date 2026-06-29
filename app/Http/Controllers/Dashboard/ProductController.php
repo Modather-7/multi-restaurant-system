@@ -36,7 +36,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         $categories = $user->restaurant->categories();
-        $restaurants = Restaurant::select('id', 'name')->get();
+        $restaurants = $user->restaurant();
 
         $branches = $user->restaurant->branches;
 
@@ -72,7 +72,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         $categories = $user->restaurant->categories();
-        $restaurants = Restaurant::all();
+        $restaurants = $user->restaurant();
 
         $branches = $user->restaurant->branches;
 

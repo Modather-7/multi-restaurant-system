@@ -27,14 +27,13 @@ class BranchController extends Controller
     public function select(Restaurant $restaurant, Branch $branch)
     {
         $branch = $restaurant->branches()->where('status', 'active')->findOrFail($branch->id);
-
         $currentBranch = CurrentBranchId::getBranchId();
 
-        if ($currentBranch != $branch->id) {
+        if ($currentBranch && $currentBranch != $branch->id) {
             Cart::where('cookie_id', request()->cookie('cart_id'))
+                ->where('restaurant_id', $restaurant->id)
                 ->delete();
-        } // delete the cart after customer change branch or restaurant
-
+        } // delete the cart after customer change branch
 
         Cookie::queue("res_{$restaurant->id}_branch", $branch->id, 60*24*30);
 

@@ -29,6 +29,7 @@ class ProductRequest extends FormRequest
             'category_id'    => ['bail', 'required', 'integer', 'exists:categories,id'], // if null don't check for the rest of commands
             'ingredients'    => ['bail', 'required', 'string', 'max:255'],
             'price'          => ['bail', 'required', 'numeric', 'max:5000'],
+            'compare_price'  => ['bail', 'nullable', 'numeric', 'max:5000'],
             'status'         => ['bail', 'required', 'in:active,draft,archived'],
             'image'          => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
             'branches'       => ['nullable', 'array'],

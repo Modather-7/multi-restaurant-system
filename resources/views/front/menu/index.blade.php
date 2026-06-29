@@ -4,9 +4,6 @@
     <section class="menu-hero-section">
         <div class="container">
             <div class="menu-hero-content text-center">
-                <span class="menu-badge">
-                    Premium Food Experience
-                </span>
                 <h1 class="menu-title">
                     Explore Our Menu
                 </h1>
@@ -14,7 +11,6 @@
                     Fresh ingredients, rich flavors, and dishes crafted with love.
                 </p>
             </div>
-
             <div class="menu-categories-wrapper">
                 <ul class="nav justify-content-center gap-2 flex-wrap" id="menu-tabs">
                     {{-- CATEGORIES --}}

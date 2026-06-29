@@ -11,11 +11,11 @@
             <span class="new-tag">New</span>
         @endif
 
-        <div class="button">
+        {{-- <div class="button">
             <a href="{{ route('restaurant.menu.show', [$product->restaurant, $branch, $product->slug]) }}" class="btn">
                 <i class="lni lni-cart"></i> View Details
             </a>
-        </div>
+        </div> --}}
     </div>
 
     <div class="product-info">

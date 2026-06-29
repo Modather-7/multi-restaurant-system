@@ -25,6 +25,7 @@ class CartModelRepository implements CartRepository
 
             $this->items = Cart::with('product')
                 ->where('cookie_id', request()->cookie('cart_id'))
+                ->where('restaurant_id', request()->route('restaurant')->id)
                 ->where('branch_id', $branchId)
                 ->get();
         }
@@ -42,7 +43,8 @@ class CartModelRepository implements CartRepository
 
         $item = Cart::where('product_id', $product->id)
                 ->where('cookie_id', request()->cookie('cart_id'))
-                ->where('branch_id', CurrentBranchId::getBranchId())
+                ->where('restaurant_id', request()->route('restaurant')->id)
+                ->where('branch_id', $branchId)
                 ->first();
 
         if(! $item){
@@ -83,7 +85,13 @@ class CartModelRepository implements CartRepository
 
     public function empty()
     {
-        Cart::query()->delete(); // returns query builder for Cart Model
+        $branchId = CurrentBranchId::getBranchId();
+
+        Cart::query() // returns query builder for Cart Model
+            ->where('cookie_id', request()->cookie('cart_id'))
+            ->where('restaurant_id', request()->route('restaurant')->id)
+            ->where('branch_id', $branchId)
+            ->delete();
     }
 
     public function total(): float

@@ -24,7 +24,7 @@
                 {{-- IMAGE --}}
                 <div class="col-lg-6 text-center">
                     <div class="hero-image-wrapper">
-                        <img src="{{ asset('assets/images/hero/hero-chicken.jpg') }}" alt="Hero Image"
+                        <img src="{{ asset('assets/images/hero/FoodGrids.jpg') }}" alt="Hero Image"
                             class="hero-image">
                     </div>
                 </div>

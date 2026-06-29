@@ -3,16 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 #[Fillable(['branch_id', 'product_id', 'quantity', 'availability'])]
-class BranchProduct extends Model
+class BranchProduct extends Pivot
 {
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $table = 'branch_products';
+    public $incrementing = true;
 
     /*
     |--------------------------------------------------------------------------

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['user_id', 'restaurant_id', 'status', 'payment_method', 'payment_status', 'order_type'])]
+#[Fillable(['user_id', 'restaurant_id', 'branch_id', 'status', 'payment_method', 'payment_status', 'order_type'])]
 class Order extends Model
 {
     /*

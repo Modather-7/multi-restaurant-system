@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-#[Fillable(['order_id', 'product_id', 'quantity', 'price'])]
+#[Fillable(['order_id', 'product_id', 'product_name', 'quantity', 'price'])]
 class OrderItem extends Pivot
 {
     /*

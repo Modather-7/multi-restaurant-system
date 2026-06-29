@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('restaurant_id')
                 ->constrained('restaurants');
+            $table->foreignId('branch_id')
+                ->constrained('branches');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')
@@ -23,7 +25,8 @@ return new class extends Migration
             $table->string('payment_method');
             $table->enum('status', ['pending', 'processing', 'delivering', 'completed', 'cancelled', 'refunded'])
                 ->default('pending');
-            $table->enum('payment_status', ['pending', 'paid', 'failed']);
+            $table->enum('payment_status', ['pending', 'paid', 'failed'])
+                ->default('pending');
             $table->enum('order_type', ['delivery', 'pickup']);
             $table->timestamps();
         });
