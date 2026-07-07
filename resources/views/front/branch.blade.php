@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 </head>
 
-<body class="foodgrids-branch-body">
+<body class="foodgrids-branch-body grid-bg">
 
     <div class="container branch-grid-wrapper">
 

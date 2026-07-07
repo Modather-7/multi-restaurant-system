@@ -21,6 +21,10 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
+            $table->string('customer_name');
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone');
+            $table->text('notes')->nullable();
             $table->string('number')->unique();
             $table->string('payment_method');
             $table->enum('status', ['pending', 'processing', 'delivering', 'completed', 'cancelled', 'refunded'])

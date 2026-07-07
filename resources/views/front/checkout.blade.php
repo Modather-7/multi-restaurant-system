@@ -3,7 +3,7 @@
 <form action="{{ route('restaurant.checkout', [$restaurant, $branch]) }}" method="POST">
     @csrf
 
-    <div class="checkout-page">
+    <div class="checkout-page grid-bg">
         <div class="container">
             <div class="row g-4">
 
@@ -38,7 +38,7 @@
 
                         <div class="mb-3">
                             <label>Area</label>
-                            <select name="delivery_area_id" class="form-control">
+                            <select name="delivery_area_id" class="form-control @error('delivery_area_id') is-invalid @enderror">
                                 <option value="">Select Area</option>
                                 @foreach($areas as $area)
                                     <option value="{{ $area->id }}">
@@ -46,11 +46,21 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div>
                             <label>Street Address</label>
-                            <textarea name="street_address" rows="3" class="form-control"></textarea>
+                            <textarea name="street_address" rows="3" class="form-control @error('street_address') is-invalid @enderror"></textarea>
+                            @error('')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                     </div>
@@ -60,11 +70,26 @@
 
                         <h4 class="checkout-title">Customer Info</h4>
 
-                        <input type="text" name="full_name" class="form-control mb-2" placeholder="Full Name">
+                        <input type="text" name="customer_name" class="form-control mb-2 @error('customer_name') is-invalid @enderror" placeholder="Full Name">
+                        @error('')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                        <input type="text" name="phone_number" class="form-control mb-2" placeholder="Phone">
+                        <input type="text" name="customer_phone" class="form-control mb-2 @error('customer_phone') is-invalid @enderror" placeholder="Phone">
+                        @error('')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                        <input type="email" name="email" class="form-control" placeholder="Email (optional)">
+                        <input type="email" name="customer_email" class="form-control @error('customer_email') is-invalid @enderror" placeholder="Email (optional)">
+                        @error('')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                     </div>
 
@@ -111,7 +136,7 @@
                             </span>
                         </div>
 
-                        <button type="submit" class="checkout-btn">
+                        <button type="submit" class="checkout-btn" onclick="this.disabled=true; this.form.submit();">
                             Place Order
                         </button>
 

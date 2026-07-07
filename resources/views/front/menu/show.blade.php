@@ -1,6 +1,6 @@
 <x-front-layout :title="$product->name">
 
-    <section class="product-details-section py-5">
+    <section class="product-details-section py-5 grid-bg">
         <div class="container">
             <div class="product-wrapper bg-white rounded-5 shadow-sm overflow-hidden">
                 <div class="row g-0 align-items-stretch">
@@ -116,31 +116,12 @@
                                     </div>
 
                                     {{-- Add To Cart --}}
-                                    <button type="submit" class="btn add-cart-btn flex-grow-1">
+                                    <button type="submit" class="btn add-cart-btn flex-grow-1" onclick="this.disabled=true; this.form.submit();">
                                         <i class="lni lni-cart-full me-2"></i>
                                         Add To Cart
                                     </button>
                                 </div>
                             </form>
-
-                            {{-- Features --}}
-                            <div class="features-wrapper">
-
-                                <div class="feature-item">
-                                    <i class="lni lni-delivery"></i>
-                                    Fast Delivery
-                                </div>
-
-                                <div class="feature-item">
-                                    <i class="lni lni-pizza"></i>
-                                    Fresh Ingredients
-                                </div>
-
-                                <div class="feature-item">
-                                    <i class="lni lni-lock-alt"></i>
-                                    Secure Payment
-                                </div>
-                            </div>
 
                         </div>
                     </div>

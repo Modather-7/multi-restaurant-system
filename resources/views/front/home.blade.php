@@ -1,13 +1,10 @@
 <x-front-layout>
 
-    <section class="hero-section">
+    <section class="hero-section grid-bg">
         <div class="container">
             <div class="row align-items-center g-5">
                 {{-- TEXT --}}
                 <div class="col-lg-6">
-                    <span class="hero-badge">
-                        Premium Gastronomy
-                    </span>
                     <h1 class="hero-title">
                         Crispy Experience<br>
                         Crafted With <span>Precision</span>

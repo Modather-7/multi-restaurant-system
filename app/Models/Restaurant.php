@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'slug', 'description', 'logo_image', 'cover_image', 'status'])]
 class Restaurant extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /*
     |--------------------------------------------------------------------------

@@ -6,7 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['user_id', 'restaurant_id', 'branch_id', 'status', 'payment_method', 'payment_status', 'order_type'])]
+#[Fillable([
+    'user_id', 'restaurant_id', 'branch_id', 'customer_name', 'customer_email',
+    'customer_phone', 'notes', 'status', 'payment_method', 'payment_status', 'order_type'
+ ])]
 class Order extends Model
 {
     /*
@@ -35,7 +38,7 @@ class Order extends Model
     public static function getNextOrderNumber()
     {
         // SELECT MAX(number) FROM orders
-        $year = Carbon::now()->year();
+        $year = Carbon::now()->year;
         $number = Order::whereYear('created_at', $year)->max('number');
 
         if($number){

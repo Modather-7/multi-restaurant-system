@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Branch;
 use App\Models\DeliveryArea;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Restaurant;
 use App\Repositories\Cart\CartRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -28,7 +28,7 @@ class CheckoutController extends Controller
         return view('front.checkout', compact('cart', 'areas', 'restaurant', 'branch', 'areas'));
     }
 
-    public function store(Request $request, CartRepository $cart, Restaurant $restaurant, Branch $branch)
+    public function store(CheckoutRequest $request, CartRepository $cart, Restaurant $restaurant, Branch $branch)
     {
         $cartItems = $cart->get();
 
@@ -36,8 +36,7 @@ class CheckoutController extends Controller
             return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
         }
 
-        $request->validate([
-        ]);
+        $validated = $request->validated();
 
         $restaurant_id = $cartItems->first()->product->restaurant_id;
 
@@ -46,19 +45,20 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'restaurant_id' => $restaurant_id,
                 'branch_id' => $branch->id,
-                'order_type' => $request->order_type,
+                'order_type' => $validated['order_type'],
                 'user_id' => Auth::id(),
+
+                'customer_name' => $validated['customer_name'],
+                'customer_email' => $validated['customer_email'],
+                'customer_phone' => $validated['customer_phone'],
+
                 'payment_method' => 'COD',
             ]);
 
-            if ($request->order_type === 'delivery') {
+            if ($validated['order_type'] === 'delivery') {
                 $order->address()->create([
-                    'delivery_area_id' => $request->delivery_area_id,
-                    'full_name' => $request->full_name,
-                    'email' => $request->email,
-                    'phone_number' => $request->phone_number,
-                    'notes' => $request->notes,
-                    'street_address' => $request->street_address,
+                    'delivery_area_id' => $validated['delivery_area_id'],
+                    'street_address' => $validated['street_address'],
                 ]);
             }
 
@@ -68,7 +68,8 @@ class CheckoutController extends Controller
                     'product_id' => $item->product_id,
                     'product_name' => $item->product->name,
                     'price' => $item->product->price,
-                    'quantity' => $item->quantity
+                    'quantity' => $item->quantity,
+                    'notes' => $item->notes,
                 ]);
             }
 

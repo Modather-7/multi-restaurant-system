@@ -19,10 +19,6 @@ return new class extends Migration
             $table->foreignId('delivery_area_id')
                 ->constrained('delivery_areas')
                 ->cascadeOnDelete();
-            $table->string('full_name');
-            $table->string('email')->nullable();
-            $table->string('phone_number');
-            $table->text('notes')->nullable();
             $table->string('street_address');
             });
     }

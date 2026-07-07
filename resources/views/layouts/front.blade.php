@@ -88,13 +88,6 @@
     {{ $slot }}
 </main>
 
-<footer class="modern-footer">
-    <div class="container text-center">
-        <h6>Food<span class="text-gold">Grids</span></h6>
-        <small>© 2026 All rights reserved</small>
-    </div>
-</footer>
-
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 @stack('scripts')
 
