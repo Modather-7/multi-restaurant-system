@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CheckoutRequest;
+use App\Http\Requests\Front\CheckoutRequest;
 use App\Models\Branch;
 use App\Models\DeliveryArea;
 use App\Models\Order;
@@ -25,7 +25,7 @@ class CheckoutController extends Controller
 
         $areas = DeliveryArea::where('branch_id', $branch->id)->get();
 
-        return view('front.checkout', compact('cart', 'areas', 'restaurant', 'branch', 'areas'));
+        return view('front.checkout', compact('cart', 'restaurant', 'branch', 'areas'));
     }
 
     public function store(CheckoutRequest $request, CartRepository $cart, Restaurant $restaurant, Branch $branch)

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Front\BranchController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\MenuController;
 use App\Http\Controllers\ProfileController;
@@ -37,8 +38,9 @@ Route::group([
             ],
                 function () {
                 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-
                 Route::get('/menu/{product:slug}', [MenuController::class, 'show'])->name('menu.show');
+
+                Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
                 Route::resource('cart', CartController::class);
 

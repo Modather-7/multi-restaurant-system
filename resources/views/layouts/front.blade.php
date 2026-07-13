@@ -44,7 +44,7 @@
                             Menu
                     </a>
                 </li>
-                <li><a class="nav-link" href="/contact">Contact</a></li>
+                <li><a class="nav-link" href="{{ route('restaurant.contact.index', [$restaurant, $branch]) }}">Contact</a></li>
                 <li>
                     <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill">
                         <i class="lni lni-cart"></i>

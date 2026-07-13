@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Front;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,9 +24,9 @@ class CheckoutRequest extends FormRequest
     {
         return [
             'order_type' => ['required', 'in:delivery,pickup'],
-            'customer_name' => ['required', 'string', 'max:255'],
+            'customer_name' => ['required', 'string', 'max:100'],
             'customer_phone' => ['required', 'digits_between:11,15'],
-            'customer_email' => ['required', 'email', 'max:255'],
+            'customer_email' => ['nullable', 'email', 'max:255'],
             'delivery_area_id' => ['required_if:order_type,delivery', 'nullable', 'exists:delivery_areas,id'],
             'street_address' => ['required_if:order_type,delivery', 'nullable', 'string', 'max:500'],
             'payment_method' => ['required'],

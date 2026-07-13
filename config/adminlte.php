@@ -66,8 +66,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Food</b>Grids',
+    'logo_img' => 'assets/images/hero/FoodGrids.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -155,7 +155,7 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => true,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
@@ -334,11 +334,6 @@ return [
             'icon' => 'fas fa-tags'
         ],
         ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => '/profile',
-            'icon' => 'fas fa-fw fa-user',
-        ],
     ],
 
     /*

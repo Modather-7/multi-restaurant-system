@@ -27,19 +27,19 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
-        $channels = ['database']; // by default store in the database
+        return ['mail', 'database'];
+        // $channels = ['database']; // by default store in the database
 
-        if($notifiable->notification_prefrences['order_created']['sms'] ?? false){
-            $channels[] = 'vonage';
-        }
-        if($notifiable->notification_prefrences['order_created']['mail'] ?? false){
-            $channels[] = 'mail';
-        }
-        if($notifiable->notification_prefrences['order_created']['broadcast'] ?? false){
-            $channels[] = 'broadcast';
-        }
-        return $channels;
+        // if($notifiable->notification_prefrences['order_created']['sms'] ?? false){
+        //     $channels[] = 'vonage';
+        // }
+        // if($notifiable->notification_prefrences['order_created']['mail'] ?? false){
+        //     $channels[] = 'mail';
+        // }
+        // if($notifiable->notification_prefrences['order_created']['broadcast'] ?? false){
+        //     $channels[] = 'broadcast';
+        // }
+        // return $channels;
     }
 
     /**
@@ -55,6 +55,17 @@ class OrderCreatedNotification extends Notification
             ->line("A new order (#{$this->order->number}) has been created by {$customerName}.")
             ->action('Notification Action', url('/dashboard'))
             ->line('Thank you for using our application!');
+    }
+
+    public function toDatabase()
+    {
+        $customerName = $this->order->customer_name ?? 'Guest';
+        return [
+            'type' => 'order_created',
+            'order_id' => $this->order->id,
+            'body' => "A new order (#{$this->order->number}) has been created by {$customerName}.",
+            'url'  => url('/dashboard'),
+        ];
     }
 
     /**

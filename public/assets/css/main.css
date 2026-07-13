@@ -567,7 +567,7 @@ body {
     font-weight: 500;
     color: var(--color-black) !important;
     padding: 8px 12px;
-    border-radius: 50px;
+    border-radius: 10px;
     transition: 0.2s ease;
 }
 
@@ -590,7 +590,7 @@ body {
     gap: 8px;
     padding: 8px 14px;
     border: 1px solid var(--color-black);
-    border-radius: 999px;
+    border-radius: 10px;
     color: var(--text-main);
     text-decoration: none;
     font-weight: 500;
@@ -598,7 +598,7 @@ body {
 }
 
 .cart-pill:hover {
-    border-color: var(--primary-gold);
+    border-color: var(--color-black);
     background: var(--color-black);
     color: var(--bg-white);
     text-decoration: none;
