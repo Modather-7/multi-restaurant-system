@@ -15,12 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\UpdateUserLastActiveAt::class,
-            MarkNotificationAsRead::class,
+            \App\Http\Middleware\MarkNotificationAsRead::class,
         ]);
 
         $middleware->alias([
             'branch.selected' => \App\Http\Middleware\EnsureBranchSelected::class,
-            'auth.type' => CheckUserType::class,
+            'auth.type' => \App\Http\Middleware\CheckUserType::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
