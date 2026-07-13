@@ -7,6 +7,8 @@
 
     <title>{{ $title ?? 'FoodGrids' }}</title>
 
+    @vite(['resources/js/app.js'])
+
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}">
@@ -15,10 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     @stack('styles')
-    <!-- TEST VITE -->
-    <meta name="vite-test" content="yes">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="d-flex flex-column min-vh-100">
 
