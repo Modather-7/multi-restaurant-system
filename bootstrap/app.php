@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CheckUserType;
+use App\Http\Middleware\MarkNotificationAsRead;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,10 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\UpdateUserLastActiveAt::class,
+            MarkNotificationAsRead::class,
         ]);
 
         $middleware->alias([
             'branch.selected' => \App\Http\Middleware\EnsureBranchSelected::class,
+            'auth.type' => CheckUserType::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
