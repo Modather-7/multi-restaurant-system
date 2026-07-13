@@ -1,6 +1,6 @@
 <x-front-layout title="Cart">
 
-    <section class="cart-page grid-bg">
+    <section class="cart-page ">
         <div class="container">
             <div class="row g-4" id="cart-wrapper">
 

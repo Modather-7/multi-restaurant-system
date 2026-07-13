@@ -8,11 +8,11 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-    
+
     @vite(['resources/js/app.js'])
 </head>
 
-<body class="foodgrids-branch-body grid-bg">
+<body class="foodgrids-branch-body">
 
     <div class="container branch-grid-wrapper">
 

@@ -1,7 +1,7 @@
 <x-front-layout title="Our Fine Menu">
 
     {{-- HERO + CATEGORIES --}}
-    <section class="menu-hero-section grid-bg">
+    <section class="menu-hero-section">
         <div class="container">
             <div class="menu-hero-content text-center">
                 <h1 class="menu-title">
@@ -27,7 +27,7 @@
     </section>
 
     {{-- PRODUCTS --}}
-    <section class="menu-products-section grid-bg">
+    <section class="menu-products-section">
         <div class="container">
             {{-- TOP ANCHOR --}}
             <div id="top"></div>
