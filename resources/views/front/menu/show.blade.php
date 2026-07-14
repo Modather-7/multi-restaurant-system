@@ -1,6 +1,6 @@
 <x-front-layout :title="$product->name">
 
-    <section class="product-details-section py-5">
+    <section class="product-details-section py-5 grid-bg">
         <div class="container">
             <div class="product-wrapper bg-white rounded-5 shadow-sm overflow-hidden">
                 <div class="row g-0 align-items-stretch">

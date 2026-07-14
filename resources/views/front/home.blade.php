@@ -1,6 +1,6 @@
 <x-front-layout>
 
-    <section class="hero-section">
+    <section class="hero-section grid-bg">
         <div class="container">
             <div class="row align-items-center g-5">
                 {{-- TEXT --}}

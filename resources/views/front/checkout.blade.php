@@ -3,7 +3,7 @@
 <form action="{{ route('restaurant.checkout', [$restaurant, $branch]) }}" method="POST">
     @csrf
 
-    <div class="checkout-page">
+    <div class="checkout-page grid-bg">
         <div class="container">
             <div class="row g-4">
 
