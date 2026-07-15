@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-    
+
     @vite(['resources/js/app.js'])
 </head>
 

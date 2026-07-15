@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,12 +13,14 @@ class OrderCreatedNotification extends Notification
 {
     use Queueable;
 
+    protected string $customerName;
+
     /**
      * Create a new notification instance.
      */
     public function __construct(protected Order $order)
     {
-        //
+        $this->customerName = $this->order->customer_name ?? 'Guest';
     }
 
     /**
@@ -27,7 +30,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['database', 'broadcast'];
         // $channels = ['database']; // by default store in the database
 
         // if($notifiable->notification_prefrences['order_created']['sms'] ?? false){
@@ -47,25 +50,33 @@ class OrderCreatedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $customerName = $this->order->customer_name ?? 'Guest';
         return (new MailMessage)
             ->subject('Order Placed Successfully.')
             ->from('notifications@foodgrids.com', $this->order->restaurant->name)
-            ->greeting("Hi, {$customerName}")
-            ->line("A new order (#{$this->order->number}) has been created by {$customerName}.")
+            ->greeting("Hi, {$this->customerName}")
+            ->line("A new order (#{$this->order->number}) has been created by {$this->customerName}.")
             ->action('Notification Action', url('/dashboard'))
             ->line('Thank you for using our application!');
     }
 
     public function toDatabase()
     {
-        $customerName = $this->order->customer_name ?? 'Guest';
         return [
             'type' => 'order_created',
             'order_id' => $this->order->id,
-            'body' => "A new order (#{$this->order->number}) has been created by {$customerName}.",
+            'body' => "A new order (#{$this->order->number}) has been created by {$this->customerName}.",
             'url'  => url('/dashboard'),
         ];
+    }
+
+    public function toBroadcast(object $notifiable)
+    {
+        return new BroadcastMessage([
+            'type' => 'order_created',
+            'order_id' => $this->order->id,
+            'body' => "A new order (#{$this->order->number}) has been created by {$this->customerName}.",
+            'url'  => url('/dashboard'),
+        ]);
     }
 
     /**
