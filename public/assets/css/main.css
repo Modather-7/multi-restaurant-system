@@ -1236,3 +1236,239 @@ body {
     position: relative;
     z-index: 2;
 }
+
+/* =========================
+   AUTH MODAL FOODGRIDS STYLE
+========================= */
+
+.auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in srgb, var(--text-main) 45%, transparent);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+
+/* CARD */
+
+.auth-modal {
+    width: 560px;
+    max-width: 100%;
+    background: var(--bg-white);
+    border: 1px solid var(--border-main);
+    border-radius: 16px;
+    padding: 35px 45px;
+    position: relative;
+    box-shadow:0 20px 50px color-mix(in srgb, var(--color-black) 12%, transparent);
+    animation: authShow .35s ease;
+}
+
+
+/* HEADER */
+
+.auth-form h2 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.auth-form p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+
+/* LABELS */
+
+.auth-form .form-control {
+    height: 50px;
+    border-radius: 10px !important;
+}
+
+
+/* INPUTS */
+
+.auth-form .form-control {
+    height: 50px;
+    background: var(--bg-elements);
+    border: 1px solid var(--border-main);
+    border-radius: 10px !important;
+    padding: 0 18px;
+    font-size: 15px;
+    color: var(--text-main);
+    transition: .25s ease;
+}
+
+.auth-form .form-control::placeholder {
+    color: var(--text-light-gray);
+}
+
+.auth-form .form-control:focus {
+    background: var(--bg-white);
+    border-color: var(--primary-gold);
+    box-shadow:
+        0 0 0 4px
+        color-mix(
+            in srgb,
+            var(--color-gold) 15%,
+            transparent
+        );
+}
+
+
+/* REMEMBER CHECKBOX */
+
+.auth-form .form-check-input {
+    border-color: var(--border-main);
+}
+
+.auth-form .form-check-input:checked {
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+}
+
+.auth-form .form-check span {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+
+/* LINKS */
+
+.auth-form a {
+    color: var(--primary-gold);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.auth-form a:hover {
+    color: var(--primary-gold-hover);
+}
+
+
+/* BUTTON */
+
+.auth-submit {
+    height: 50px;
+    border-radius: 10px !important;
+    background: var(--primary-gold);
+    color: var(--bg-white);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    transition: .25s ease;
+}
+
+.auth-submit:hover {
+    background: var(--primary-gold-hover);
+    color: var(--bg-white);
+    transform: translateY(-2px);
+}
+
+
+/* FOOTER */
+
+.auth-footer span {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.auth-footer a {
+    font-weight: 600;
+}
+
+
+/* CLOSE BUTTON */
+
+.auth-close {
+    position: absolute;
+    right: 22px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-main);
+    background: var(--bg-elements);
+    color: var(--text-main);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.auth-close:hover {
+    background: var(--primary-gold);
+    color: var(--bg-white);
+    border-color: var(--primary-gold);
+}
+
+
+/* ANIMATION */
+
+@keyframes authShow {
+    from {
+        opacity: 0;
+        transform:
+            translateY(25px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width:576px) {
+
+    .auth-modal {
+        padding: 30px 20px;
+        border-radius: 14px;
+    }
+
+    .auth-form h2 {
+        font-size: 26px;
+    }
+
+}
+
+
+/* ==========================================================================
+   USER NAV DROPDOWN FIXED STYLES (INHERITED FROM ROOT)
+   ========================================================================== */
+
+.backend-user-dropdown {
+    background-color: color-mix(in srgb, var(--bg-white) 12%, transparent) !important;
+    color: var(--text-main) !important;
+    border-color: var(--text-main) !important;
+}
+
+.backend-user-dropdown:hover,
+.backend-user-dropdown:focus,
+.backend-user-dropdown:active,
+.backend-user-dropdown.show {
+    background-color: var(--text-main) !important;
+    color: var(--bg-light) !important;
+    box-shadow: none !important;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}

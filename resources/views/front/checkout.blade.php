@@ -70,7 +70,8 @@
 
                         <h4 class="checkout-title">Customer Info</h4>
 
-                        <input type="text" name="customer_name" class="form-control mb-2 @error('customer_name') is-invalid @enderror" placeholder="Full Name">
+                        <input type="text" name="customer_name" class="form-control mb-2 @error('customer_name') is-invalid @enderror" placeholder="Full Name"
+                        value="@auth{{ auth()->user()->name }}@endauth">
                         @error('')
                             <div class="invalid-feedback">
                                 {{ $message }}

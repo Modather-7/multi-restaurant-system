@@ -46,6 +46,11 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard.dashboard', absolute: false));
-    }
+        $previousUrl = url()->previous();
+
+        $cleanUrl = preg_replace('/([?&])dialog=[^&]+(&|$)/', '$1', $previousUrl);
+        $cleanUrl = rtrim($cleanUrl, '?&');
+
+        return redirect()->to($cleanUrl);
+        }
 }

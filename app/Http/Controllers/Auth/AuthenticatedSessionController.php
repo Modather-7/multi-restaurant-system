@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard.dashboard', absolute: false));
+        $previousUrl = url()->previous();
+
+        $cleanUrl = preg_replace('/([?&])dialog=[^&]+(&|$)/', '$1', $previousUrl);
+        $cleanUrl = rtrim($cleanUrl, '?&');
+
+        return redirect()->to($cleanUrl);
     }
 
     /**
@@ -42,6 +47,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->back();
     }
 }

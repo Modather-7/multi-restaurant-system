@@ -17,7 +17,7 @@ class FrontLayout extends Component
      */
     public function __construct($title = null)
     {
-        $this->title = $title ?? config('app.name');
+        $this->title = $title;
         $this->restaurant = request()->route('restaurant');
         $this->branch = request()->route('branch');
     }
