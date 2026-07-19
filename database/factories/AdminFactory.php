@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Admin;
+use App\Models\Restaurant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,6 +23,7 @@ class AdminFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'username' => fake()->unique()->userName(),
+            'restaurant_id' => Restaurant::inRandomOrder()->first()->id,
             'password' => Hash::make('12345678'),
             'phone_number' => fake()->phoneNumber(),
             'super_admin' => fake()->boolean(),

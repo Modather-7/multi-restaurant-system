@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique();
+            $table->foreignId('restaurant_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->string('password');
             $table->string('phone_number')->unique();
             $table->boolean('super_admin')->default(false);

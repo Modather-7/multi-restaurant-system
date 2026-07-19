@@ -33,8 +33,10 @@ class ProductController extends Controller
 
     public function create(Product $product)
     {
-        $user = Auth::user();
-
+dd(
+    Auth::guard('admin')->user(),
+    Auth::guard('web')->user()
+);
         $categories = $user->restaurant->categories();
         $restaurants = $user->restaurant();
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'phone_number', 'super_admin', 'status'])]
+#[Fillable(['name', 'email', 'restaurant_id', 'password', 'phone_number', 'super_admin', 'status'])]
 class Admin extends User
 {
     use HasFactory, Notifiable;
@@ -42,6 +42,10 @@ class Admin extends User
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
