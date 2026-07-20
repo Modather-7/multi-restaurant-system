@@ -25,11 +25,26 @@
 <nav class="navbar navbar-expand-lg modern-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{{ route('restaurant.home', $restaurant) }}">Food<span class="text-gold">Grids</span></a>
-        <button class="navbar-toggler border-0 shadow-none"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-            <i class="lni lni-menu fs-4"></i>
-        </button>
+
+        <div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
+            {{-- زر السلة المخصص للموبايل يظهر خارج القائمة --}}
+            @if (!request()->routeIs('restaurant.home', $restaurant))
+                <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill mobile-cart-pill">
+                    <i class="lni lni-cart"></i>
+                    <span id="cart-badge-nav">{{ \App\Helpers\CartCounter::count() }}</span>
+                </a>
+            @endif
+
+            <button class="navbar-toggler border-0 shadow-none p-0"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <i class="lni lni-menu fs-4"></i>
+            </button>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
@@ -47,7 +62,8 @@
                     </a>
                 </li>
                 <li><a class="nav-link" href="{{ route('restaurant.contact.index', [$restaurant, $branch]) }}">Contact</a></li>
-                <li>
+
+                <li class="d-none d-lg-block">
                     <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill">
                         <i class="lni lni-cart"></i>
                         <span>Cart</span>
@@ -71,9 +87,8 @@
                 @endguest
 
                 @auth
-                    <!-- تم ضبط الكلاسات هنا لتعمل بتوافق كامل مع ميثود الـ Dropdown -->
                     <li class="nav-item dropdown position-relative">
-                        <a class="nav-link dropdown-toggle btn btn-outline-dark btn-sm rounded-pill px-3 d-flex align-items-center gap-2 backend-user-dropdown"
+                        <a class="nav-link dropdown-toggle btn btn-outline-dark btn-sm rounded-pill px-3 d-flex align-items-center justify-content-center justify-content-lg-start gap-2 backend-user-dropdown"
                            href="#"
                            id="userDropdown"
                            role="button"
@@ -130,7 +145,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // --- 1. الجزء الخاص بالـ Auth Modal (Login / Register) ---
         const closeButton = document.querySelector('.auth-close');
         const overlay = document.querySelector('.auth-overlay');
 

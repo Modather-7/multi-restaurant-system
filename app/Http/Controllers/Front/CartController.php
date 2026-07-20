@@ -58,7 +58,7 @@ class CartController extends Controller
                 'Item added to cart successfully',
             ], 201); // success and created
         }
-        return redirect()->route('restaurant.cart.index', [$restaurant, $branch]);
+        return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
     }
 
     /**

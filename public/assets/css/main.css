@@ -1060,10 +1060,17 @@ body {
 .empty-cart-btn:hover { background: var(--text-main); color: var(--bg-white); }
 
 /* ==========================================================================
-   FOODGRIDS CLEAN GRID BRANCH STYLES (Genuine Light Web Look)
+   FOODGRIDS RESTAURANT ROW-CARD BRANCH STYLES (Root Variables & Thin Fonts)
    ========================================================================== */
 
+/* الحاوية الأساسية للقسم مع الخلفية المتدرجة والحد السفلي */
 .foodgrids-branch-body {
+    min-height: 100vh;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
     background:
         radial-gradient(
             circle at right,
@@ -1076,117 +1083,151 @@ body {
             transparent 50%
         ),
         var(--bg-white);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid var(--border-main);
 }
 
-.branch-grid-wrapper { padding: 80px 0; }
-.branch-grid-header { margin-bottom: 50px; }
-
-.grid-branch-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.branch-container {
+    max-width: 900px;
+    padding: 0 15px;
     width: 100%;
-    min-height: 280px;
+}
+
+.branch-minimal-header {
+    margin-bottom: 35px;
+}
+
+.branch-title {
+    font-size: 32px;
+    font-weight: 400; /* خط أرفع */
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+.branch-subtitle {
+    font-size: 15px;
+    font-weight: 300; /* خط أرفع ناعم */
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* كرت الفرع الأفقي المعتمد على متغيرات الـ root والخطوط الرفيعة */
+.restaurant-branch-row-card {
     background: var(--bg-white);
     border: 1px solid var(--border-main);
-    border-radius: 16px;
-    padding: 30px 24px;
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-black) 50%, transparent);
-    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+    border-radius: 8px;
+    padding: 24px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
     cursor: pointer;
     position: relative;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-black) 4%, transparent);
 }
 
-.branch-card-top {
+/* مساحة النصوص والبيانات */
+.branch-details-area {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
+    gap: 6px;
+    flex-grow: 1;
 }
 
-.branch-icon-box {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: var(--bg-elements);
-    color: var(--text-main);
+.branch-top-meta {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    transition: all 0.3s ease;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
-.grid-branch-name {
-    font-size: 30px;
-    font-weight: 500;
+.branch-card-name {
+    font-size: 21px;
+    font-weight: 500; /* وزن متوسط للحفاظ على وضوح الاسم مع ستايل الخط الرفيع */
     color: var(--text-main);
     margin: 0;
-}
-
-.branch-card-footer {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: var(--bg-elements);
-    border-radius: 50px;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-}
-
-.branch-card-footer .action-text {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text-muted);
     transition: color 0.3s ease;
 }
 
-.branch-card-footer .action-arrow {
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s ease;
+/* بادج الحالة (مفتوح) */
+.branch-status-badge {
+    font-size: 12px;
+    font-weight: 400;
+    padding: 2px 14px;
+    border-radius: 50px;
+    display: inline-block;
 }
 
-.grid-branch-card:hover {
-    border-color: var(--primary-gold);
-    box-shadow: 0 15px 30px color-mix(in srgb, var(--color-black) 50%, transparent);
-    transform: translateY(-4px);
-}
-
-.grid-branch-card:hover .branch-icon-box {
-    background: color-mix(in srgb, var(--color-gold) 8%, transparent);
+.branch-status-badge.open {
     color: var(--primary-gold);
+    border: 1px solid var(--border-main);
+    background-color: color-mix(in srgb, var(--primary-gold) 6%, transparent);
 }
 
-.grid-branch-card:hover .branch-card-footer {
+/* دائرة الاختيار الجانبية (Radio Button) */
+.branch-select-radio {
+    flex-shrink: 0;
+    padding-left: 10px;
+}
+
+.radio-circle-ui {
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--border-main);
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* --- تأثيرات الـ Hover عند تمرير الماوس --- */
+.restaurant-branch-row-card:hover {
+    border-color: var(--primary-gold);
+    box-shadow: 0 12px 24px color-mix(in srgb, var(--color-black) 8%, transparent);
+}
+
+.restaurant-branch-row-card:hover .radio-circle-ui {
+    border-color: var(--primary-gold);
     background: var(--primary-gold);
 }
 
-.grid-branch-card:hover .branch-card-footer .action-text {
-    color: var(--text-main);
+/* ظهور نقطة التحديد البيضاء الناعمة داخل الدائرة عند الهوفر */
+.restaurant-branch-row-card:hover .radio-circle-ui::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background-color: var(--bg-white);
+    border-radius: 50%;
 }
 
-.grid-branch-card:hover .branch-card-footer .action-arrow {
-    color: var(--text-main);
-    transform: translateX(2px);
-}
-
+/* توافق الشاشات الصغيرة للموبايل */
 @media (max-width: 768px) {
-    .branch-grid-wrapper { padding: 40px 15px; }
-    .grid-branch-card { min-height: auto; padding: 22px; }
+    .foodgrids-branch-body {
+        padding: 40px 0;
+    }
+    .restaurant-branch-row-card {
+        padding: 18px 20px;
+        gap: 15px;
+    }
+    .branch-title {
+        font-size: 26px;
+    }
+    .branch-card-name {
+        font-size: 18px;
+    }
+    .branch-top-meta {
+        gap: 10px;
+    }
 }
 
 /* GRID SQUARES */
 .grid-bg {
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .grid-bg::before {
@@ -1213,7 +1254,7 @@ body {
 /* GRID DOTS */
 .dots-bg {
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .dots-bg::before {
@@ -1471,4 +1512,26 @@ body {
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
+}
+
+
+/* ==========================================================================
+   MOBILE NAVBAR
+   ========================================================================== */
+
+@media (max-width: 991px) {
+    .mobile-cart-pill {
+        padding: 8px 12px !important;
+        border-radius: 20px !important;
+        background: transparent !important;
+        font-size: 20px !important;
+        gap: 2px !important;
+    }
+
+    .mobile-cart-pill #cart-badge-nav {
+        min-width: 25px !important;
+        height: 25px !important;
+        font-size: 12px !important;
+        margin-left: 2px !important;
+    }
 }
