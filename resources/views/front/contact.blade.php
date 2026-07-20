@@ -1,6 +1,6 @@
 <x-front-layout title="Contact Us">
 
-    <section class="hero-section grid-bg">
+    <section class="hero-section dots-bg">
         <div class="container">
             <div class="row align-items-center g-5">
 

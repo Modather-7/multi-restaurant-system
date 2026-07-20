@@ -1255,6 +1255,7 @@ body {
 .dots-bg {
     position: relative;
     overflow-x: hidden;
+    isolation: isolate; /* السر هنا: بيعمل جدار حماية يمنع النقط تتدخل مع العناصر الفوقيها */
 }
 
 .dots-bg::before {
@@ -1263,19 +1264,19 @@ body {
     inset: 0;
 
     background-image:
-        radial-gradient(rgba(0, 0, 0, .08) 1.2px, transparent 1.2px);
+        /* [تعديل السطوع وحجم النقطة الأولى] */
+        radial-gradient(circle, var(--color-gold) 2%, transparent 0.9px),
+        /* [تعديل السطوع وحجم النقطة الثانية] */
+        radial-gradient(circle, var(--color-gold) 1%, transparent 0.5px);
 
-    background-size: 24px 24px;
+    /* [المسافة بين النقط: صغر الرقم ده عشان يقربوا أكتر] */
+    background-size: 20px 20px;
+
+    /* [قاعدة النص بالنص: لو غيرت الـ size فوق لـ 16px مثلاً، خلي دي 8px] */
+    background-position: 0 0, 10px 10px;
 
     pointer-events: none;
-    z-index: 0;
-}
-
-.dots-bg > .container,
-.dots-bg > .container-fluid,
-.dots-bg > .row {
-    position: relative;
-    z-index: 2;
+    z-index: -1; /* نزلناها لـ -1 عشان تكون تحت الكروت وأي محتوى تلقائياً */
 }
 
 /* =========================

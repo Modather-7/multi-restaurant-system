@@ -13,7 +13,7 @@
     @vite(['resources/js/app.js'])
 </head>
 
-<body class="foodgrids-branch-body grid-bg">
+<body class="foodgrids-branch-body dots-bg">
 
     <div class="container branch-container">
 

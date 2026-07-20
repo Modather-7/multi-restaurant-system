@@ -1,14 +1,14 @@
 <x-front-layout title="Our Fine Menu">
 
     {{-- HERO + CATEGORIES --}}
-    <section class="menu-hero-section grid-bg">
+    <section class="menu-hero-section dots-bg">
         <div class="container">
             <div class="menu-hero-content text-center">
                 <h1 class="menu-title">
-                    Explore Our Menu
+                    Our Menu
                 </h1>
                 <p class="menu-subtitle">
-                    Fresh ingredients, rich flavors, and dishes crafted with love.
+
                 </p>
             </div>
             <div class="menu-categories-wrapper">
@@ -27,7 +27,7 @@
     </section>
 
     {{-- PRODUCTS --}}
-    <section class="menu-products-section grid-bg">
+    <section class="menu-products-section dots-bg">
         <div class="container">
             {{-- TOP ANCHOR --}}
             <div id="top"></div>
