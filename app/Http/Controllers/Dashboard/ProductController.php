@@ -163,4 +163,17 @@ class ProductController extends Controller
         return redirect()->route('dashboard.products.trash')
             ->with('delete', 'Product Deleted Forever!');
     }
+
+    public function deleteImage(Product $product)
+    {
+        if ($product->image) {
+            FacadesStorage::disk('public')->delete($product->image);
+
+            $product->update(['image' => null]);
+        }
+
+        return redirect()
+            ->back()
+            ->with('info', 'Product Image Deleted Successfully');
+    }
 }

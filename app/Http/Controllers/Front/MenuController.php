@@ -17,19 +17,22 @@ class MenuController extends Controller
         if (! $branchId) {
             return redirect()->route('restaurant.branches', $restaurant);
         }
-
-        $categories = $restaurant->categories()->with([
-            'products' => function ($query) use ($restaurant, $branchId) {
+        
+        $categories = $restaurant->categories()
+            ->withWhereHas('products', function ($query) use ($restaurant, $branchId) {
 
                 $query->where('restaurant_id', $restaurant->id)
                     ->where('status', 'active')
-                    ->whereHas('branches', function($q) use ($branchId){
+                    ->whereHas('branches', function ($q) use ($branchId) {
 
                         $q->where('branches.id', $branchId)
                             ->where('availability', 'available');
+
                     });
-            }
-        ])->latest('id')->get();
+
+            })
+            ->latest('id')
+            ->get();
 
         return view('front.menu.index', compact('categories', 'restaurant', 'branch'));
     }

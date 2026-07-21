@@ -1267,7 +1267,7 @@ body {
         /* [تعديل السطوع وحجم النقطة الأولى] */
         radial-gradient(circle, var(--color-gold) 2%, transparent 0.9px),
         /* [تعديل السطوع وحجم النقطة الثانية] */
-        radial-gradient(circle, var(--color-gold) 1%, transparent 0.5px);
+        radial-gradient(circle, var(--color-gold) 1%, transparent 0.8px);
 
     /* [المسافة بين النقط: صغر الرقم ده عشان يقربوا أكتر] */
     background-size: 20px 20px;
@@ -1353,14 +1353,8 @@ body {
 
 .auth-form .form-control:focus {
     background: var(--bg-white);
-    border-color: var(--primary-gold);
-    box-shadow:
-        0 0 0 4px
-        color-mix(
-            in srgb,
-            var(--color-gold) 15%,
-            transparent
-        );
+    border-color: var(--text-main);
+    box-shadow: var(--text-main);
 }
 
 
@@ -1535,4 +1529,36 @@ body {
         font-size: 12px !important;
         margin-left: 2px !important;
     }
+}
+
+.menu-products-section {
+    padding-top: 0;
+}
+
+.menu-banner-top {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-top: 0;
+    margin-bottom: 60px;
+}
+
+.menu-banner-top img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.menu-banner-between {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.menu-banner-between img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
 }

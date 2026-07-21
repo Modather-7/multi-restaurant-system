@@ -20,7 +20,10 @@ Route::group([
             ->name('products.restore');
         Route::delete('products/{product}/force-delete', [ProductController::class, 'forceDelete'])
             ->name('products.force-delete');
+        Route::delete('products/{product}/image', [ProductController::class, 'deleteImage'])
+            ->name('products.delete-image');
         Route::resource('products', ProductController::class);
+
 
         Route::get('/categories/trash', [CategoryController::class, 'trash'])
             ->name('categories.trash');
@@ -28,5 +31,7 @@ Route::group([
             ->name('categories.restore');
         Route::delete('categories/{category}/force-delete', [CategoryController::class, 'forceDelete'])
             ->name('categories.force-delete');
+        Route::delete('categories/{category}/image', [CategoryController::class, 'deleteImage'])
+            ->name('categories.delete-image');
         Route::resource('categories', CategoryController::class);
     });

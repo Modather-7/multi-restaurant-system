@@ -7,12 +7,10 @@
                 <h1 class="menu-title">
                     Our Menu
                 </h1>
-                <p class="menu-subtitle">
-
-                </p>
             </div>
             <div class="menu-categories-wrapper">
                 <ul class="nav justify-content-center gap-2 flex-wrap" id="menu-tabs">
+
                     {{-- CATEGORIES --}}
                     @foreach ($categories as $category)
                         <li class="nav-item">
@@ -29,10 +27,17 @@
     {{-- PRODUCTS --}}
     <section class="menu-products-section dots-bg">
         <div class="container">
-            {{-- TOP ANCHOR --}}
-            <div id="top"></div>
+
+            <div class="menu-banner-top">
+                <img
+                    src="{{ asset('storage/' . $categories->first()->image) }}"
+                    alt="{{ $categories->first()->name }}"
+                >
+            </div>
+
             @foreach ($categories as $category)
                 @if ($category->products->count())
+
                     {{-- CATEGORY BLOCK --}}
                     <div class="category-block mb-5" id="cat-{{ $category->id }}">
                         {{-- TITLE --}}
@@ -41,6 +46,7 @@
                                 {{ $category->name }}
                             </h3>
                         </div>
+
                         {{-- PRODUCTS --}}
                         <div class="row">
                             @foreach ($category->products as $product)
@@ -55,6 +61,19 @@
                             @endforeach
                         </div>
                     </div>
+
+                    {{-- Banner Between Categories --}}
+                    @if (!$loop->last && $categories[$loop->index + 1]->image)
+
+                        <div class="menu-banner-between">
+                            <img
+                                src="{{ asset('storage/' . $categories[$loop->index + 1]->image) }}"
+                                alt="{{ $categories[$loop->index + 1]->name }}"
+                            >
+                        </div>
+
+                    @endif
+
                 @endif
             @endforeach
         </div>

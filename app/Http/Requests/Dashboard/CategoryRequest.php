@@ -5,6 +5,7 @@ namespace App\Http\Requests\Dashboard;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class CategoryRequest extends FormRequest
 {
@@ -33,6 +34,8 @@ class CategoryRequest extends FormRequest
                 'between:3,255',
                 Rule::unique('categories', 'name')->ignore($categoryId),
             ],
+            'restaurant_id'  => ['bail', 'required', 'integer', 'exists:restaurants,id'],
+            'image' => ['bail', 'nullable', 'image', File::image()-> max(10*1024)],
         ];
     }
 }

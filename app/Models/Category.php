@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-#[Fillable(['name'])]
+#[Fillable(['name', 'restaurant_id', 'image'])]
 class Category extends Model
 {
     use HasFactory, SoftDeletes;

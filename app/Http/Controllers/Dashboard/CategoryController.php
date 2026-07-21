@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -17,6 +19,7 @@ class CategoryController extends Controller
         $request = request();
 
         $categories = Category::filter($request->query())
+            ->with('restaurant')
             ->orderBy('id', 'asc')
             ->paginate(5);
 
@@ -28,7 +31,10 @@ class CategoryController extends Controller
      */
     public function create(Category $category)
     {
-        return view('dashboard.categories.create', compact('category'));
+        $user = Auth::user();
+        $restaurants = $user->restaurant();
+
+        return view('dashboard.categories.create', compact('category', 'restaurants'));
     }
 
     /**
@@ -36,7 +42,13 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->validated());
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('categories', 'public');
+        }
+
+        Category::create($validated);
 
         return redirect()->route('dashboard.categories.index')
         ->with('success', 'Category Added Successfully');
@@ -47,7 +59,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('dashboard.categories.edit', compact('category'));
+        $user = Auth::user();
+        $restaurants = $user->restaurant();
+
+        return view('dashboard.categories.edit', compact('category', 'restaurants'));
     }
 
     /**
@@ -56,15 +71,28 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
         $validated = $request->validated();
+        $old_image = $category->image;
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('categories', 'public');
+        }
 
         $category->fill($validated);
+
         $hasChanges = $category->isDirty();
 
         if(! $hasChanges){
             return redirect()->route('dashboard.categories.index')
             ->with('info', 'No Changes Were Made');
         }
+
         $category->save($validated);
+
+
+        // delete the old image
+        if($request->hasFile('image') && $old_image) {
+            Storage::disk('public')->delete($old_image);
+        }
 
         return redirect()->route('dashboard.categories.index')
         ->with('info', 'Category Updated Successfully');
@@ -106,7 +134,25 @@ class CategoryController extends Controller
         $category = Category::onlyTrashed() -> findOrFail($id);
         $category->forceDelete();
 
+        // to delete the image from the storage/app/public file
+        if($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+
         return redirect()->route('dashboard.categories.trash')
             ->with('delete', 'Category Deleted Forever!');
+    }
+
+    public function deleteImage(Category $category)
+    {
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+
+            $category->update(['image' => null]);
+        }
+
+        return redirect()
+            ->back()
+            ->with('info', 'Category Image Deleted Successfully');
     }
 }

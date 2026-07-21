@@ -59,12 +59,33 @@
                 <td>{{ $product -> price }}</td>
                 <td>{{ $product -> status }}</td>
                 <td>{{ $product -> created_at }}</td>
-                <td><img
-                    src="{{ asset('storage/' . $product->image) }}"
-                    alt=""
-                    height="100"
-                    style="border: 2px solid #ddd; padding: 3px; border-radius: 10%;"
-                    >
+                <td>
+                    @if($product->image)
+                        <img
+                            src="{{ asset('storage/' . $product->image) }}"
+                            alt="{{ $product->name }}"
+                            height="100"
+                            style="border: 2px solid #ddd; padding: 3px; border-radius: 10%;"
+                        >
+
+                        <form
+                            action="{{ route('dashboard.products.delete-image', $product->id) }}"
+                            method="POST"
+                            class="mt-2"
+                        >
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="btn btn-sm btn-outline-danger"
+                            >
+                                Remove Image
+                            </button>
+                        </form>
+                    @else
+                        -
+                    @endif
                 </td>
                 <td>
                     <a href="{{ route('dashboard.products.edit', $product->id) }}" class="btn btn-sm btn-outline-success">Edit</a>

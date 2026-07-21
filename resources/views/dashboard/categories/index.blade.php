@@ -28,7 +28,9 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Restaurant</th>
                 <th>Created At</th>
+                <th>Image</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -37,7 +39,36 @@
             <tr>
                 <td>{{ $category -> id }}</td>
                 <td>{{ $category -> name }}</td>
+                <td>{{ $category -> restaurant -> name ?? '-' }}</td>
                 <td>{{ $category -> created_at }}</td>
+                <td>
+                    @if($category->image)
+                        <img
+                            src="{{ asset('storage/' . $category->image) }}"
+                            alt="{{ $category->name }}"
+                            height="100"
+                            style="border: 2px solid #ddd; padding: 3px; border-radius: 10%;"
+                        >
+
+                        <form
+                            action="{{ route('dashboard.categories.delete-image', $category->id) }}"
+                            method="POST"
+                            class="mt-2"
+                        >
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="btn btn-sm btn-outline-danger"
+                            >
+                                Remove Image
+                            </button>
+                        </form>
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                 </td>
