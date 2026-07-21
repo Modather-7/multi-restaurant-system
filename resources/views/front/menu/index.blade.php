@@ -28,12 +28,16 @@
     <section class="menu-products-section dots-bg">
         <div class="container">
 
-            <div class="menu-banner-top">
-                <img
-                    src="{{ asset('storage/' . $categories->first()->image) }}"
-                    alt="{{ $categories->first()->name }}"
-                >
-            </div>
+            @if($categories->isNotEmpty() && $categories->first()->image)
+
+                <div class="menu-banner-top">
+                    <img
+                        src="{{ asset('storage/' . $categories->first()->image) }}"
+                        alt="{{ $categories->first()->name }}"
+                    >
+                </div>
+
+            @endif
 
             @foreach ($categories as $category)
                 @if ($category->products->count())
