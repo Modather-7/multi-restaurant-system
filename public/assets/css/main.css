@@ -1531,6 +1531,9 @@ body {
     }
 }
 
+/* ==========================================================================
+    CATEGORY IMAGE
+   ========================================================================== */
 .menu-products-section {
     padding-top: 0;
 }
@@ -1561,4 +1564,19 @@ body {
     height: 200px;
     object-fit: cover;
     display: block;
+}
+
+@media (max-width: 768px) {
+
+    .menu-banner-top,
+    .menu-banner-between {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .menu-banner-top img,
+    .menu-banner-between img {
+        height: 90px;
+        object-fit: cover;
+    }
 }
