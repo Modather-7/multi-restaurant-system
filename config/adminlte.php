@@ -259,14 +259,14 @@ return [
     |
     */
 
-    'use_route_url' => true,
-    'dashboard_url' => 'dashboard.dashboard',
+    'use_route_url' => false,
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
-    'login_url' => 'admin.login',
+    'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => 'profile.edit',
+    'profile_url' => '/profile',
     'disable_darkmode_routes' => false,
 
     /*

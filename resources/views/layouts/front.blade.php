@@ -161,11 +161,13 @@
 
         closeButton?.addEventListener('click', closeAuthModal);
 
-        document.addEventListener('click', function(e) {
-            if(e.target === overlay) {
-                closeAuthModal();
-            }
-        });
+        if (overlay) {
+            document.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeAuthModal();
+                }
+            });
+        }
 
         @auth
             let url = new URL(window.location.href);

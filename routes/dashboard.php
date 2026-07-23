@@ -7,9 +7,9 @@ use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-        'middleware' => ['auth:admin'], //admin guard
+        'middleware' => ['auth', 'auth.type:super-admin,admin'], //admin guard
         'as' => 'dashboard.', //all routes should start with (dashboard.) -> 'dashboard.products.create'
-        'prefix' => 'admin/dashboard', //all routes in this group starts with dashboard in the url
+        'prefix' => 'dashboard', //all routes in this group starts with dashboard in the url
     ], function() {
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
