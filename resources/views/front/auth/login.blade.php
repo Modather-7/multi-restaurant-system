@@ -24,7 +24,7 @@
                 id="email"
                 class="form-control"
                 type="text"
-                name="{{ config('fortify.username') }}"
+                name="email"
                 value="{{ old('email') }}"
                 required
                 autofocus
