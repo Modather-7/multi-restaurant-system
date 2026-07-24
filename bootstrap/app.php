@@ -17,6 +17,20 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\MarkNotificationAsRead::class,
         ]);
 
+        $middleware->redirectGuestsTo(function ($request) {
+            if ($request->is('admin/*')) {
+                return route('admin.login');
+            }
+            return '/';
+        });
+
+        $middleware->redirectUsersTo(function ($request) {
+            if (auth('admin')->check()) {
+                return route('dashboard.dashboard');
+            }
+            return route('profile.edit');
+        });
+
         $middleware->alias([
             'branch.selected' => \App\Http\Middleware\EnsureBranchSelected::class,
             'auth.type' => \App\Http\Middleware\CheckUserType::class,

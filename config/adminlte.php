@@ -261,12 +261,12 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => 'dashboard',
-    'logout_url' => 'logout',
-    'login_url' => 'login',
-    'register_url' => 'register',
+    'logout_url' => 'admin/logout',
+    'login_url' => 'admin/login',
+    'register_url' => 'admin/register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => '/profile',
+    'profile_url' => 'profile.edit',
     'disable_darkmode_routes' => false,
 
     /*
