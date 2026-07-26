@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +14,6 @@ use Illuminate\Support\Str;
     'name', 'slug', 'category_id', 'restaurant_id', 'ingredients',
     'price', 'compare_price', 'image', 'status', 'feautured'
 ])]
-#[Hidden(['image', 'created_at', 'updated_at', 'deleted_at'])]
-#[Appends(['image_url'])]
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
@@ -114,24 +110,6 @@ class Product extends Model
             isset($filters['status']) && $filters['status'] != 'All',
             function($builder) use ($filters) {
                 $builder->where('status', $filters['status']);
-        });
-
-        $options = array_merge([
-            'restaurant_id' => null,
-            'category_id' => null,
-            'status' => 'active',
-        ], $filters);
-
-        $builder->when($options['restaurant_id'], function ($builder, $value) {
-            $builder->where('restaurant_id', $value);
-        });
-
-        $builder->when($options['category_id'], function ($builder, $value) {
-            $builder->where('category_id', $value);
-        });
-
-        $builder->when($options['status'], function ($builder, $value) {
-            $builder->where('status', $value);
         });
     }
 
