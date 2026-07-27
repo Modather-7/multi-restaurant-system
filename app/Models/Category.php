@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 #[Fillable(['name', 'restaurant_id', 'image'])]
@@ -38,6 +39,13 @@ class Category extends Model
     */
     protected static function booted()
     {
+        static::addGlobalScope('restaurant', function(Builder $builder) {
+            $user = Auth::user();
+            if ($user && $user->restaurant_id) {
+                $builder->where('restaurant_id', $user->restaurant_id);
+            }
+        });
+
         static::creating(function($category) {
             $category->slug = Str::slug($category);
         });

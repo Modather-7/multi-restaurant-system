@@ -32,7 +32,7 @@
     $('.item-quantity').on('change', function () {
 
         $.ajax({
-            url: `/${restaurant_slug}/${branch_slug}/cart/${$(this).data('id')}`,
+            url: `/${locale}/${restaurant_slug}/${branch_slug}/cart/${$(this).data('id')}`,
             method: 'PUT',
             data: {
                 quantity: $(this).val(),
@@ -51,7 +51,7 @@
         const id = $(this).data('id');
 
         $.ajax({
-            url: `/${restaurant_slug}/${branch_slug}/cart/${id}`,
+            url: `/${locale}/${restaurant_slug}/${branch_slug}/cart/${$(this).data('id')}`,
             type: 'POST',
             data: {
                 _method: 'DELETE',

@@ -22,6 +22,12 @@ require __DIR__.'/admin-auth.php';
 require __DIR__.'/dashboard.php';
 
 Route::group([
+        'prefix' => '{locale}',
+        'where' => ['locale' => 'ar|en'],
+        'middleware' => 'set.locale',
+    ], function() {
+    Route::group([
+
         'prefix' => '{restaurant:slug}',
         'as' => 'restaurant.'
     ], function() {
@@ -50,3 +56,5 @@ Route::group([
                 Route::post('/checkout', [CheckoutController::class, 'store']);
             });
     });
+
+});

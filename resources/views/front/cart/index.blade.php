@@ -138,6 +138,7 @@
         </script>
 
         <script>
+            const locale = "{{ app()->getLocale() }}";
             const restaurant_slug = "{{ $restaurant->slug }}";
             const branch_slug = "{{ $branch->name }}";
             const csrf_token = "{{ csrf_token() }}";

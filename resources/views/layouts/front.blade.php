@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
@@ -9,24 +9,50 @@
 
     @vite(['resources/js/app.js'])
 
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    @if(app()->getLocale() === 'ar')
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-rtl.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/LineIcons-rtl.3.0.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider-rtl.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/glightbox-rtl.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main-rtl.css') }}">
+
+    @else
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
+    @endif
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=400;600;700;800&display=swap" rel="stylesheet">
 
     @stack('styles')
 
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg modern-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{{ route('restaurant.home', $restaurant) }}">Food<span class="text-gold">Grids</span></a>
 
-        <div class="d-flex align-items-center gap-2 ms-auto d-lg-none">
+        <a href="{{ route(
+            request()->route()->getName(),
+            array_merge(
+                request()->route()->parameters(),
+                [
+                    'locale' => app()->getLocale() === 'ar' ? 'en' : 'ar'
+                ]
+            )
+        ) }}"
+        class="btn btn-sm btn-outline-dark rounded-pill">
+            {{ app()->getLocale() === 'ar' ? 'English US' : 'العربية EG' }}
+        </a>
+
+        <div class="d-flex align-items-center gap-2 ml-auto d-lg-none">
             {{-- زر السلة المخصص للموبايل يظهر خارج القائمة --}}
             @if (!request()->routeIs('restaurant.home', $restaurant))
                 <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill mobile-cart-pill">
@@ -37,8 +63,8 @@
 
             <button class="navbar-toggler border-0 shadow-none p-0"
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
                     aria-controls="navbarNav"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -52,21 +78,21 @@
                 <li>
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
                         href="{{ route('restaurant.home', $restaurant) }}">
-                            Home
+                            {{ trans('home') }}
                     </a>
                 </li>
                 <li>
                     <a class="nav-link {{ request()->is('menu*') ? 'active' : '' }}"
                         href="{{ route('restaurant.menu.index', [$restaurant, $branch]) }}">
-                            Menu
+                            {{ trans('menu') }}
                     </a>
                 </li>
-                <li><a class="nav-link" href="{{ route('restaurant.contact.index', [$restaurant, $branch]) }}">Contact</a></li>
+                <li><a class="nav-link" href="{{ route('restaurant.contact.index', [$restaurant, $branch]) }}">{{ trans('contact') }}</a></li>
 
                 <li class="d-none d-lg-block">
                     <a href="{{ route('restaurant.cart.index', [$restaurant, $branch]) }}" class="cart-pill">
                         <i class="lni lni-cart"></i>
-                        <span>Cart</span>
+                        <span>{{ trans('cart') }}</span>
                         <span id="cart-badge-nav">{{ \App\Helpers\CartCounter::count() }}</span>
                     </a>
                 </li>
@@ -75,13 +101,13 @@
                 @guest
                     <li>
                         <a href="?dialog=LOGIN" class="btn btn-outline-dark btn-sm rounded-pill px-3 auth-btn">
-                            Login
+                            {{ trans('Log in') }}
                         </a>
                     </li>
 
                     <li>
                         <a href="?dialog=REGISTER" class="btn btn-outline-dark btn-sm rounded-pill px-3 auth-btn">
-                            Register
+                            {{ trans('Register') }}
                         </a>
                     </li>
                 @endguest
@@ -107,7 +133,7 @@
                                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                                     @csrf
                                     <button type="submit" class="dropdown-item text-danger py-2 w-100 text-start align-items-center d-flex">
-                                        <i class="lni lni-exit me-2"></i> Logout
+                                        <i class="lni lni-exit me-2"></i> {{ trans('Log Out') }}
                                     </button>
                                 </form>
                             </li>

@@ -34,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'branch.selected' => \App\Http\Middleware\EnsureBranchSelected::class,
             'auth.type' => \App\Http\Middleware\CheckUserType::class,
+            'set.locale' => \App\Http\Middleware\SetAppLocale::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
