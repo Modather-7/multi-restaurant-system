@@ -1580,3 +1580,44 @@ body {
         object-fit: cover;
     }
 }
+
+
+.lang-switch-mobile{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #e5e7eb;
+    border-radius:50%;
+
+    color:var(--text-main);
+    background:color-mix(in srgb, var(--color-white) 0%, transparent);;
+    text-decoration:none;
+}
+
+.lang-switch-mobile i{
+    font-size:18px;
+}
+
+.lang-switch-desktop{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 14px;
+
+    border:1px solid var(--text-muted);
+    border-radius:999px;
+
+    color:var(--text-main);
+    text-decoration:none;
+}
+
+.lang-switch-desktop:hover,
+.lang-switch-mobile:hover{
+    color:inherit;
+    text-decoration:none;
+}

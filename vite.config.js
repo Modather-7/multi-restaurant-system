@@ -9,6 +9,7 @@ export default defineConfig({
                     'resources/js/app.js',
                     'resources/js/cart.js',
                     'resources/js/checkout.js',
+                    'resources/js/front.js',
                 ],
                 refresh: true,
         }),

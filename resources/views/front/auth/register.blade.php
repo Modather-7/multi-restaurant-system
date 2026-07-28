@@ -2,7 +2,7 @@
 
     <div class="text-center mb-4">
         <h2>
-            Create Account
+            {{ trans('Create Account') }}
         </h2>
     </div>
 
@@ -12,7 +12,7 @@
         <!-- Name -->
         <div class="mb-3">
             <label class="form-label">
-                Name
+                {{ trans('name') }}
             </label>
 
             <input
@@ -24,7 +24,7 @@
                 required
                 autofocus
                 autocomplete="name"
-                placeholder="Enter your name"
+                placeholder="{{ trans('Enter your name') }}"
             >
 
             <x-input-error
@@ -37,7 +37,7 @@
         <!-- Email -->
         <div class="mb-3">
             <label class="form-label">
-                Email Address
+                {{ trans('Email Address') }}
             </label>
 
             <input
@@ -48,7 +48,7 @@
                 value="{{ old('email') }}"
                 required
                 autocomplete="username"
-                placeholder="Enter your email"
+                placeholder="{{ trans('Enter your email') }}"
             >
 
             <x-input-error
@@ -61,7 +61,7 @@
         <!-- Password -->
         <div class="mb-3">
             <label class="form-label">
-                Password
+                {{ trans('Password') }}
             </label>
 
             <input
@@ -71,7 +71,7 @@
                 name="password"
                 required
                 autocomplete="new-password"
-                placeholder="Create a password"
+                placeholder="{{ trans('Create a password') }}"
             >
 
             <x-input-error
@@ -84,7 +84,7 @@
         <!-- Confirm Password -->
         <div class="mb-3">
             <label class="form-label">
-                Confirm Password
+                {{ trans('Confirm Password') }}
             </label>
 
             <input
@@ -94,7 +94,7 @@
                 name="password_confirmation"
                 required
                 autocomplete="new-password"
-                placeholder="Confirm your password"
+                placeholder="{{ trans('Confirm Password') }}"
             >
 
             <x-input-error
@@ -108,17 +108,17 @@
             type="submit"
             class="btn w-100 auth-submit"
         >
-            Create Account
+            {{ trans('Create Account') }}
         </button>
 
 
         <div class="text-center mt-3 auth-footer">
             <span>
-                Already have an account?
+                {{ trans('Already have an account?') }}
             </span>
 
             <a href="{{ request()->fullUrlWithQuery(['dialog'=>'LOGIN']) }}">
-                Login
+                {{ trans('Log In') }}
             </a>
         </div>
 

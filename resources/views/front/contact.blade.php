@@ -7,49 +7,25 @@
                 {{-- CONTACT INFO --}}
                 <div class="col-lg-6">
 
-                    <span class="section-badge">
-                        Contact Us
-                    </span>
+                <h1 class="hero-title">
+                    {{ trans('Get In') }} <span>{{ trans('Touch') }}</span>
+                </h1>
 
-                    <h1 class="hero-title">
-                        Get In <span>Touch</span>
-                    </h1>
+                <p class="hero-desc">
+                    {{ trans("We'd love to hear from you. Feel free to contact us for orders, inquiries, feedback, or any assistance you may need.") }}
+                </p>
 
-                    <p class="hero-desc">
-                        We'd love to hear from you. Feel free to contact us for
-                        orders, inquiries, feedback, or any assistance you may need.
-                    </p>
+                <div class="contact-item mb-3">
+                    <h6 class="mb-1">{{ trans('Restaurant') }}: {{ $restaurant->name }}</h6>
+                </div>
 
-                    <div class="contact-info mt-4">
+                <div class="contact-item mb-3">
+                    <h6 class="mb-1">{{ trans('Phone Number') }}: 0100000000</h6>
+                </div>
 
-                        <div class="contact-item mb-3">
-                            <h6 class="mb-1">Restaurant</h6>
-                            <p class="mb-0">
-                                {{ $restaurant->name }}
-                            </p>
-                        </div>
-
-                        <div class="contact-item mb-3">
-                            <h6 class="mb-1">Phone Number</h6>
-                            <p class="mb-0"> 111111111
-                                {{-- <a href="tel:{{ $restaurant->phone }}">
-                                    {{ $restaurant->phone }}
-                                </a> --}}
-                            </p>
-                        </div>
-
-                        {{-- @if($restaurant->email)
-                            <div class="contact-item mb-3">
-                                <h6 class="mb-1">Email</h6>
-                                <p class="mb-0">
-                                    <a href="mailto:{{ $restaurant->email }}">
-                                        {{ $restaurant->email }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif --}}
-
-                    </div>
+                {{-- <div class="contact-item mb-3">
+                    <h6 class="mb-1">{{ trans('Email') }}</h6>
+                </div> --}}
 
                 </div>
 

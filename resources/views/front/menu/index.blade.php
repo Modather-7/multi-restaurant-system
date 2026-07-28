@@ -5,7 +5,7 @@
         <div class="container">
             <div class="menu-hero-content text-center">
                 <h1 class="menu-title">
-                    Our Menu
+                    {{ trans('Our Menu') }}
                 </h1>
             </div>
             <div class="menu-categories-wrapper">

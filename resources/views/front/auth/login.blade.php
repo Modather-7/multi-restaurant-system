@@ -2,7 +2,7 @@
 
     <div class="text-center mb-5">
         <h2>
-            Login
+            {{ trans('Log In') }}
         </h2>
     </div>
 
@@ -17,7 +17,7 @@
         <div class="mb-4">
 
             <label class="form-label">
-                Email Address
+                {{ trans('Email') }}
             </label>
 
             <input
@@ -29,7 +29,7 @@
                 required
                 autofocus
                 autocomplete="username"
-                placeholder="Enter your email"
+                placeholder="{{ trans('Enter your email') }}"
             >
 
             <x-input-error
@@ -41,7 +41,7 @@
         <!-- Password -->
         <div class="mb-4">
             <label class="form-label">
-                Password
+                {{ trans('Password') }}
             </label>
 
             <input
@@ -51,7 +51,7 @@
                 name="password"
                 required
                 autocomplete="current-password"
-                placeholder="Enter your password"
+                placeholder="{{ trans('Enter your password') }}"
             >
 
             <x-input-error
@@ -71,14 +71,14 @@
                 >
 
                 <span>
-                    Remember me
+                    {{ trans('Remember Me') }}
                 </span>
 
             </label>
 
             @if(Route::has('password.request'))
                 <a href="{{ route('password.request') }}">
-                    Forgot password?
+                    {{ trans('Forgot Your Password?') }}
                 </a>
             @endif
 
@@ -88,16 +88,16 @@
             type="submit"
             class="btn w-100 auth-submit"
         >
-            Login
+            {{ trans('Log In') }}
         </button>
 
         <div class="text-center mt-4 auth-footer">
             <span>
-                Don't have an account?
+                {{ trans("Don't have an account?") }}
             </span>
 
             <a href="{{ request()->fullUrlWithQuery(['dialog'=>'REGISTER']) }}">
-                Create account
+                {{ trans('Create Account') }}
             </a>
 
         </div>

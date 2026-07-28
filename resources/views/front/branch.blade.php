@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Location | FoodGrids</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    @if(app()->getLocale() === 'ar')
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-rtl.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main-rtl.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    @endif
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     @vite(['resources/js/app.js'])
@@ -18,8 +24,8 @@
     <div class="container branch-container">
 
         <div class="branch-minimal-header text-center mb-5">
-            <h1 class="branch-title">Select Location</h1>
-            <p class="branch-subtitle">Choose a branch to view the menu and order</p>
+            <h1 class="branch-title">{{ trans('Select Location') }}</h1>
+            <p class="branch-subtitle">{{ trans('Choose a branch to view the menu and order') }}</p>
         </div>
 
         {{-- تقسيم الـ Grid: يعرض كرتين بجانب بعض في الشاشات الكبيرة وكرت واحد في الموبايل --}}

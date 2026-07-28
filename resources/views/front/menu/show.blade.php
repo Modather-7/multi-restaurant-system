@@ -15,7 +15,7 @@
 
                                     @if ($product->new)
                                         <span class="custom-badge success">
-                                            New
+                                            {{ trans('New') }}
                                         </span>
                                     @endif
 
@@ -38,7 +38,7 @@
                                 <ol class="breadcrumb mb-0 small">
                                     <li class="breadcrumb-item">
                                         <a href="{{  route('restaurant.menu.index', [$restaurant, $branch])  }}" class="text-decoration-none">
-                                            Menu
+                                            {{ trans('Menu') }}
                                         </a>
                                     </li>
 
@@ -72,7 +72,7 @@
                             {{-- Description --}}
                             <div class="mb-4">
                                 <label class="form-label fw-semibold">
-                                    Description
+                                    {{ trans('Description') }}
                                 </label>
 
                                 <p class="description-text mb-0">
@@ -87,13 +87,13 @@
                                 {{-- Notes --}}
                                 <div class="mb-4">
                                     <label class="form-label fw-semibold">
-                                        Special Instructions
+                                        {{ trans('Special Instructions') }}
                                     </label>
                                     <textarea
                                         name="notes"
                                         rows="3"
                                         class="form-control modern-input @error('notes') is-invalid @enderror"
-                                        placeholder="Add notes, allergies, extra toppings..."></textarea>
+                                        placeholder="{{ trans('Add notes, allergies...') }}"></textarea>
 
                                     @error('notes')
                                         <div class="invalid-feedback">
@@ -118,7 +118,7 @@
                                     {{-- Add To Cart --}}
                                     <button type="submit" class="btn add-cart-btn flex-grow-1" onclick="this.disabled=true; this.form.submit();">
                                         <i class="lni lni-cart-full me-2"></i>
-                                        Add To Cart
+                                        {{ trans('Add To Cart') }}
                                     </button>
                                 </div>
                             </form>

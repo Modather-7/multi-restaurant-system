@@ -14,7 +14,7 @@
                         lovers.
                     </p>
                     <a href="{{ route('restaurant.branches', $restaurant) }}" class="btn btn-gold hero-btn">
-                        Choose Branch
+                        {{ trans('Choose Branch') }}
                     </a>
                 </div>
 

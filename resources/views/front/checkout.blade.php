@@ -13,18 +13,18 @@
                     {{-- ORDER TYPE --}}
                     <div class="checkout-card">
 
-                        <h4 class="checkout-title">Order Type</h4>
+                        <h4 class="checkout-title">{{ trans('Order Type') }}</h4>
 
                         <div class="d-flex gap-3">
 
                             <label class="payment-option w-100">
                                 <input type="radio" name="order_type" value="delivery" checked>
-                                <span>Delivery</span>
+                                <span>{{ trans('Delivery') }}</span>
                             </label>
 
                             <label class="payment-option w-100">
                                 <input type="radio" name="order_type" value="pickup">
-                                <span>Pickup</span>
+                                <span>{{ trans('Pickup') }}</span>
                             </label>
 
                         </div>
@@ -34,12 +34,12 @@
                     {{-- DELIVERY --}}
                     <div id="delivery-box" class="checkout-card mt-4">
 
-                        <h4 class="checkout-title">Delivery Details</h4>
+                        <h4 class="checkout-title">{{ trans('Delivery Details') }}</h4>
 
                         <div class="mb-3">
-                            <label>Area</label>
+                            <label>{{ trans('Area') }}</label>
                             <select name="delivery_area_id" class="form-control @error('delivery_area_id') is-invalid @enderror">
-                                <option value="">Select Area</option>
+                                <option value="">{{ trans('Select Area') }}</option>
                                 @foreach($areas as $area)
                                     <option value="{{ $area->id }}">
                                         {{ App\Helpers\Currency::format($area->delivery_fee) }} - {{ $area->name }}
@@ -54,7 +54,7 @@
                         </div>
 
                         <div>
-                            <label>Street Address</label>
+                            <label>{{ trans('Street Address') }}</label>
                             <textarea name="street_address" rows="3" class="form-control @error('street_address') is-invalid @enderror"></textarea>
                             @error('')
                                 <div class="invalid-feedback">
@@ -68,9 +68,9 @@
                     {{-- CUSTOMER INFO --}}
                     <div class="checkout-card mt-4">
 
-                        <h4 class="checkout-title">Customer Info</h4>
+                        <h4 class="checkout-title">{{ trans('Customer Info') }}</h4>
 
-                        <input type="text" name="customer_name" class="form-control mb-2 @error('customer_name') is-invalid @enderror" placeholder="Full Name"
+                        <input type="text" name="customer_name" class="form-control mb-2 @error('customer_name') is-invalid @enderror" placeholder="{{ trans('Full Name') }}"
                         value="@auth{{ auth()->user()->name }}@endauth">
                         @error('')
                             <div class="invalid-feedback">
@@ -78,14 +78,14 @@
                             </div>
                         @enderror
 
-                        <input type="text" name="customer_phone" class="form-control mb-2 @error('customer_phone') is-invalid @enderror" placeholder="Phone">
+                        <input type="text" name="customer_phone" class="form-control mb-2 @error('customer_phone') is-invalid @enderror" placeholder="{{ trans('Phone') }}">
                         @error('')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
 
-                        <input type="email" name="customer_email" class="form-control @error('customer_email') is-invalid @enderror" placeholder="Email (optional)">
+                        <input type="email" name="customer_email" class="form-control @error('customer_email') is-invalid @enderror" placeholder="{{ trans('Email (optional)') }}">
                         @error('')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -97,16 +97,16 @@
                     {{-- PAYMENT --}}
                     <div class="checkout-card mt-4">
 
-                        <h4 class="checkout-title">Payment Method</h4>
+                        <h4 class="checkout-title">{{ trans('Payment Method') }}</h4>
 
                         <label class="payment-option">
                             <input type="radio" name="payment_method" value="cod" checked>
-                            <span>💵 Cash</span>
+                            <span>💵 {{ trans('Cash') }}</span>
                         </label>
 
                         <label class="payment-option mt-2 opacity-50">
                             <input type="radio" disabled>
-                            <span>💳 Online Payment (Coming Soon)</span>
+                            <span>💳 {{ trans('Online Payment (Coming Soon)') }}</span>
                         </label>
 
                     </div>
@@ -118,27 +118,27 @@
 
                     <div class="checkout-card sticky-top">
 
-                        <h4 class="checkout-title">Order Summary</h4>
+                        <h4 class="checkout-title">{{ trans('Order Summary') }}</h4>
 
                         <div class="summary-row">
-                            <span>Subtotal</span>
+                            <span>{{ trans('Subtotal') }}</span>
                             <span>{{ App\Helpers\Currency::format($cart->total()) }}</span>
                         </div>
 
                         <div class="summary-row">
-                            <span>Delivery</span>
+                            <span>{{ trans('Delivery') }}</span>
                             <span id="delivery-fee">{{ App\Helpers\Currency::format(0) }}</span>
                         </div>
 
                         <div class="summary-row total">
-                            <span>Total</span>
+                            <span>{{ trans('Total') }}</span>
                             <span id="total-price">
                                 {{ App\Helpers\Currency::format($cart->total()) }}
                             </span>
                         </div>
 
                         <button type="submit" class="checkout-btn" onclick="this.disabled=true; this.form.submit();">
-                            Place Order
+                            {{ trans('Place Order') }}
                         </button>
 
                     </div>

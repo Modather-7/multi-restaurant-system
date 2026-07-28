@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-_m_tURRy.css",
+    "file": "assets/app-D4cKV12b.css",
     "name": "app",
     "names": [
       "app.css"
@@ -9,13 +9,13 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-m6OeqPmd.js",
+    "file": "assets/app-89mmwHIV.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/js/cart.js": {
-    "file": "assets/cart-qjNr4JEt.js",
+    "file": "assets/cart-LZlGoQda.js",
     "name": "cart",
     "src": "resources/js/cart.js",
     "isEntry": true
@@ -24,6 +24,12 @@
     "file": "assets/checkout-D9kBbbNC.js",
     "name": "checkout",
     "src": "resources/js/checkout.js",
+    "isEntry": true
+  },
+  "resources/js/front.js": {
+    "file": "assets/front-Cq7QAWXJ.js",
+    "name": "front",
+    "src": "resources/js/front.js",
     "isEntry": true
   }
 }

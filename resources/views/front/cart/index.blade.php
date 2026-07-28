@@ -14,12 +14,12 @@
                     <div id="cart-header">
                         <div class="cart-header">
                             <div>
-                                <h1>Your Cart</h1>
+                                <h1>{{ trans('Your Cart') }}</h1>
                                 <p>
-                                    Review your selected meals and checkout or
+                                    {{ trans('Review your selected meals and checkout or') }}
                                     <a href="{{ route('restaurant.menu.index', [$restaurant, $branch]) }}"
                                     class="continue-shopping">
-                                        Continue Shopping
+                                        {{ trans('Continue Shopping') }}
                                     </a>
                                 </p>
                             </div>
@@ -94,26 +94,26 @@
 
                         <div class="summary-card">
 
-                            <h4>Order Summary</h4>
+                            <h4>{{ trans('Order Summary') }}</h4>
 
                             <div class="summary-row">
-                                <span>Subtotal</span>
+                                <span>{{ trans('Subtotal') }}</span>
                                 <span>{{ App\Helpers\Currency::format($cart->total()) }}</span>
                             </div>
 
                             <div class="summary-row">
-                                <span>Delivery</span>
+                                <span>{{ trans('Delivery') }}</span>
                                 <span>Free</span>
                             </div>
 
                             <div class="summary-row total">
-                                <span>Total</span>
+                                <span>{{ trans('Total') }}</span>
                                 <span>{{ App\Helpers\Currency::format($cart->total()) }}</span>
                             </div>
 
                             <a href="{{ route('restaurant.checkout', [$restaurant, $branch]) }}">
                                 <button class="checkout-btn">
-                                    Proceed to Checkout
+                                    {{ trans('Proceed to Checkout') }}
                                 </button>
                             </a>
 
