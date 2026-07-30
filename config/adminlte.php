@@ -260,7 +260,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'dashboard',
+    'dashboard_url' => 'admin/dashboard',
     'logout_url' => 'admin/logout',
     'login_url' => 'admin/login',
     'register_url' => 'admin/register',
@@ -326,12 +326,13 @@ return [
         [
             'text' => 'products',
             'route' => 'dashboard.products.index',
-            'icon' => 'fas fa-hamburger'
+            'icon' => 'fas fa-hamburger',
         ],
         [
             'text' => 'Categories',
             'route' => 'dashboard.categories.index',
-            'icon' => 'fas fa-tags'
+            'icon' => 'fas fa-tags',
+            // 'can' => 'categories.create',
         ],
         ['header' => 'account_settings'],
     ],

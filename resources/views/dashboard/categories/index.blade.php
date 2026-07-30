@@ -9,7 +9,9 @@
 @section('content')
 
     <div class="mb-5">
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Add Category</a>
+        @can('categories.create')
+            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Add Category</a>
+        @endcan
         <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark">Go To Trash</a>
     </div>
 
@@ -49,37 +51,44 @@
                             height="100"
                             style="border: 2px solid #ddd; padding: 3px; border-radius: 10%;"
                         >
-
-                        <form
-                            action="{{ route('dashboard.categories.delete-image', $category->id) }}"
-                            method="POST"
-                            class="mt-2"
-                        >
-                            @csrf
-                            @method('DELETE')
-
-                            <button
-                                type="submit"
-                                class="btn btn-sm btn-outline-danger"
+                        @can('categories.update')
+                            <form
+                                action="{{ route('dashboard.categories.delete-image', $category->id) }}"
+                                method="POST"
+                                class="mt-2"
                             >
-                                Remove Image
-                            </button>
-                        </form>
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                >
+                                    Remove Image
+                                </button>
+                            </form>
+                        @endcan
+
                     @else
                         -
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                    @can('categories.update')
+                        <a href="{{ route('dashboard.categories.edit', $category->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                    @endcan
                 </td>
                 <td>
-                    <form action="{{ route ('dashboard.categories.destroy', $category->id) }}" method="POST">
-                        @csrf
-                        {{-- Form method spoofing --}}
-                        <input type="hidden" name="_method" value="delete">
-                        @method('delete')
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
+                    @can('categories.delete')
+                        <form action="{{ route ('dashboard.categories.destroy', $category->id) }}" method="POST">
+                            @csrf
+                            {{-- Form method spoofing --}}
+                            <input type="hidden" name="_method" value="delete">
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    @endcan
+
                 </td>
             </tr>
             @empty

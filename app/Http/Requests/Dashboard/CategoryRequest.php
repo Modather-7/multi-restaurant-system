@@ -4,6 +4,7 @@ namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
@@ -15,6 +16,11 @@ class CategoryRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+        // if($this->route('category')) {
+        //     return Gate::allows('categories.update');
+        // }
+
+        // // return Gate::allows('categories.create');
     }
 
     /**
