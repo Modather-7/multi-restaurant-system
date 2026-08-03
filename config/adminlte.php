@@ -303,11 +303,11 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type' => 'navbar-search',
+        //     'text' => 'search',
+        //     'topnav_right' => true,
+        // ],
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
@@ -327,12 +327,18 @@ return [
             'text' => 'products',
             'route' => 'dashboard.products.index',
             'icon' => 'fas fa-hamburger',
+            'can' => 'product.view',
         ],
         [
             'text' => 'Categories',
             'route' => 'dashboard.categories.index',
             'icon' => 'fas fa-tags',
-            // 'can' => 'categories.create',
+            'can' => 'category.view',
+        ],
+        [
+            'text' => 'Roles',
+            'route' => 'dashboard.roles.index',
+            'icon' => 'fas fa-user-shield',
         ],
         ['header' => 'account_settings'],
     ],

@@ -7,7 +7,7 @@ use App\Http\Requests\Dashboard\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -17,9 +17,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // if(!Gate::allows('categories.view')) {
-        //     abort(403);
-        // }
         $request = request();
 
         $categories = Category::filter($request->query())
@@ -35,9 +32,6 @@ class CategoryController extends Controller
      */
     public function create(Category $category)
     {
-        // if(Gate::denies('categories.create')) {
-        //     abort(403);
-        // }
         $user = Auth::user();
         $restaurants = $user->restaurant();
 
@@ -66,8 +60,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        // Gate::authorize('categories.update');
-
         $user = Auth::user();
         $restaurants = $user->restaurant();
 
@@ -112,8 +104,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // Gate::authorize('categories.delete');
-
         $category->delete();
 
         return redirect()->route('dashboard.categories.index')
