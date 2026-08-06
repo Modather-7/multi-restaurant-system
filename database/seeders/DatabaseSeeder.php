@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-        // \App\Models\Admin::factory(3)->create();
+        \App\Models\Admin::factory(3)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
@@ -30,9 +30,9 @@ class DatabaseSeeder extends Seeder
         // Category::factory(10)->create();
         // Product::factory(50)->create();
 
-        $this->call([
-            PermissionSeeder::class,
-        ]);
+        // $this->call([
+        //     PermissionSeeder::class,
+        // ]);
 
 
         // $this->call(UserSeeder::class);
