@@ -336,6 +336,11 @@ return [
             'can' => 'category.view',
         ],
         [
+            'text' => 'Admins',
+            'route' => 'dashboard.admins.index',
+            'icon' => 'fas fa-users-cog',
+        ],
+        [
             'text' => 'Roles',
             'route' => 'dashboard.roles.index',
             'icon' => 'fas fa-user-shield',

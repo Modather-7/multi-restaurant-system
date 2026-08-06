@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RolesController;
@@ -38,4 +39,5 @@ Route::group([
 
         Route::resource('roles', RolesController::class);
 
+        Route::resource('admins', AdminsController::class);
     });

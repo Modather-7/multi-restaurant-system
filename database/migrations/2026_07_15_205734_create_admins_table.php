@@ -21,7 +21,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('password');
             $table->string('phone_number')->unique();
-            $table->boolean('super_admin')->default(false);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('last_active_at')->nullable();
             $table->timestamps();

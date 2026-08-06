@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Product;
-use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage as FacadesStorage;

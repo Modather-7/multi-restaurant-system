@@ -26,7 +26,6 @@ class AdminFactory extends Factory
             'restaurant_id' => Restaurant::inRandomOrder()->first()->id,
             'password' => Hash::make('12345678'),
             'phone_number' => fake()->phoneNumber(),
-            'super_admin' => fake()->boolean(),
         ];
     }
 }
