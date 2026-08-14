@@ -34,10 +34,6 @@ class Product extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
 
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +45,7 @@ class Product extends Model
     {
         // restaurant_id -> authentication
         static::addGlobalScope('restaurant', function(Builder $builder) {
-            $user = Auth::user();
+            $user = Auth::guard('admin')->user();
             if ($user && $user->restaurant_id) {
                 $builder->where('restaurant_id', $user->restaurant_id);
             }

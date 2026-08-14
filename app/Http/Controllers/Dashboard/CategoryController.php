@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'category');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create(Category $category)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $restaurants = $user->restaurant();
 
         return view('dashboard.categories.create', compact('category', 'restaurants'));
@@ -60,7 +63,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $restaurants = $user->restaurant();
 
         return view('dashboard.categories.edit', compact('category', 'restaurants'));
@@ -87,8 +90,7 @@ class CategoryController extends Controller
             ->with('info', 'No Changes Were Made');
         }
 
-        $category->save($validated);
-
+        $category->save();
 
         // delete the old image
         if($request->hasFile('image') && $old_image) {
@@ -112,6 +114,8 @@ class CategoryController extends Controller
 
     public function trash()
     {
+        $this->authorize('viewTrash', Category::class);
+
         $request = request();
 
         $categories = Category::onlyTrashed()
@@ -121,9 +125,12 @@ class CategoryController extends Controller
         return view('dashboard.categories.trash', compact('categories'));
     }
 
-    public function restore(Request $request, int $id)
+    public function restore(int $id)
     {
         $category = Category::onlyTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $category);
+
         $category->restore();
 
         return redirect()->route('dashboard.categories.trash')
@@ -133,6 +140,9 @@ class CategoryController extends Controller
     public function forceDelete(int $id)
     {
         $category = Category::onlyTrashed() -> findOrFail($id);
+
+        $this->authorize('forceDelete', $category);
+
         $category->forceDelete();
 
         // to delete the image from the storage/app/public file
@@ -146,6 +156,8 @@ class CategoryController extends Controller
 
     public function deleteImage(Category $category)
     {
+        $this->authorize('update', $category);
+
         if ($category->image) {
             Storage::disk('public')->delete($category->image);
 

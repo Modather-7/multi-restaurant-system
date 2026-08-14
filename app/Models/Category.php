@@ -40,7 +40,7 @@ class Category extends Model
     protected static function booted()
     {
         static::addGlobalScope('restaurant', function(Builder $builder) {
-            $user = Auth::user();
+            $user = Auth::guard('admin')->user();
             if ($user && $user->restaurant_id) {
                 $builder->where('restaurant_id', $user->restaurant_id);
             }

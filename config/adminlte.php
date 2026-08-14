@@ -319,11 +319,6 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
             'text' => 'products',
             'route' => 'dashboard.products.index',
             'icon' => 'fas fa-hamburger',
@@ -339,6 +334,7 @@ return [
             'text' => 'Admins',
             'route' => 'dashboard.admins.index',
             'icon' => 'fas fa-users-cog',
+            'can' => 'admin.view',
         ],
         [
             'text' => 'Roles',

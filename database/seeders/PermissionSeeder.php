@@ -18,11 +18,17 @@ class PermissionSeeder extends Seeder
             'product.create',
             'product.update',
             'product.delete',
+            'product.trash',
+            'product.restore',
+            'product.forceDelete',
 
             'category.view',
             'category.create',
             'category.update',
             'category.delete',
+            'category.trash',
+            'category.restore',
+            'category.forceDelete',
 
             'order.view',
             'order.create',

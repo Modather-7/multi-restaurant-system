@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'username', 'restaurant_id', 'password', 'phone_number', 'status'])]
+#[Fillable(['name', 'email', 'username', 'restaurant_id', 'password', 'phone_number', 'super_admin', 'status'])]
 class Admin extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;

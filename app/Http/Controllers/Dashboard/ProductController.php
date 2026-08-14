@@ -7,10 +7,15 @@ use App\Http\Requests\Dashboard\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage as FacadesStorage;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,7 +37,7 @@ class ProductController extends Controller
 
     public function create(Product $product)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
 
         $categories = $user->restaurant->categories();
         $restaurants = $user->restaurant();
@@ -68,7 +73,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
 
         $categories = $user->restaurant->categories();
         $restaurants = $user->restaurant();
@@ -106,7 +111,7 @@ class ProductController extends Controller
 
         // delete the old image
         if($request->hasFile('image') && $old_image) {
-            FacadesStorage::disk('public')->delete($old_image);
+            Storage::disk('public')->delete($old_image);
         }
 
         $product -> save();
@@ -131,6 +136,7 @@ class ProductController extends Controller
      */
     public function trash()
     {
+        $this->authorize('viewTrash', Product::class);
         $request = request();
 
         $products = Product::onlyTrashed()
@@ -140,9 +146,12 @@ class ProductController extends Controller
         return view('dashboard.products.trash', compact('products'));
     }
 
-    public function restore(Request $request, int $id)
+    public function restore(int $id)
     {
         $product = Product::onlyTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $product);
+
         $product->restore();
 
         return redirect()->route('dashboard.products.trash')
@@ -152,11 +161,14 @@ class ProductController extends Controller
     public function forceDelete(int $id)
     {
         $product = Product::onlyTrashed() -> findOrFail($id);
+
+        $this->authorize('forceDelete', $product);
+
         $product->forceDelete();
 
         // to delete the image from the storage/app/public file
         if($product->image) {
-            FacadesStorage::disk('public')->delete($product->image);
+            Storage::disk('public')->delete($product->image);
         }
 
         return redirect()->route('dashboard.products.trash')
@@ -165,8 +177,10 @@ class ProductController extends Controller
 
     public function deleteImage(Product $product)
     {
+        $this->authorize('update', $product);
+
         if ($product->image) {
-            FacadesStorage::disk('public')->delete($product->image);
+            Storage::disk('public')->delete($product->image);
 
             $product->update(['image' => null]);
         }

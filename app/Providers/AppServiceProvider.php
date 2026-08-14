@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
+use App\Policies\RolePolicy;
 use App\Repositories\Cart\CartModelRepository;
 use App\Repositories\Cart\CartRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,22 +22,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CartRepository::class, function(){
             return new CartModelRepository();
         });
-
-        // Gate::define('categories.view', function($user) {
-        //     return true;
-        // });
-
-        // Gate::define('categories.create', function($user) {
-        //     return false;
-        // });
-
-        // Gate::define('categories.update', function($user) {
-        //     return true;
-        // });
-
-        // Gate::define('categories.delete', function($user) {
-        //     return false;
-        // });
     }
 
     /**
@@ -47,5 +34,13 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        Gate::before(function ($user, string $ability) {
+            if ($user instanceof Admin && $user->super_admin) {
+                return true;
+            }
+        });
+
+        Gate::policy(Role::class, RolePolicy::class);
     }
 }

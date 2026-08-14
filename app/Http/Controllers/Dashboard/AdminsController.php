@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\AdminRequest;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class AdminsController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Admin::class, 'admin');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +31,7 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $roles = Role::all();
         $admin = new Admin();
         $restaurants = $user->restaurant();
@@ -66,7 +69,7 @@ class AdminsController extends Controller
      */
     public function edit(Admin $admin)
     {
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $roles = Role::all();
         $restaurants = $user->restaurant();
         $admin_roles = $admin->roles()->pluck('id')->toArray();
