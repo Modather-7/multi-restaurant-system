@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,9 @@ Route::group([
             ->name('categories.delete-image');
         Route::resource('categories', CategoryController::class);
 
+        Route::resource('admins', AdminsController::class);
+
         Route::resource('roles', RolesController::class);
 
-        Route::resource('admins', AdminsController::class);
+        Route::resource('orders', OrdersController::class);
     });

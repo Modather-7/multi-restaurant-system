@@ -1,8 +1,11 @@
 <?php
 
+use App\Exceptions\InvalidOrderException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -38,5 +41,32 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // dashboard exceptions
+        $exceptions->render(function (QueryException $e, Request $request) {
+            if ($e->getCode() == 23000) {
+                $message = 'Foreign key constraint failed';
+            } else {
+                $message = $e->getMessage();
+            }
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $message,
+                ], 400);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()->withErrors([
+                    'message' => $e->getMessage(),
+                ])
+                ->with('info', $message);
+        });
+
+        // front exception
+        $exceptions->render(function (InvalidOrderException $e, Request $request) {
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
+        });
     })->create();

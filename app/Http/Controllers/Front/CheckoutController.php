@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Events\OrderCreated;
+use App\Exceptions\InvalidOrderException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\CheckoutRequest;
 use App\Models\Branch;
@@ -20,7 +21,7 @@ class CheckoutController extends Controller
     public function create(CartRepository $cart, Restaurant $restaurant, Branch $branch)
     {
         if ($cart->get()->count() == 0) {
-            return redirect()->route('restaurant.menu.index', [$restaurant, $branch]);
+            throw new InvalidOrderException(trans('Cart is empty!'));
         }
 
         $areas = DeliveryArea::where('branch_id', $branch->id)->get();

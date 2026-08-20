@@ -5,6 +5,7 @@
             <div class="row align-items-center g-5">
                 {{-- TEXT --}}
                 <div class="col-lg-6">
+                    <x-alert />
                     <h1 class="hero-title">
                         Crispy Experience<br>
                         Crafted With <span>Precision</span>

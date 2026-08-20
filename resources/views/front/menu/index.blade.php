@@ -4,6 +4,7 @@
     <section class="menu-hero-section dots-bg">
         <div class="container">
             <div class="menu-hero-content text-center">
+                <x-alert />
                 <h1 class="menu-title">
                     {{ trans('Our Menu') }}
                 </h1>

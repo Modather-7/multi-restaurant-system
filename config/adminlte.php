@@ -197,13 +197,13 @@ return [
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
-    'classes_content_header' => '',
-    'classes_content' => '',
+    'classes_content_header' => 'container-fluid',
+    'classes_content' => 'container-fluid',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
-    'classes_topnav_container' => 'container',
+    'classes_topnav_container' => 'container-fluid',
 
     /*
     |--------------------------------------------------------------------------
@@ -340,6 +340,11 @@ return [
             'text' => 'Roles',
             'route' => 'dashboard.roles.index',
             'icon' => 'fas fa-user-shield',
+        ],
+        [
+            'text' => 'Orders',
+            'route' => 'dashboard.orders.index',
+            'icon' => 'fas fa-receipt',
         ],
         ['header' => 'account_settings'],
     ],
