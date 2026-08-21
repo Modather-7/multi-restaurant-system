@@ -1,19 +1,42 @@
 @extends('adminlte::page')
 
-@section('title', 'Add New Product')
+@section('title', 'Import Products')
 
 @section('content_header')
     <h1>Import Products</h1>
 @stop
 
 @section('content')
-    <form action="{{ route('dashboard.products.import') }}" method="post" enctype="multipart/form-data">
+
+    <form
+        action="{{ route('dashboard.products.import') }}"
+        method="POST"
+        enctype="multipart/form-data"
+    >
         @csrf
 
         <div class="form-group">
-            <x-form.input label="Products Count" class="form-control-lg" name="count" />
+            <label for="file">Products File</label>
+
+            <input
+                type="file"
+                name="file"
+                id="file"
+                class="form-control @error('file') is-invalid @enderror"
+                accept=".xlsx,.xls,.csv"
+                required
+            >
+
+            @error('file')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Start Import...</button>
+
+        <button type="submit" class="btn btn-primary">
+            Import Products
+        </button>
     </form>
 
 @stop

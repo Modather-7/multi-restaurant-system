@@ -16,10 +16,14 @@ class ImprotProductsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'count' => ['required', 'integer', 'min:1', 'max:5000'],
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
         ]);
 
-        ImportProducts::dispatch($validated['count'])->onQueue('import')->delay(now()->addSeconds(5));
+        $restaurantId = auth('admin')->user()->restaurant_id;
+
+        $path = $validated['file']->store('imports');
+
+        ImportProducts::dispatch($path, $restaurantId)->onQueue('import');
 
         return redirect()
             ->route('dashboard.products.index')

@@ -2,9 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Models\Product;
+use App\Imports\ProductsImport;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportProducts implements ShouldQueue
 {
@@ -13,7 +14,7 @@ class ImportProducts implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected $count)
+    public function __construct(protected string $path, protected int $restaurantId)
     {
         //
     }
@@ -23,6 +24,9 @@ class ImportProducts implements ShouldQueue
      */
     public function handle(): void
     {
-        Product::factory($this->count)->create();
+        Excel::import(
+            new ProductsImport($this->restaurantId),
+            $this->path
+        );
     }
 }
