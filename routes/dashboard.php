@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\ImprotProductsController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\DashboardController;
@@ -25,7 +26,6 @@ Route::group([
             ->name('products.force-delete');
         Route::delete('products/{product}/image', [ProductController::class, 'deleteImage'])
             ->name('products.delete-image');
-        Route::resource('products', ProductController::class);
 
 
         Route::get('/categories/trash', [CategoryController::class, 'trash'])
@@ -36,11 +36,16 @@ Route::group([
             ->name('categories.force-delete');
         Route::delete('categories/{category}/image', [CategoryController::class, 'deleteImage'])
             ->name('categories.delete-image');
-        Route::resource('categories', CategoryController::class);
 
-        Route::resource('admins', AdminsController::class);
+        Route::get('products/import', [ImprotProductsController::class, 'create'])
+            ->name('products.import');
+        Route::post('products/import', [ImprotProductsController::class, 'store']);
 
-        Route::resource('roles', RolesController::class);
-
-        Route::resource('orders', OrdersController::class);
+        Route::resources([
+            'products' => ProductController::class,
+            'categories' => CategoryController::class,
+            'roles' => RolesController::class,
+            'admins' => AdminsController::class,
+            'orders' => OrdersController::class,
+        ]);
     });

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->text('ingredients');
             $table->decimal('price', 8, 2);
             $table->decimal('compare_price', 8, 2)->nullable();
@@ -24,6 +24,9 @@ return new class extends Migration
             $table->enum('status', ['active', 'draft', 'archived'])->default('active');
             $table->boolean('featured')->default(0); // منتج مميز
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->unique(['restaurant_id', 'slug']);
         });
     }
 
