@@ -10,7 +10,8 @@
 
     <div class="mb-5">
         <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary mr-2">Add Product</a>
-        <a href="{{ route('dashboard.products.trash') }}" class="btn btn-sm btn-outline-dark">Go To Trash</a>
+        <a href="{{ route('dashboard.products.trash') }}" class="btn btn-sm btn-outline-dark mr-2">Go To Trash</a>
+        <a href="{{ route('dashboard.products.import') }}" class="btn btn-sm btn-outline-dark">Import Data</a>
     </div>
 
     {{-- Search Form --}}

@@ -42,43 +42,42 @@
 
             @foreach ($categories as $category)
                 @if ($category->products->count())
-
                     {{-- CATEGORY BLOCK --}}
                     <div class="category-block mb-5" id="cat-{{ $category->id }}">
-                        {{-- TITLE --}}
-                        <div class="mb-4">
-                            <h3 class="fw-italic text-dark mb-1">
+
+                        {{-- TITLE & BOTTOM-ALIGNED HORIZONTAL LINE --}}
+                        <div class="category-header mb-4">
+                            <h3 class="category-title fw-italic text-dark mb-0">
                                 {{ $category->name }}
                             </h3>
+                            <div class="category-horizontal-line"></div>
                         </div>
 
                         {{-- PRODUCTS --}}
-                        <div class="row">
-                            @foreach ($category->products as $product)
-                                <div class="col-lg-3 col-md-4 col-6 mb-3">
-                                    <div class="product-card-animation">
+                        <div class="category-content">
+                            <div class="row">
+                                @foreach ($category->products as $product)
+                                    <div class="col-lg-3 col-md-4 col-6 mb-3">
+                                        <div class="product-card-animation">
                                             <x-product-card
                                                 :product="$product"
                                                 :branch="request()->route('branch')"
                                             />
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-
                     {{-- Banner Between Categories --}}
                     @if (!$loop->last && $categories[$loop->index + 1]->image)
-
                         <div class="menu-banner-between">
                             <img
                                 src="{{ asset('storage/' . $categories[$loop->index + 1]->image) }}"
                                 alt="{{ $categories[$loop->index + 1]->name }}"
                             >
                         </div>
-
                     @endif
-
                 @endif
             @endforeach
         </div>

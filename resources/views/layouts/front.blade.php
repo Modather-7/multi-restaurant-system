@@ -28,7 +28,7 @@
     @stack('styles')
 
 </head>
-<body class="d-flex flex-column min-vh-100 {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<body class="d-flex flex-column min-vh-100 {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" data-authenticated="{{ auth()->check() ? '1' : '0' }}">
 
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg modern-navbar sticky-top">
@@ -166,25 +166,16 @@
 </main>
 
 @guest
-    @if(request('dialog') && !auth()->check())
-    <div class="auth-overlay">
-        <div class="auth-modal">
-            <button class="auth-close">&times;</button>
-            @if(request('dialog') == 'LOGIN')
-                @include('front.auth.login')
-            @elseif(request('dialog') == 'REGISTER')
-                @include('front.auth.register')
-            @endif
+    <div class="auth-overlay" data-auth-overlay hidden role="presentation">
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-label="{{ trans('Log in') }}">
+            <button class="auth-close" type="button" aria-label="{{ trans('Close') }}">&times;</button>
+            <div class="auth-pane" data-auth-pane="LOGIN" hidden>@include('front.auth.login')</div>
+            <div class="auth-pane" data-auth-pane="REGISTER" hidden>@include('front.auth.register')</div>
         </div>
     </div>
-    @endif
 @endguest
 
 @stack('scripts')
-
-<script>
-    window.isAuthenticated = @json(auth()->check());
-</script>
 
 </body>
 </html>
