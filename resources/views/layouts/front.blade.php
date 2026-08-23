@@ -26,7 +26,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=400;600;700;800&display=swap" rel="stylesheet">
 
     @stack('styles')
-
 </head>
 <body class="d-flex flex-column min-vh-100 {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" data-authenticated="{{ auth()->check() ? '1' : '0' }}">
 
@@ -52,17 +51,13 @@
             </a>
         </li>
 
-         {{-- Mobile Navbar --}}
+        {{-- Mobile Navbar --}}
         <div class="d-flex align-items-center gap-2 ml-auto d-lg-none">
-
-            {{-- Localization --}}
             <a href="{{ route(
                 request()->route()->getName(),
                 array_merge(
                     request()->route()->parameters(),
-                    [
-                        'locale' => app()->getLocale() === 'ar' ? 'en' : 'ar'
-                    ]
+                    ['locale' => app()->getLocale() === 'ar' ? 'en' : 'ar']
                 )
             ) }}"
             class="lang-switch-mobile">
@@ -119,7 +114,6 @@
                             {{ trans('Log in') }}
                         </a>
                     </li>
-
                     <li>
                         <a href="?dialog=REGISTER" class="btn btn-outline-dark btn-sm rounded-pill px-3 auth-btn">
                             {{ trans('Register') }}
@@ -130,14 +124,10 @@
                 @auth
                     <li class="nav-item dropdown position-relative">
                         <a class="nav-link dropdown-toggle btn btn-outline-dark btn-sm rounded-pill px-3 d-flex align-items-center justify-content-center justify-content-lg-start gap-2 backend-user-dropdown"
-                           href="#"
-                           id="userDropdown"
-                           role="button"
-                           aria-expanded="false">
+                           href="#" id="userDropdown" role="button" aria-expanded="false">
                             <i class="lni lni-user fs-6"></i>
                             <span>{{ auth()->user()->name }}</span>
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-3" id="userDropdownMenu" aria-labelledby="userDropdown">
                             <li>
                                 <span class="dropdown-item-text text-muted small pb-2 border-bottom d-block">
@@ -155,7 +145,6 @@
                         </ul>
                     </li>
                 @endauth
-
             </ul>
         </div>
     </div>
@@ -165,9 +154,17 @@
     {{ $slot }}
 </main>
 
+{{-- بقت بتشيّك على كل الأخطاء مش email/password بس --}}
 @guest
-    <div class="auth-overlay" data-auth-overlay hidden role="presentation">
-        <div class="auth-modal" role="dialog" aria-modal="true" aria-label="{{ trans('Log in') }}">
+    <div class="auth-overlay"
+        data-auth-overlay
+        @if(old('_dialog') && $errors->any())
+            data-auto-open="{{ old('_dialog') }}"
+        @endif
+        hidden
+        role="presentation">
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+            <h2 id="authModalTitle" class="visually-hidden">{{ trans('Authentication') }}</h2>
             <button class="auth-close" type="button" aria-label="{{ trans('Close') }}">&times;</button>
             <div class="auth-pane" data-auth-pane="LOGIN" hidden>@include('front.auth.login')</div>
             <div class="auth-pane" data-auth-pane="REGISTER" hidden>@include('front.auth.register')</div>
@@ -176,6 +173,5 @@
 @endguest
 
 @stack('scripts')
-
 </body>
 </html>

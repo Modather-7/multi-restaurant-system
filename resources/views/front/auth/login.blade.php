@@ -11,42 +11,49 @@
         :status="session('status')"
     />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
+        <input type="hidden" name="_dialog" value="LOGIN">
+
+        @php
+            $loginErrors = old('_dialog') === 'LOGIN';
+        @endphp
+
         <!-- Email -->
         <div class="mb-4">
-
-            <label class="form-label">
+            <label for="login-email" class="form-label">
                 {{ trans('Email') }}
             </label>
 
             <input
-                id="email"
-                class="form-control"
-                type="text"
+                id="login-email"
+                class="form-control {{ $loginErrors && $errors->has('email') ? 'is-invalid' : '' }}"
+                type="email"
                 name="email"
-                value="{{ old('email') }}"
+                value="{{ $loginErrors ? old('email') : '' }}"
                 required
-                autofocus
                 autocomplete="username"
                 placeholder="{{ trans('Enter your email') }}"
             >
 
-            <x-input-error
-                :messages="$errors->get('email')"
-                class="mt-2"
-            />
+            @if ($loginErrors)
+                @error('email')
+                    <div class="text-danger small mt-1" data-error-for="email" role="alert">
+                        {{ $message }}
+                    </div>
+                @enderror
+            @endif
         </div>
 
         <!-- Password -->
         <div class="mb-4">
-            <label class="form-label">
+            <label for="login-password" class="form-label">
                 {{ trans('Password') }}
             </label>
 
             <input
-                id="password"
-                class="form-control"
+                id="login-password"
+                class="form-control {{ $loginErrors && $errors->has('password') ? 'is-invalid' : '' }}"
                 type="password"
                 name="password"
                 required
@@ -54,26 +61,29 @@
                 placeholder="{{ trans('Enter your password') }}"
             >
 
-            <x-input-error
-                :messages="$errors->get('password')"
-                class="mt-2"
-            />
+            @if ($loginErrors)
+                @error('password')
+                    <div class="text-danger small mt-1" data-error-for="password" role="alert">
+                        {{ $message }}
+                    </div>
+                @enderror
+            @endif
         </div>
 
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <label class="form-check d-flex align-items-center gap-2 mb-0">
+            <label class="form-check d-flex align-items-center gap-2 mb-0" for="login-remember">
                 <input
-                    id="remember_me"
+                    id="login-remember"
                     type="checkbox"
                     class="form-check-input mt-0"
                     name="remember"
                     value="1"
+                    {{ old('remember') ? 'checked' : '' }}
                 >
 
                 <span>
                     {{ trans('Remember Me') }}
                 </span>
-
             </label>
 
             @if(Route::has('password.request'))
@@ -81,7 +91,6 @@
                     {{ trans('Forgot Your Password?') }}
                 </a>
             @endif
-
         </div>
 
         <button
@@ -96,11 +105,9 @@
                 {{ trans("Don't have an account?") }}
             </span>
 
-            <a href="{{ request()->fullUrlWithQuery(['dialog'=>'REGISTER']) }}">
+            <a href="?dialog=REGISTER" class="auth-btn">
                 {{ trans('Create Account') }}
             </a>
-
         </div>
     </form>
-
 </div>

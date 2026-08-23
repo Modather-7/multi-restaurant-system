@@ -1,72 +1,72 @@
 <div class="auth-form">
-
     <div class="text-center mb-4">
-        <h2>
-            {{ trans('Create Account') }}
-        </h2>
+        <h2>{{ trans('Create Account') }}</h2>
     </div>
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
+        <input type="hidden" name="_dialog" value="REGISTER">
+
+        @php
+            $registerErrors = old('_dialog') === 'REGISTER';
+        @endphp
 
         <!-- Name -->
         <div class="mb-3">
-            <label class="form-label">
-                {{ trans('name') }}
-            </label>
+            <label class="form-label">{{ trans('name') }}</label>
 
             <input
                 id="name"
-                class="form-control"
+                class="form-control {{ $registerErrors && $errors->has('name') ? 'is-invalid' : '' }}"
                 type="text"
                 name="name"
-                value="{{ old('name') }}"
+                value="{{ $registerErrors ? old('name') : '' }}"
                 required
                 autofocus
                 autocomplete="name"
                 placeholder="{{ trans('Enter your name') }}"
             >
 
-            <x-input-error
-                :messages="$errors->get('name')"
-                class="mt-2"
-            />
+            @if ($registerErrors)
+                @error('name')
+                    <div class="text-danger small mt-1" data-error-for="name" role="alert">
+                        {{ $message }}
+                    </div>
+                @enderror
+            @endif
         </div>
-
 
         <!-- Email -->
         <div class="mb-3">
-            <label class="form-label">
-                {{ trans('Email Address') }}
-            </label>
+            <label class="form-label">{{ trans('Email Address') }}</label>
 
             <input
                 id="email"
-                class="form-control"
+                class="form-control {{ $registerErrors && $errors->has('email') ? 'is-invalid' : '' }}"
                 type="email"
                 name="email"
-                value="{{ old('email') }}"
+                value="{{ $registerErrors ? old('email') : '' }}"
                 required
                 autocomplete="username"
                 placeholder="{{ trans('Enter your email') }}"
             >
 
-            <x-input-error
-                :messages="$errors->get('email')"
-                class="mt-2"
-            />
+            @if ($registerErrors)
+                @error('email')
+                    <div class="text-danger small mt-1" data-error-for="email" role="alert">
+                        {{ $message }}
+                    </div>
+                @enderror
+            @endif
         </div>
-
 
         <!-- Password -->
         <div class="mb-3">
-            <label class="form-label">
-                {{ trans('Password') }}
-            </label>
+            <label class="form-label">{{ trans('Password') }}</label>
 
             <input
                 id="password"
-                class="form-control"
+                class="form-control {{ $registerErrors && $errors->has('password') ? 'is-invalid' : '' }}"
                 type="password"
                 name="password"
                 required
@@ -74,19 +74,17 @@
                 placeholder="{{ trans('Create a password') }}"
             >
 
-            <x-input-error
-                :messages="$errors->get('password')"
-                class="mt-2"
-            />
+            @if ($registerErrors)
+                @error('password')
+                    <div class="text-danger small mt-1" data-error-for="password" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+            @endif
         </div>
 
-
-        <!-- Confirm Password -->
         <div class="mb-3">
-            <label class="form-label">
-                {{ trans('Confirm Password') }}
-            </label>
-
+            <label class="form-label">{{ trans('Confirm Password') }}</label>
             <input
                 id="password_confirmation"
                 class="form-control"
@@ -96,32 +94,14 @@
                 autocomplete="new-password"
                 placeholder="{{ trans('Confirm Password') }}"
             >
-
-            <x-input-error
-                :messages="$errors->get('password_confirmation')"
-                class="mt-2"
-            />
         </div>
 
-
-        <button
-            type="submit"
-            class="btn w-100 auth-submit"
-        >
-            {{ trans('Create Account') }}
-        </button>
-
+        <button type="submit" class="btn w-100 auth-submit">{{ trans('Create Account') }}</button>
 
         <div class="text-center mt-3 auth-footer">
-            <span>
-                {{ trans('Already have an account?') }}
-            </span>
+            <span>{{ trans('Already have an account?') }}</span>
 
-            <a href="{{ request()->fullUrlWithQuery(['dialog'=>'LOGIN']) }}">
-                {{ trans('Log In') }}
-            </a>
+            <a href="?dialog=LOGIN" class="auth-btn">{{ trans('Log In') }}</a>
         </div>
-
     </form>
-
 </div>

@@ -18,8 +18,53 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function currentAuthState() {
-        return document.body.getAttribute('data-authenticated') === '1' ? '1' : '0';
+        return document.body && document.body.getAttribute('data-authenticated') === '1' ? '1' : '0';
     }
+
+    function focusFirstError(pane) {
+        const slots = pane.querySelectorAll('[data-error-for]');
+        for (const slot of slots) {
+            if (slot.textContent.trim() !== '') {
+                const fieldName = slot.getAttribute('data-error-for');
+                const field = pane.querySelector(`[name="${fieldName}"]`);
+                if (field) {
+                    field.focus();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // ---- Focus trap جوه الـ modal ----
+    function trapFocus(e) {
+        if (!overlay || overlay.hidden || e.key !== 'Tab') return;
+
+        const visiblePane = Array.prototype.find.call(panes, function (p) {
+            return !p.hidden;
+        });
+        if (!visiblePane) return;
+
+        const focusableSelector = 'input, button, select, textarea, [href], [tabindex]:not([tabindex="-1"])';
+        const focusable = Array.prototype.filter.call(
+            overlay.querySelectorAll(focusableSelector),
+            function (el) { return el.offsetParent !== null; } // visible only
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    }
+
+document.addEventListener('keydown', trapFocus);
 
     function showPane(dialog) {
         if (!overlay) return;
@@ -40,11 +85,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const visiblePane = Array.prototype.find.call(panes, function (p) {
                 return !p.hidden;
             });
-            const focusTarget =
-                (visiblePane && visiblePane.querySelector(
-                    'input, button, select, textarea, [href], [tabindex]:not([tabindex="-1"])'
-                )) || overlay.querySelector('.auth-close');
-            focusTarget?.focus();
+
+            if (visiblePane && !focusFirstError(visiblePane)) {
+                const focusTarget =
+                    visiblePane.querySelector(
+                        'input, button, select, textarea, [href], [tabindex]:not([tabindex="-1"])'
+                    ) || overlay.querySelector('.auth-close');
+                focusTarget?.focus();
+            }
         } else {
             unlockBodyScroll();
         }
@@ -68,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
         lastFocused = document.activeElement;
         setDialogParam(dialog);
         showPane(dialog);
+        document.querySelector('main')?.setAttribute('inert', '');
     }
 
     function closeAuthModal() {
         clearDialogParam();
+        document.querySelector('main')?.removeAttribute('inert');
 
         if (overlay) {
             overlay.hidden = true;
@@ -90,22 +140,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ---- Open: intercept the auth links ---------------------------------
 
-    document.querySelectorAll('.auth-btn').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (currentAuthState() === '1') return; // حماية إضافية لو مسجل بالفعل
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.auth-btn');
+        if (!btn) return;
 
-            let dialog = null;
-            try {
-                dialog = new URL(btn.href).searchParams.get('dialog');
-            } catch (err) {
-                dialog = null;
-            }
-            if (dialog) openAuthModal(dialog);
-        });
+        e.preventDefault();
+        if (currentAuthState() === '1') return;
+
+        let dialog = null;
+        try {
+            dialog = new URL(btn.href, window.location.origin).searchParams.get('dialog');
+        } catch (err) {
+            dialog = null;
+        }
+        if (dialog) openAuthModal(dialog);
     });
 
-    // ---- Form Submit: تنظيف الرابط قبل الـ POST عشان ميتسجلش في الـ History ----
+    // ---- Form Submit: تنظيف الرابط قبل الـ POST ------------------------
 
     if (overlay) {
         overlay.querySelectorAll('form').forEach(function (form) {
@@ -134,18 +185,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ---- Deep-link / Initial load ---------------------------------------
+    // ---- Deep-link / Initial load / Validation Auto-open -----------------
 
     (function handleInitialState() {
-        const url = new URL(window.location.href);
-        const dialog = url.searchParams.get('dialog');
-
-        if (!dialog) return;
-
         if (currentAuthState() === '1') {
             clearDialogParam();
             return;
         }
+
+        const url = new URL(window.location.href);
+        const urlDialog = url.searchParams.get('dialog');
+        const autoOpen = overlay ? overlay.getAttribute('data-auto-open') : null;
+        const dialog = autoOpen || urlDialog;
+
+        if (!dialog) return;
 
         openAuthModal(dialog);
     })();
@@ -186,21 +239,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// ---- Sync & BFcache Guard --------------------------------------------
+// ---- Sync & BFcache Guard (بدون Infinite Loop) ------------------------
 
 function getDomAuthState() {
-    return document.body ? (document.body.getAttribute('data-authenticated') === '1' ? '1' : '0') : '0';
+    return document.body && document.body.getAttribute('data-authenticated') === '1' ? '1' : '0';
 }
 
-(function syncAuthMarker() {
-    try {
-        sessionStorage.setItem('auth_state', getDomAuthState());
-    } catch (e) {}
-})();
+function isBackForwardNavigation(event) {
+    if (event && event.persisted) return true;
+
+    const navEntries = performance.getEntriesByType('navigation');
+    if (navEntries.length && navEntries[0].type) {
+        return navEntries[0].type === 'back_forward';
+    }
+
+    if (performance.navigation) {
+        return performance.navigation.type === 2;
+    }
+    return false;
+}
 
 window.addEventListener('pageshow', function (event) {
-    if (!event.persisted) return;
-
     let known = null;
     try {
         known = sessionStorage.getItem('auth_state');
@@ -208,12 +267,19 @@ window.addEventListener('pageshow', function (event) {
 
     const cached = getDomAuthState();
 
-    if (known !== null && known !== cached) {
+    // لا يتم عمل Reload إلا إذا كان الرجوع بـ Back/Forward وهناك اختلاف حقيقي
+    if (isBackForwardNavigation(event) && known !== null && known !== cached) {
         const url = new URL(window.location.href);
         if (url.searchParams.has('dialog')) {
             url.searchParams.delete('dialog');
             window.history.replaceState({}, document.title, url.pathname + url.search);
         }
         window.location.reload();
+        return;
     }
+
+    // في التحميل العادي يتم دائماً تحديث الـ marker لمنع الـ Loop
+    try {
+        sessionStorage.setItem('auth_state', cached);
+    } catch (e) {}
 });
